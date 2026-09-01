@@ -2,720 +2,228 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>席替えメーカー</title>
-
 <style>
-:root{
-  --yellow:#f5e342;
-  --dark:#333;
-  --line:#ddd;
-  --blue:#4a90e2;
-  --red:#e85b67;
-}
-
+:root{--yellow:#F5E342;--dark:#333;--line:#ddd;--blue:#4A90E2;--red:#E85B67}
 *{box-sizing:border-box}
-
-html,body{
-  margin:0;
-  padding:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP","Yu Gothic",sans-serif;
-  color:var(--dark);
-  background:#fafafa;
-}
-
+html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP","Yu Gothic",sans-serif;color:var(--dark);background:#fafafa}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-
-.header{
-  background:var(--yellow);
-  padding:23px 16px;
-  text-align:center;
-  box-shadow:0 2px 8px #0002;
-}
-.header h1{
-  margin:0;
-  font-size:30px;
-  font-weight:800;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-.card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 3px 15px #0000000a;
-}
-
-.title{
-  font-size:21px;
-  font-weight:800;
-  margin:0 0 16px;
-}
-
-.sub{
-  font-size:16px;
-  font-weight:800;
-  margin:25px 0 10px;
-}
-
-.front{
-  width:min(650px,90%);
-  margin:0 auto 16px;
-  background:#eee;
-  border-radius:7px;
-  text-align:center;
-  padding:7px;
-  color:#666;
-  font-size:13px;
-}
-
+.header{background:var(--yellow);padding:23px 16px;text-align:center;box-shadow:0 2px 8px #0002}
+.header h1{margin:0;font-size:30px;font-weight:800}
+.container{max-width:1100px;margin:auto;padding:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 3px 15px #0000000a}
+.title{font-size:21px;font-weight:800;margin:0 0 16px}
+.front{width:min(650px,90%);margin:0 auto 16px;background:#eee;border-radius:7px;text-align:center;padding:7px;color:#666;font-size:13px}
 .seat-wrap{overflow:auto;padding:5px}
-
-.seat-grid{
-  display:grid;
-  justify-content:center;
-  width:max-content;
-  margin:auto;
-}
-
-.seat{
-  width:92px;
-  min-height:64px;
-  border:2px solid #d6d6d6;
-  background:#fff;
-  border-radius:10px;
-  color:#333;
-  font-weight:700;
-  padding:6px;
-  overflow-wrap:anywhere;
-  transition:.15s;
-}
-
-.seat:hover{
-  border-color:#c9b800;
-  transform:translateY(-1px);
-}
-
-.seat.empty{
-  color:#999;
-  font-weight:500;
-}
-
-.seat.male{color:var(--blue)}
-.seat.female{color:var(--red)}
-
+.seat-grid{display:grid;justify-content:center;width:max-content;margin:auto}
+.seat{width:92px;min-height:64px;border:2px solid #d6d6d6;background:#fff;border-radius:10px;color:#333;font-weight:700;padding:6px;overflow-wrap:anywhere}
+.seat:hover{border-color:#c9b800}
 .gap-r{margin-right:15px}
 .gap-b{margin-bottom:15px}
-
-.setting-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.field label{
-  font-size:13px;
-  font-weight:700;
-  display:block;
-}
-
-select,
-input[type=number],
-input[type=text],
-textarea{
-  width:100%;
-  margin-top:6px;
-  padding:10px;
-  border:1px solid #ccc;
-  border-radius:9px;
-  background:white;
-  outline:none;
-}
-
-textarea{
-  resize:vertical;
-  min-height:130px;
-  line-height:1.7;
-}
-
-.bulk-example{
-  color:#aaa;
-  font-size:13px;
-  line-height:1.7;
-  margin-top:7px;
-}
-
-.bulk-btn,.add,.remove{
-  border:0;
-  background:#eee;
-  border-radius:9px;
-  padding:10px 14px;
-  font-weight:700;
-}
-
-.bulk-btn{
-  margin-top:10px;
-}
-
-.bulk-btn:hover,.add:hover,.remove:hover{background:#ddd}
-
-.rule-list{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-#nearRules,#farRules{margin-bottom:14px}
-
-#nearRules + .add,
-#farRules + .add{
-  margin-top:4px;
-}
-
-#nearRules .remove,
-#farRules .remove{
-  margin-left:8px;
-}
-
-.rule{
-  display:grid;
-  gap:7px;
-  align-items:end;
-}
-
-.rule.column{
-  grid-template-columns:minmax(130px,1fr) 120px 120px 44px;
-}
-
-.rule.position{
-  grid-template-columns:minmax(130px,1fr) 145px 145px 44px;
-}
-
-.rule.distance{
-  grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) 90px 100px 44px;
-}
-
-.rule.leader{
-  grid-template-columns:minmax(130px,1fr) 44px;
-}
-
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:18px;
-}
-
-.main-btn,.sub-btn{
-  border:0;
-  border-radius:11px;
-  padding:13px 22px;
-  font-weight:800;
-}
-
+.setting-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field label{font-size:13px;font-weight:700;display:block}
+select,input[type=number],input[type=text],textarea{width:100%;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:9px;background:white;outline:none}
+select:focus,input:focus,textarea:focus{border-color:#c9b800;box-shadow:0 0 0 3px #f5e34255}
+.sub{font-size:16px;font-weight:800;margin:25px 0 10px}
+.rule-list{display:flex;flex-direction:column;gap:8px}
+.rule{display:grid;gap:7px;align-items:end}
+.rule.column{grid-template-columns:minmax(130px,1fr) 120px 120px 44px}
+.rule.position{grid-template-columns:minmax(130px,1fr) 145px 145px 44px}
+.rule.distance{grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) 90px 80px 44px}
+.rule.leader{grid-template-columns:minmax(130px,1fr) 44px}
+.remove{height:42px;border:0;border-radius:9px;background:#eee;font-weight:800}
+.add{margin-top:9px;border:0;background:#eee;border-radius:9px;padding:10px 14px;font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.main-btn,.sub-btn{border:0;border-radius:11px;padding:13px 22px;font-weight:800}
 .main-btn{background:var(--yellow)}
 .main-btn:hover{background:#d9c900}
-
 .sub-btn{background:#eee}
 .sub-btn:hover{background:#ddd}
+.check{display:flex;gap:9px;align-items:center;margin-top:12px;font-weight:600;font-size:14px}
+.check input{width:19px;height:19px;margin:0;accent-color:#d3c300}
+.status{text-align:center;color:#777;font-size:13px;margin-top:10px;min-height:20px}
+.gender-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:8px}
+.gender-column{border:1px solid #ddd;border-radius:10px;padding:10px;background:#fafafa}
+.gender-column-title{font-size:13px;font-weight:800;margin-bottom:5px}
+.bulk-area{margin-top:12px}
+.bulk-area textarea{min-height:130px;resize:vertical}
+.student-input-note{font-size:13px;color:#777;margin:0 0 10px}
+.hidden{display:none!important}
 
-.check{
-  display:flex;
-  gap:9px;
-  align-items:center;
-  margin-top:12px;
-  font-weight:600;
-  font-size:14px;
-}
-
-.check input{
-  width:19px;
-  height:19px;
-  margin:0;
-  accent-color:#d3c300;
-}
-
-.status{
-  text-align:center;
-  color:#777;
-  font-size:13px;
-  margin-top:10px;
-  min-height:20px;
-}
-
-.gender-columns{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:10px;
-}
-
-.gender-column{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:10px;
-  min-width:105px;
-  background:#fafafa;
-}
-
-.gender-column-title{
-  text-align:center;
-  font-size:13px;
-  font-weight:800;
-  margin-bottom:8px;
-}
-
-.gender-switch{
-  display:flex;
-  border-radius:999px;
-  background:#eee;
-  padding:3px;
-  gap:2px;
-}
-
-.gender-switch button{
-  flex:1;
-  border:0;
-  background:transparent;
-  border-radius:999px;
-  padding:7px 5px;
-  font-size:12px;
-  font-weight:800;
-}
-
-.gender-switch button.active.male{
-  background:var(--blue);
-  color:white;
-}
-
-.gender-switch button.active.female{
-  background:var(--red);
-  color:white;
-}
-
-.gender-switch button.active.none{
-  background:#777;
-  color:white;
-}
-
-/* モーダル */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0008;
-  z-index:20000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{display:flex}
-
-.modal-box{
-  width:min(430px,100%);
-  background:white;
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 15px 50px #0004;
-}
-
-.modal-box h3{margin:0 0 18px}
-
-.modal-actions{
-  display:flex;
-  gap:10px;
-  margin-top:16px;
-}
-
-.modal-actions button{
-  flex:1;
-  border:0;
-  border-radius:10px;
-  padding:12px;
-  font-weight:800;
-}
-
-/* 続き */
-
-.presentation{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#fff;
-  z-index:10000;
-  overflow:auto;
-}
-
+.presentation{display:none;position:fixed;inset:0;background:#fff;z-index:10000;overflow:auto}
 .presentation.show{display:block}
-
-.presentation-head{
-  height:72px;
-  background:var(--yellow);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:sticky;
-  top:0;
-  z-index:2;
+.presentation-head{height:72px;background:var(--yellow);display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:2}
+.presentation-head h2{margin:0;font-size:24px}
+.presentation-close{position:absolute;right:18px;top:15px;border:0;background:#fff;border-radius:10px;padding:10px 16px;font-weight:800}
+.presentation-stage{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:35px}
+.presentation-table{display:grid;gap:8px;justify-content:center}
+.presentation-table .seat{width:100px;min
+.presentation-table .seat{width:100px;min-height:65px}
+.big-seat{width:min(850px,90vw);border:3px solid #ddd;border-radius:22px;text-align:center;padding:70px 25px;font-size:clamp(34px,7vw,80px);font-weight:900}
+.slot-box{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.slot-name{font-size:clamp(38px,8vw,90px);font-weight:900;min-height:1.3em}
+.slot-sub{font-size:16px;color:#888;margin-top:12px}
+.animation-settings{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.print-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.print-btn{border:0;border-radius:10px;padding:11px 15px;background:#eee;font-weight:700}
+#exportCanvas{display:none}
+@media(max-width:750px){
+.container{padding:12px 9px}
+.card{padding:15px}
+.setting-grid,.animation-settings{grid-template-columns:1fr}
+.rule.column,.rule.position,.rule.distance,.rule.leader{grid-template-columns:1fr 1fr}
+.remove{width:100%}
+.seat{width:72px;min-height:56px;font-size:12px}
 }
-
-.presentation-head h2{
-  margin:0;
-  font-size:24px;
+@media print{
+body{background:white}
+body>*:not(#printArea){display:none!important}
+#printArea{display:block!important;padding:25px}
 }
-
-.presentation-close{
-  position:absolute;
-  right:18px;
-  top:15px;
-  border:0;
-  background:#fff;
-  border-radius:10px;
-  padding:10px 16px;
-  font-weight:800;
-}
-
-.presentation-stage{
-  min-height:calc(100vh - 72px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:35px;
-}
-
-.presentation-board{
-  width:min(1200px,96vw);
-}
-
-.presentation-front{
-  background:#eee;
-  border-radius:8px;
-  padding:9px;
-  text-align:center;
-  color:#666;
-  font-size:14px;
-  margin-bottom:22px;
-}
-
-.presentation-table{
-  display:grid;
-  justify-content:center;
-  gap:8px;
-}
-
-.presentation-seat{
-  width:100px;
-  min-height:68px;
-  border:2px solid #d6d6d6;
-  background:white;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:7px;
-  font-weight:800;
-  overflow-wrap:anywhere;
-  transition:.2s;
-}
-
-.presentation-seat.hidden-seat{
-  background:#111;
-  border-color:#111;
-  color:#111;
-}
-
-.presentation-seat.revealed{
-  animation:seatPop .28s ease;
-}
-
-.presentation-seat.male{color:var(--blue)}
-.presentation-seat.female{color:var(--red)}
-
-@keyframes seatPop{
-  from{transform:scale(.75);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-.slot-seat{
-  animation:slotFlash .12s linear infinite;
-}
-
-@keyframes slotFlash{
-  0%{transform:scale(.97)}
-  50%{transform:scale(1.03)}
-  100%{transform:scale(.97)}
-}
-
-/* 印刷 */
 #printArea{display:none}
-
-.print-page-title{
-  text-align:center;
-  font-size:28px;
-  font-weight:800;
-  margin-bottom:20px;
-}
-
-.print-board{
-  border:2px solid #333;
-  padding:20px;
-  display:inline-block;
-  min-width:80%;
-  margin-left:10%;
-  margin-right:10%;
-}
-
-.print-blackboard{
-  text-align:center;
-  border:2px solid #333;
-  padding:8px;
-  margin-bottom:20px;
-  font-weight:800;
-}
-
-.print-blackboard.bottom{
-  margin-top:20px;
-  margin-bottom:0;
-}
-
-.print-grid{
-  display:grid;
-  justify-content:center;
-  gap:8px;
-}
-
-.print-seat{
-  border:2px solid #333;
-  border-radius:7px;
-  min-width:80px;
-  min-height:55px;
-  padding:8px;
-  text-align:center;
-  font-weight:800;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
+.print-page-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:20px}
+.print-board{border:2px solid #333;padding:20px;display:inline-block;min-width:80%;margin-left:10%;margin-right:10%}
+.print-blackboard{text-align:center;border:2px solid #333;padding:8px;margin-bottom:20px;font-weight:800}
+.print-blackboard.bottom{margin-top:20px;margin-bottom:0}
+.print-grid{display:grid;justify-content:center;gap:8px}
+.print-seat{border:2px solid #333;border-radius:7px;min-width:80px;min-height:55px;padding:8px;text-align:center;font-weight:800;display:flex;align-items:center;justify-content:center}
 .print-seat.male{color:var(--blue)}
 .print-seat.female{color:var(--red)}
-
-@media(max-width:750px){
-  .container{padding:12px 9px}
-  .card{padding:15px}
-  .setting-grid{grid-template-columns:1fr}
-
-  .rule.column,
-  .rule.position,
-  .rule.distance,
-  .rule.leader{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .remove{width:100%}
-
-  .seat{
-    width:72px;
-    min-height:56px;
-    font-size:12px;
-  }
-
-  .presentation-stage{padding:15px}
-
-  .presentation-seat{
-    width:70px;
-    min-height:55px;
-    font-size:12px;
-  }
-}
-
-@media print{
-  body{background:white}
-
-  body>*:not(#printArea){
-    display:none!important;
-  }
-
-  #printArea{
-    display:block!important;
-    padding:25px;
-  }
-}
 </style>
 </head>
-
 <body>
 
 <header class="header">
-  <h1>席替えメーカー</h1>
+<h1>席替えメーカー</h1>
 </header>
 
 <main class="container">
 
 <section class="card">
-
 <h2 class="title">座席表</h2>
-
 <div class="front">黒板（前）</div>
-
 <div class="seat-wrap">
-  <div id="seatGrid" class="seat-grid"></div>
+<div id="seatGrid" class="seat-grid"></div>
 </div>
-
-<h3 class="sub">一括入力</h3>
-
-<textarea
-  id="bulkInput"
-  placeholder="田中　佐藤　空席　山田&#10;高橋　橋本　鈴木　空席"
-></textarea>
-
-<div class="bulk-example">
-  例：田中　佐藤　空席　山田<br>
-  　　高橋　橋本　鈴木　空席
-</div>
-
-<button id="bulkBtn" class="bulk-btn">
-  一括入力する
-</button>
-
-<br>
-
-<button id="clearSeatsBtn" class="bulk-btn">
-  座席表をクリア
-</button>
-
-<h3 class="sub">列ごとの男女</h3>
-
-<div id="genderColumns" class="gender-columns"></div>
-
 </section>
 
+<section class="card">
+<h2 class="title">生徒入力</h2>
+
+<p class="student-input-note">座席をタップすると、その席の名前と男女を入力できます。</p>
+
+<div class="actions">
+<button id="bulkToggle" class="sub-btn">一括入力</button>
+<button id="clearBtn" class="sub-btn">座席表をクリア</button>
+</div>
+
+<div id="bulkArea" class="bulk-area hidden">
+<textarea id="bulkInput" placeholder="田中　佐藤　空席　山田
+高橋　橋本　鈴木　空席"></textarea>
+<div class="actions">
+<button id="applyBulk" class="main-btn">一括入力を反映</button>
+</div>
+</div>
+
+<h3 class="sub">列ごとの男女指定</h3>
+<div id="genderColumns" class="gender-columns"></div>
+</section>
 
 <section class="card">
-
 <h2 class="title">設定</h2>
 
 <h3 class="sub">座席数の指定</h3>
-
 <div class="setting-grid">
-
 <div class="field">
-<label>
-全体：横
+<label>全体：横
 <select id="cols"></select>
 </label>
 </div>
-
 <div class="field">
-<label>
-縦
+<label>縦
 <select id="rows"></select>
 </label>
 </div>
-
 </div>
 
 <h3 class="sub">班</h3>
-
 <div class="setting-grid">
-
 <div class="field">
-<label>
-横
+<label>横
 <select id="groupCols">
 <option value="0">なし</option>
-<option value="2">2</option>
-<option value="3">3</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
 </select>
 </label>
 </div>
-
 <div class="field">
-<label>
-縦
+<label>縦
 <select id="groupRows">
 <option value="0">なし</option>
-<option value="2">2</option>
-<option value="3">3</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
 </select>
 </label>
 </div>
-
 </div>
 
 <h3 class="sub">列の指定</h3>
 <div id="columnRules" class="rule-list"></div>
+<button id="addColumn" type="button" class="add">+ 条件を指定</button>
 
-<button id="addColumn" class="add">＋ 条件を追加</button>
-
-<h3 class="sub">位置の指定</h3>
+<h3 class="sub">生徒の位置を指定</h3>
 <div id="positionRules" class="rule-list"></div>
-
-<button id="addPosition" class="add">＋ 条件を追加</button>
+<button id="addPosition" type="button" class="add">+ 条件を指定</button>
 
 <h3 class="sub">生徒同士を近づける</h3>
 <div id="nearRules" class="rule-list"></div>
-
-<button id="addNear" class="add">＋ 条件を追加</button>
+<button id="addNear" type="button" class="add">+ 条件を追加</button>
 
 <h3 class="sub">生徒同士を離す</h3>
 <div id="farRules" class="rule-list"></div>
-
-<button id="addFar" class="add">＋ 条件を追加</button>
+<button id="addFar" type="button" class="add">+ 条件を追加</button>
 
 <h3 class="sub">班長を指定する</h3>
 <div id="leaderRules" class="rule-list"></div>
+<button id="addLeader" type="button" class="add">+ 班長を追加</button>
 
-<button id="addLeader" class="add">＋ 条件を追加</button>
+<label id="leaderSeparateWrap" class="check hidden">
+<input type="checkbox" id="leaderSeparate">
+班長同士を同じ班にしない
+</label>
 
 </section>
 
-
 <section class="card">
 
-<h2 class="title">演出</h2>
-
-<div class="setting-grid">
-
+<div class="animation-settings">
 <div class="field">
-<label>
-演出
-<select id="animation">
-<option value="normal">通常</option>
+<select id="animationType">
+<option value="normal">ノーマル</option>
 <option value="slot">スロット</option>
 </select>
-</label>
 </div>
 
 <div class="field">
-<label>
-<select id="animationAxis">
+<select id="animationDirection">
 <option value="row">横</option>
 <option value="col">縦</option>
 </select>
-</label>
 </div>
-
 </div>
-
-<label class="check">
-<input type="checkbox" id="moveAll">
-今の座席から全員移動させる
-</label>
 
 <label class="check">
 <input type="checkbox" id="fixGender">
-男女の座席を固定する
+男女を固定する
 </label>
 
 <label class="check">
@@ -723,3617 +231,1504 @@ textarea{
 空席の位置を固定する
 </label>
 
+<label class="check">
+<input type="checkbox" id="moveAll">
+全員が席を移動する
+</label>
+
 <div class="actions">
-
-<button id="shuffleBtn" class="main-btn">
-席替えする！
-</button>
-
-<button id="resetBtn" class="sub-btn">
-座席をリセット
-</button>
-
+<button id="shuffleBtn" class="main-btn">席替えする！</button>
+<button id="resetBtn" class="sub-btn">座席をリセット</button>
 </div>
 
 <div id="status" class="status"></div>
-
 </section>
 
-
 <section class="card">
-
 <h2 class="title">保存・印刷</h2>
-
-<p style="font-size:13px">
-席替え後の座席表を画像として保存したり、印刷できます。
-</p>
-
+<p style="font-size:13px">席替え後の座席表を画像として保存したり、印刷できます。</p>
 <div class="actions">
-
-<button id="saveBtn" class="main-btn">
-画像として保存
-</button>
-
-<button id="printTopBtn" class="sub-btn">
-印刷（黒板が上）
-</button>
-
-<button id="printBottomBtn" class="sub-btn">
-印刷（黒板が下）
-</button>
-
+<button id="saveBtn" class="main-btn">画像として保存</button>
+<button id="printTopBtn" class="sub-btn">印刷（黒板が上）</button>
+<button id="printBottomBtn" class="sub-btn">印刷（黒板が下）</button>
 </div>
-
 </section>
 
 </main>
 
-
-<div id="inputModal" class="modal">
-
-<div class="modal-box">
-
-<h3>座席を編集</h3>
-
-<div class="field">
-<label>
-名前
-<input type="text" id="modalName">
-</label>
-</div>
-
-<div class="field" style="margin-top:12px">
-<label>
-男女
-<select id="modalGender">
-<option value="">指定なし</option>
-<option value="男">男</option>
-<option value="女">女</option>
-</select>
-</label>
-</div>
-
-<div class="modal-actions">
-
-<button id="modalCancel" class="sub-btn">
-キャンセル
-</button>
-
-<button id="modalSave" class="main-btn">
-保存
-</button>
-
-</div>
-
-</div>
-</div>
-
-
 <div id="presentation" class="presentation">
-
 <div class="presentation-head">
-
-<h2>席替え</h2>
-
-<button id="closePresentation" class="presentation-close">
-閉じる
-</button>
-
+<h2>席替え発表</h2>
+<button id="closePresentation" class="presentation-close">閉じる</button>
 </div>
-
 <div id="presentationStage" class="presentation-stage"></div>
-
 </div>
-
 
 <div id="printArea"></div>
-
-<canvas id="exportCanvas" style="display:none"></canvas>
-
+<canvas id="exportCanvas"></canvas>
 
 <script>
 (function(){
-
 "use strict";
 
-var rows=6;
-var cols=6;
-
+var rows=6,cols=6;
 var students=[];
+var originalSeats=[];
+var hasPreviousSeat=false;
 
-var seatGender=[];
-
-var columnGenders=[];
-
-var currentEditingIndex=-1;
-
-var beforeShuffleStudents=null;
-
-
-/* 初期状態 */
 for(var i=0;i<36;i++){
-
-  students.push({
-    name:"",
-    gender:""
-  });
-
-  seatGender.push("");
-
+students.push({name:"",gender:""});
 }
-
-for(var c=0;c<6;c++){
-  columnGenders.push("");
-}
-
 
 function $(id){
-  return document.getElementById(id);
+return document.getElementById(id);
 }
-
-
-function cloneStudents(arr){
-
-  return arr.map(function(s){
-
-    return {
-      name:s.name || "",
-      gender:s.gender || ""
-    };
-
-  });
-
-}
-
 
 function fillSelect(id,max,selected){
-
-  var s=$(id);
-
-  s.innerHTML="";
-
-  for(var i=1;i<=max;i++){
-
-    var o=document.createElement("option");
-
-    o.value=i;
-    o.textContent=i;
-
-    if(i===selected){
-      o.selected=true;
-    }
-
-    s.appendChild(o);
-
-  }
-
+var s=$(id);
+s.innerHTML="";
+for(var i=1;i<=max;i++){
+var o=document.createElement("option");
+o.value=i;
+o.textContent=i;
+if(i===selected)o.selected=true;
+s.appendChild(o);
+}
 }
 
-
-function saveState(){
-
-  try{
-
-    var state={
-
-      rows:rows,
-      cols:cols,
-
-      students:students,
-
-      seatGender:seatGender,
-
-      columnGenders:columnGenders,
-
-      beforeShuffleStudents:
-        beforeShuffleStudents,
-
-      groupCols:$("groupCols").value,
-      groupRows:$("groupRows").value,
-
-      animation:$("animation").value,
-      animationAxis:$("animationAxis").value,
-
-      moveAll:$("moveAll").checked,
-      fixGender:$("fixGender").checked,
-      fixEmpty:$("fixEmpty").checked
-
-    };
-
-    localStorage.setItem(
-      "changeSeatsMakerState",
-      JSON.stringify(state)
-    );
-
-  }catch(e){}
-
-}
-
-
-function loadState(){
-
-  try{
-
-    var raw=
-      localStorage.getItem(
-        "changeSeatsMakerState"
-      );
-
-    if(!raw){
-      return;
-    }
-
-    var data=JSON.parse(raw);
-
-    if(
-      typeof data.rows==="number" &&
-      typeof data.cols==="number"
-    ){
-
-      rows=data.rows;
-      cols=data.cols;
-
-    }
-
-    if(Array.isArray(data.students)){
-      students=data.students;
-    }
-
-    if(Array.isArray(data.seatGender)){
-      seatGender=data.seatGender;
-    }
-
-    while(seatGender.length<rows*cols){
-      seatGender.push("");
-    }
-
-    seatGender=
-      seatGender.slice(0,rows*cols);
-
-    if(Array.isArray(data.columnGenders)){
-      columnGenders=
-        data.columnGenders.slice(0,cols);
-    }
-
-    while(columnGenders.length<cols){
-      columnGenders.push("");
-    }
-
-    while(students.length<rows*cols){
-
-      students.push({
-        name:"",
-        gender:""
-      });
-
-    }
-
-    students=
-      students.slice(0,rows*cols);
-
-
-    if(Array.isArray(data.beforeShuffleStudents)){
-
-      beforeShuffleStudents=
-        data.beforeShuffleStudents;
-
-    }
-
-  }catch(e){}
-
-}
-
+fillSelect("cols",10,6);
+fillSelect("rows",10,6);
 
 function names(){
-
-  var result=[];
-
-  students.forEach(function(s){
-
-    if(
-      s.name &&
-      result.indexOf(s.name)<0
-    ){
-
-      result.push(s.name);
-
-    }
-
-  });
-
-  return result;
-
+var a=[];
+students.forEach(function(s){
+if(s.name&&a.indexOf(s.name)<0)a.push(s.name);
+});
+return a;
 }
-
 
 function studentSelect(){
+var s=document.createElement("select");
+s.className="student-select";
 
-  var s=document.createElement("select");
+var first=document.createElement("option");
+first.value="";
+first.textContent="生徒を選択";
+s.appendChild(first);
 
-  s.className="student-select";
+names().forEach(function(n){
+var o=document.createElement("option");
+o.value=n;
+o.textContent=n;
+s.appendChild(o);
+});
 
-  var first=document.createElement("option");
-
-  first.value="";
-
-  first.textContent="生徒を選択";
-
-  s.appendChild(first);
-
-  names().forEach(function(name){
-
-    var o=document.createElement("option");
-
-    o.value=name;
-
-    o.textContent=name;
-
-    s.appendChild(o);
-
-  });
-
-  return s;
-
+return s;
 }
-
 
 function refreshSelects(){
-
-  document
-    .querySelectorAll(".student-select")
-    .forEach(function(old){
-
-      var value=old.value;
-
-      var replacement=studentSelect();
-
-      replacement.value=value;
-
-      old.parentNode.replaceChild(
-        replacement,
-        old
-      );
-
-    });
-
+document.querySelectorAll(".student-select").forEach(function(old){
+var v=old.value;
+var n=studentSelect();
+n.value=v;
+old.parentNode.replaceChild(n,old);
+});
+updateLeaderVisibility();
+refreshLeaderEvents();
 }
-
 
 function render(){
+var grid=$("seatGrid");
+grid.innerHTML="";
+grid.style.gridTemplateColumns="repeat("+cols+",92px)";
 
-  var grid=$("seatGrid");
+var gc=+$("groupCols").value;
+var gr=+$("groupRows").value;
 
-  grid.innerHTML="";
+for(var r=0;r<rows;r++){
+for(var c=0;c<cols;c++){
 
-  grid.style.gridTemplateColumns=
-    "repeat("+cols+",92px)";
+var idx=r*cols+c;
+var b=document.createElement("button");
 
-  var groupCols=
-    +$("groupCols").value;
+b.type="button";
+b.className="seat";
 
-  var groupRows=
-    +$("groupRows").value;
+var person=students[idx];
 
+b.textContent=person.name||"空席";
 
-  for(var r=0;r<rows;r++){
+if(!person.name)b.className+=" empty";
 
-    for(var c=0;c<cols;c++){
+if(gc&&c<cols-1&&(c+1)%gc===0)b.className+=" gap-r";
+if(gr&&r<rows-1&&(r+1)%gr===0)b.className+=" gap-b";
 
-      var index=r*cols+c;
+if(person.gender==="男")b.style.color="var(--blue)";
+if(person.gender==="女")b.style.color="var(--red)";
 
-      var seat=
-        document.createElement("button");
+(function(i){
+b.onclick=function(){
 
-      seat.type="button";
+var current=students[i];
 
-      seat.className="seat";
-
-      var person=students[index];
-
-      seat.textContent=
-        person.name || "空席";
-
-      if(!person.name){
-        seat.classList.add("empty");
-      }
-
-      if(person.gender==="男"){
-        seat.classList.add("male");
-      }
-
-      if(person.gender==="女"){
-        seat.classList.add("female");
-      }
-
-
-      if(
-        groupCols &&
-        (c+1)%groupCols===0 &&
-        c<cols-1
-      ){
-
-        seat.classList.add("gap-r");
-
-      }
-
-
-      if(
-        groupRows &&
-        (r+1)%groupRows===0 &&
-        r<rows-1
-      ){
-
-        seat.classList.add("gap-b");
-
-      }
-
-
-      (function(i){
-
-        seat.onclick=function(){
-
-          openSeatModal(i);
-
-        };
-
-      })(index);
-
-
-      grid.appendChild(seat);
-
-    }
-
-  }
-
-
-  renderGenderColumns();
-
-}
-
-
-function openSeatModal(index){
-
-  currentEditingIndex=index;
-
-  $("modalName").value=
-    students[index].name || "";
-
-  $("modalGender").value=
-    students[index].gender || "";
-
-  $("inputModal").classList.add("show");
-
-  setTimeout(function(){
-
-    $("modalName").focus();
-
-  },50);
-
-}
-
-
-$("modalCancel").onclick=function(){
-
-  $("inputModal")
-    .classList.remove("show");
-
-};
-
-
-$("modalSave").onclick=function(){
-
-  if(currentEditingIndex<0){
-    return;
-  }
-
-  students[currentEditingIndex]={
-
-    name:$("modalName").value.trim(),
-
-    gender:$("modalGender").value
-
-  };
-
-  $("inputModal")
-    .classList.remove("show");
-
-  render();
-
-  refreshSelects();
-
-  saveState();
-
-};
-
-
-$("inputModal").addEventListener(
-  "click",
-  function(e){
-
-    if(e.target===this){
-
-      this.classList.remove("show");
-
-    }
-
-  }
+var name=prompt(
+"名前を入力してください。\n空欄で空席になります。",
+current.name
 );
 
+if(name===null)return;
+
+name=name.trim();
+
+if(!name){
+students[i]={name:"",gender:""};
+render();
+refreshSelects();
+renderGenderColumns();
+return;
+}
+
+if(name==="空席"){
+students[i]={name:"",gender:""};
+render();
+refreshSelects();
+renderGenderColumns();
+return;
+}
+
+var gender=prompt(
+"性別を入力してください。\n「男」または「女」を入力（任意）",
+current.gender
+);
+
+if(gender===null)gender=current.gender;
+
+gender=gender.trim();
+
+if(gender!=="男"&&gender!=="女")gender="";
+
+students[i]={
+name:name,
+gender:gender
+};
+
+render();
+refreshSelects();
+renderGenderColumns();
+};
+})(idx);
+
+grid.appendChild(b);
+}
+}
+
+renderGenderColumns();
+}
 
 function renderGenderColumns(){
 
-  var area=$("genderColumns");
+var area=$("genderColumns");
+area.innerHTML="";
 
-  area.innerHTML="";
+for(var c=0;c<cols;c++){
 
+var box=document.createElement("div");
+box.className="gender-column";
 
-  while(columnGenders.length<cols){
-    columnGenders.push("");
-  }
+var title=document.createElement("div");
+title.className="gender-column-title";
+title.textContent=(c+1)+"列目";
 
+var select=document.createElement("select");
+select.dataset.column=c;
 
-  for(var c=0;c<cols;c++){
+select.innerHTML=
+"<option value=''>指定なし</option>"+
+"<option value='男'>男子</option>"+
+"<option value='女'>女子</option>";
 
-    var box=document.createElement("div");
+var existing=[];
 
-    box.className="gender-column";
-
-
-    var title=document.createElement("div");
-
-    title.className="gender-column-title";
-
-    title.textContent=
-      (c+1)+"列目";
-
-    box.appendChild(title);
-
-
-    var sw=document.createElement("div");
-
-    sw.className="gender-switch";
-
-
-    var none=document.createElement("button");
-
-    none.type="button";
-    none.textContent="指定なし";
-    none.className="none";
-
-
-    var male=document.createElement("button");
-
-    male.type="button";
-    male.textContent="男";
-    male.className="male";
-
-
-    var female=document.createElement("button");
-
-    female.type="button";
-    female.textContent="女";
-    female.className="female";
-
-
-    if(columnGenders[c]==="男"){
-
-      male.classList.add("active");
-
-    }else if(columnGenders[c]==="女"){
-
-      female.classList.add("active");
-
-    }else{
-
-      none.classList.add("active");
-
-    }
-
-
-    none.onclick=(function(column){
-
-      return function(){
-
-        setColumnGender(column,"");
-
-      };
-
-    })(c);
-
-
-    male.onclick=(function(column){
-
-      return function(){
-
-        setColumnGender(column,"男");
-
-      };
-
-    })(c);
-
-
-    female.onclick=(function(column){
-
-      return function(){
-
-        setColumnGender(column,"女");
-
-      };
-
-    })(c);
-
-
-    sw.append(
-      none,
-      male,
-      female
-    );
-
-
-    box.appendChild(sw);
-
-    area.appendChild(box);
-
-  }
-
+for(var r=0;r<rows;r++){
+if(students[r*cols+c].name){
+existing.push(students[r*cols+c].gender);
+}
 }
 
-
-function setColumnGender(column,gender){
-
-  columnGenders[column]=gender;
-
-
-  for(var r=0;r<rows;r++){
-
-    var index=r*cols+column;
-
-    if(students[index].name){
-
-      students[index].gender=gender;
-
-    }
-
-  }
-
-
-  render();
-
-  saveState();
-
+if(existing.length&&existing.every(function(x){return x==="男";})){
+select.value="男";
+}else if(existing.length&&existing.every(function(x){return x==="女";})){
+select.value="女";
+}else{
+select.value="";
 }
 
+select.onchange=function(){
 
-function removeButton(parent,rule){
+var col=+this.dataset.column;
+var value=this.value;
 
-  var x=document.createElement("button");
+if(!value)return;
 
-  x.type="button";
+for(var rr=0;rr<rows;rr++){
+var index=rr*cols+col;
 
-  x.className="remove";
-
-  x.textContent="×";
-
-
-  x.onclick=function(){
-
-    parent.removeChild(rule);
-
-  };
-
-
-  return x;
-
+if(students[index].name){
+students[index].gender=value;
+}
 }
 
+render();
+};
+
+box.appendChild(title);
+box.appendChild(select);
+area.appendChild(box);
+}
+}
+  function removeButton(parent,rule){
+
+var x=document.createElement("button");
+x.type="button";
+x.className="remove";
+x.textContent="×";
+
+x.onclick=function(){
+parent.removeChild(rule);
+};
+
+return x;
+}
 
 function addColumnRule(){
 
-  var parent=$("columnRules");
+var p=$("columnRules");
+var r=document.createElement("div");
+r.className="rule column";
 
-  var rule=document.createElement("div");
+var s=studentSelect();
 
-  rule.className="rule column";
+var dir=document.createElement("select");
 
+dir.innerHTML=
+"<option value='front'>前から</option>"+
+"<option value='back'>後ろから</option>";
 
-  var person=studentSelect();
+var n=document.createElement("select");
 
-  var direction=
-    document.createElement("select");
-
-
-  direction.innerHTML=
-    "<option value='front'>前から</option>"+
-    "<option value='back'>後ろから</option>";
-
-
-  var number=
-    document.createElement("select");
-
-
-  for(var i=1;i<=rows;i++){
-
-    var o=document.createElement("option");
-
-    o.value=i;
-
-    o.textContent=
-      i+"列目まで";
-
-    number.appendChild(o);
-
-  }
-
-
-  rule.append(
-    person,
-    direction,
-    number,
-    removeButton(parent,rule)
-  );
-
-
-  parent.appendChild(rule);
-
+for(var i=1;i<=cols;i++){
+var o=document.createElement("option");
+o.value=i;
+o.textContent=i+"列目まで";
+n.appendChild(o);
 }
 
+r.append(
+s,
+dir,
+n,
+removeButton(p,r)
+);
+
+p.appendChild(r);
+}
 
 function addPositionRule(){
 
-  var parent=$("positionRules");
+var p=$("positionRules");
+var r=document.createElement("div");
+r.className="rule position";
 
-  var rule=document.createElement("div");
+var s=studentSelect();
+var a=document.createElement("select");
+var b=document.createElement("select");
 
-  rule.className="rule position";
-
-
-  var person=studentSelect();
-
-  var rowSelect=
-    document.createElement("select");
-
-  var colSelect=
-    document.createElement("select");
-
-
-  for(var i=1;i<=rows;i++){
-
-    var o=document.createElement("option");
-
-    o.value=i;
-
-    o.textContent=
-      "前から"+i+"列目";
-
-    rowSelect.appendChild(o);
-
-  }
-
-
-  for(var j=1;j<=cols;j++){
-
-    var q=document.createElement("option");
-
-    q.value=j;
-
-    q.textContent=
-      "左から"+j+"列目";
-
-    colSelect.appendChild(q);
-
-  }
-
-
-  rule.append(
-    person,
-    rowSelect,
-    colSelect,
-    removeButton(parent,rule)
-  );
-
-
-  parent.appendChild(rule);
-
+for(var i=1;i<=rows;i++){
+var o=document.createElement("option");
+o.value=i;
+o.textContent="前から"+i+"列目";
+a.appendChild(o);
 }
 
-
-function addDistanceRule(type){
-
-  var parent=
-    type==="near"
-      ? $("nearRules")
-      : $("farRules");
-
-
-  var rule=document.createElement("div");
-
-  rule.className="rule distance";
-
-
-  var person1=studentSelect();
-
-  var person2=studentSelect();
-
-
-  var number=
-    document.createElement("input");
-
-  number.type="number";
-
-  number.min="0";
-
-  number.value="2";
-
-
-  var label=
-    document.createElement("select");
-
-
-  if(type==="near"){
-
-    label.innerHTML=
-      "<option value='max'>席以下</option>";
-
-  }else{
-
-    label.innerHTML=
-      "<option value='min'>席以上空ける</option>";
-
-  }
-
-
-  rule.append(
-    person1,
-    person2,
-    number,
-    label,
-    removeButton(parent,rule)
-  );
-
-
-  parent.appendChild(rule);
-
+for(var j=1;j<=cols;j++){
+var q=document.createElement("option");
+q.value=j;
+q.textContent="横から"+j+"列目";
+b.appendChild(q);
 }
 
+r.append(
+s,
+a,
+b,
+removeButton(p,r)
+);
+
+p.appendChild(r);
+}
+
+function addDistanceRule(id,text){
+
+var p=$(id);
+var r=document.createElement("div");
+r.className="rule distance";
+
+var a=studentSelect();
+var b=studentSelect();
+
+var n=document.createElement("input");
+n.type="number";
+n.min=0;
+n.max=36;
+n.value=1;
+
+var label=document.createElement("div");
+label.textContent=text;
+label.style.paddingBottom="12px";
+label.style.fontSize="12px";
+
+r.append(
+a,
+b,
+n,
+label,
+removeButton(p,r)
+);
+
+p.appendChild(r);
+}
 
 function addLeaderRule(){
 
-  var parent=$("leaderRules");
+var p=$("leaderRules");
+var r=document.createElement("div");
+r.className="rule leader";
 
-  var rule=document.createElement("div");
-
-  rule.className="rule leader";
-
-
-  var person=studentSelect();
-
-
-  rule.append(
-    person,
-    removeButton(parent,rule)
-  );
-
-
-  parent.appendChild(rule);
-
-}
-
-
-$("addColumn").onclick=addColumnRule;
-
-$("addPosition").onclick=addPositionRule;
-
-$("addNear").onclick=function(){
-  addDistanceRule("near");
-};
-
-$("addFar").onclick=function(){
-  addDistanceRule("far");
-};
-
-$("addLeader").onclick=addLeaderRule;
-  /* ================================
-   座席数変更
-================================ */
-
-function rebuildSeats(){
-
-  var newCount=rows*cols;
-
-  var oldStudents=students.slice();
-
-  students=[];
-
-  for(var i=0;i<newCount;i++){
-
-    if(oldStudents[i]){
-
-      students.push({
-        name:oldStudents[i].name || "",
-        gender:oldStudents[i].gender || ""
-      });
-
-    }else{
-
-      students.push({
-        name:"",
-        gender:""
-      });
-
-    }
-
-  }
-
-  seatGender=[];
-
-  for(var j=0;j<newCount;j++){
-
-    seatGender.push("");
-
-  }
-
-  columnGenders=
-    columnGenders.slice(0,cols);
-
-  while(columnGenders.length<cols){
-    columnGenders.push("");
-  }
-
-  render();
-  saveState();
-
-}
-
-
-/* ================================
-   座席数変更イベント
-================================ */
-
-$("cols").addEventListener(
-  "change",
-  function(){
-
-    cols=parseInt(this.value,10);
-
-    rebuildSeats();
-
-  }
+r.append(
+studentSelect(),
+removeButton(p,r)
 );
 
+p.appendChild(r);
 
-$("rows").addEventListener(
-  "change",
-  function(){
-
-    rows=parseInt(this.value,10);
-
-    rebuildSeats();
-
-  }
-);
-
-
-/* ================================
-   一括入力
-================================ */
-
-$("bulkBtn").onclick=function(){
-
-  var text=$("bulkInput").value.trim();
-
-  if(!text){
-
-    $("status").textContent=
-      "一括入力する名前を入力してください。";
-
-    return;
-
-  }
-
-
-  /*
-   空白・全角空白・改行のいずれでも区切れる
-  */
-
-  var list=text
-    .split(/[\s　]+/)
-    .filter(function(x){
-      return x.trim()!=="";
-    });
-
-
-  var max=rows*cols;
-
-  for(var i=0;i<max;i++){
-
-    var value=list[i] || "";
-
-    /*
-      「空席」は空欄として扱う
-    */
-
-    if(value==="空席"){
-
-      students[i]={
-        name:"",
-        gender:students[i]
-          ? students[i].gender || ""
-          : ""
-      };
-
-    }else{
-
-      students[i]={
-        name:value,
-        gender:students[i]
-          ? students[i].gender || ""
-          : ""
-      };
-
-    }
-
-  }
-
-
-  /*
-    一括入力しても
-    列ごとの男女設定は消さない
-  */
-
-  for(var c=0;c<cols;c++){
-
-    if(
-      columnGenders[c]==="男" ||
-      columnGenders[c]==="女"
-    ){
-
-      for(var r=0;r<rows;r++){
-
-        var index=r*cols+c;
-
-        if(students[index].name){
-
-          students[index].gender=
-            columnGenders[c];
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  render();
-
-  refreshSelects();
-
-  saveState();
-
-
-  $("status").textContent=
-    "一括入力しました。";
-
-};
-
-
-/* ================================
-   座席表をクリア
-================================ */
-
-$("clearSeatsBtn").onclick=function(){
-
-  if(
-    !confirm(
-      "座席表の名前をすべて消しますか？"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  for(var i=0;i<students.length;i++){
-
-    students[i]={
-      name:"",
-      gender:""
-    };
-
-  }
-
-
-  /*
-    列ごとの男女設定は
-    そのまま維持する
-  */
-
-  render();
-
-  refreshSelects();
-
-  saveState();
-
-
-  $("status").textContent=
-    "座席表をクリアしました。";
-
-};
-
-
-/* ================================
-   座席数セレクト初期化
-================================ */
-
-fillSelect("cols",6,cols);
-
-fillSelect("rows",6,rows);
-
-
-/* ================================
-   設定値の読み込み
-================================ */
-
-function restoreSettings(){
-
-  try{
-
-    var raw=
-      localStorage.getItem(
-        "changeSeatsMakerState"
-      );
-
-    if(!raw)return;
-
-    var data=JSON.parse(raw);
-
-
-    if(data.groupCols!==undefined){
-
-      $("groupCols").value=
-        data.groupCols;
-
-    }
-
-    if(data.groupRows!==undefined){
-
-      $("groupRows").value=
-        data.groupRows;
-
-    }
-
-
-    if(data.animation){
-
-      $("animation").value=
-        data.animation;
-
-    }
-
-
-    if(data.animationAxis){
-
-      $("animationAxis").value=
-        data.animationAxis;
-
-    }
-
-
-    $("moveAll").checked=
-      !!data.moveAll;
-
-    $("fixGender").checked=
-      !!data.fixGender;
-
-    $("fixEmpty").checked=
-      !!data.fixEmpty;
-
-
-  }catch(e){}
-
+updateLeaderVisibility();
+refreshLeaderEvents();
 }
 
+function updateLeaderVisibility(){
 
-/* ================================
-   設定変更時の保存
-================================ */
+var selected=[];
 
-[
-  "groupCols",
-  "groupRows",
-  "animation",
-  "animationAxis"
-].forEach(function(id){
+document.querySelectorAll("#leaderRules .student-select").forEach(function(s){
 
-  $(id).addEventListener(
-    "change",
-    function(){
-
-      render();
-
-      saveState();
-
-    }
-  );
+if(
+s.value&&
+selected.indexOf(s.value)<0
+){
+selected.push(s.value);
+}
 
 });
 
+$("leaderSeparateWrap").classList.toggle(
+"hidden",
+selected.length<2
+);
+}
 
-[
-  "moveAll",
-  "fixGender",
-  "fixEmpty"
-].forEach(function(id){
+function refreshLeaderEvents(){
 
-  $(id).addEventListener(
-    "change",
-    function(){
+document.querySelectorAll("#leaderRules .student-select").forEach(function(s){
+s.onchange=updateLeaderVisibility;
+});
+}
 
-      saveState();
+function getPositionRules(){
 
-    }
-  );
+var out=[];
+
+document.querySelectorAll("#positionRules .position").forEach(function(r){
+
+var s=r.querySelectorAll("select");
+
+if(s.length<3||!s[0].value)return;
+
+out.push({
+name:s[0].value,
+index:(+s[1].value-1)*cols+(+s[2].value-1)
+});
 
 });
 
-
-/* ================================
-   条件取得
-================================ */
-
-function getRuleValues(){
-
-  var result={
-    column:[],
-    position:[],
-    near:[],
-    far:[],
-    leader:[]
-  };
-
-
-  document
-    .querySelectorAll("#columnRules .rule")
-    .forEach(function(rule){
-
-      var selects=
-        rule.querySelectorAll("select");
-
-      result.column.push({
-
-        name:selects[0].value,
-
-        direction:selects[1].value,
-
-        number:parseInt(
-          selects[2].value,
-          10
-        )
-
-      });
-
-    });
-
-
-  document
-    .querySelectorAll("#positionRules .rule")
-    .forEach(function(rule){
-
-      var selects=
-        rule.querySelectorAll("select");
-
-      result.position.push({
-
-        name:selects[0].value,
-
-        row:parseInt(
-          selects[1].value,
-          10
-        ),
-
-        col:parseInt(
-          selects[2].value,
-          10
-        )
-
-      });
-
-    });
-
-
-  document
-    .querySelectorAll("#nearRules .rule")
-    .forEach(function(rule){
-
-      var selects=
-        rule.querySelectorAll("select");
-
-      var input=
-        rule.querySelector("input");
-
-      result.near.push({
-
-        a:selects[0].value,
-
-        b:selects[1].value,
-
-        distance:parseInt(
-          input.value,
-          10
-        ) || 0
-
-      });
-
-    });
-
-
-  document
-    .querySelectorAll("#farRules .rule")
-    .forEach(function(rule){
-
-      var selects=
-        rule.querySelectorAll("select");
-
-      var input=
-        rule.querySelector("input");
-
-      result.far.push({
-
-        a:selects[0].value,
-
-        b:selects[1].value,
-
-        distance:parseInt(
-          input.value,
-          10
-        ) || 0
-
-      });
-
-    });
-
-
-  document
-    .querySelectorAll("#leaderRules .rule")
-    .forEach(function(rule){
-
-      var select=
-        rule.querySelector("select");
-
-      if(select.value){
-
-        result.leader.push(
-          select.value
-        );
-
-      }
-
-    });
-
-
-  return result;
-
+return out;
 }
 
+function getColumnRules(){
 
-/* ================================
-   名前 → 現在位置
-================================ */
+var out=[];
 
-function findStudent(name,arr){
+document.querySelectorAll("#columnRules .column").forEach(function(r){
 
-  for(var i=0;i<arr.length;i++){
+var s=r.querySelectorAll("select");
 
-    if(
-      arr[i] &&
-      arr[i].name===name
-    ){
+if(s.length<3||!s[0].value)return;
 
-      return i;
+out.push({
+name:s[0].value,
+direction:s[1].value,
+limit:+s[2].value
+});
 
-    }
+});
 
-  }
-
-  return -1;
-
+return out;
 }
 
+function getLeaderNames(){
 
-/* ================================
-   行・列
-================================ */
+var out=[];
 
-function rowOf(index){
+document.querySelectorAll("#leaderRules .student-select").forEach(function(s){
 
-  return Math.floor(index/cols);
-
+if(
+s.value&&
+out.indexOf(s.value)<0
+){
+out.push(s.value);
 }
 
+});
 
-function colOf(index){
-
-  return index%cols;
-
+return out;
 }
 
+function shuffle(a){
 
-/* ================================
-   座席間距離
-================================ */
+a=a.slice();
 
-function seatDistance(a,b){
+for(var i=a.length-1;i>0;i--){
 
-  var ar=rowOf(a);
-  var ac=colOf(a);
+var j=Math.floor(Math.random()*(i+1));
 
-  var br=rowOf(b);
-  var bc=colOf(b);
-
-  /*
-    座席間の距離を
-    縦横の差の合計として扱う
-  */
-
-  return Math.abs(ar-br)+Math.abs(ac-bc);
-
+var t=a[i];
+a[i]=a[j];
+a[j]=t;
 }
 
-
-/* ================================
-   男女固定用
-================================ */
-
-function genderOfStudent(person){
-
-  return person.gender || "";
-
+return a;
 }
 
+function distance(a,b){
 
-function makeGenderPools(arr){
-
-  var pools={
-    "男":[],
-    "女":[],
-    "":[],
-    "empty":[]
-  };
-
-
-  for(var i=0;i<arr.length;i++){
-
-    var p=arr[i];
-
-    if(!p || !p.name){
-
-      pools.empty.push(i);
-
-    }else{
-
-      var g=
-        genderOfStudent(p);
-
-      if(g==="男"){
-
-        pools["男"].push(i);
-
-      }else if(g==="女"){
-
-        pools["女"].push(i);
-
-      }else{
-
-        pools[""].push(i);
-
-      }
-
-    }
-
-  }
-
-
-  return pools;
-
+return Math.abs(a.row-b.row)+Math.abs(a.col-b.col);
 }
 
+function getPosition(result,name){
 
-/* ================================
-   列男女固定
-================================ */
+for(var i=0;i<result.length;i++){
 
-function allowedGenderForColumn(c){
+if(
+result[i]&&
+result[i].name===name
+){
 
-  if(
-    columnGenders[c]==="男" ||
-    columnGenders[c]==="女"
-  ){
-
-    return columnGenders[c];
-
-  }
-
-  return "";
-
-}
-
-
-/* ================================
-   シャッフル
-================================ */
-
-function shuffleArray(arr){
-
-  var a=arr.slice();
-
-  for(var i=a.length-1;i>0;i--){
-
-    var j=
-      Math.floor(
-        Math.random()*(i+1)
-      );
-
-    var temp=a[i];
-
-    a[i]=a[j];
-
-    a[j]=temp;
-
-  }
-
-  return a;
-
-}
-
-
-/* ================================
-   候補生成
-================================ */
-
-function createCandidate(){
-
-  var original=
-    cloneStudents(students);
-
-  var result=
-    new Array(rows*cols);
-
-  for(var i=0;i<result.length;i++){
-
-    result[i]={
-      name:"",
-      gender:""
-    };
-
-  }
-
-
-  var used=
-    new Array(original.length)
-      .fill(false);
-
-
-  /*
-    空席固定
-  */
-
-  if($("fixEmpty").checked){
-
-    for(var e=0;e<original.length;e++){
-
-      if(!original[e].name){
-
-        result[e]={
-          name:"",
-          gender:""
-        };
-
-        used[e]=true;
-
-      }
-
-    }
-
-  }
-
-
-  /*
-    男女固定
-    → 男子は男子として指定された席から
-       女子は女子として指定された席から選ぶ
-  */
-
-  if($("fixGender").checked){
-
-    var pools=
-      makeGenderPools(original);
-
-
-    for(var c=0;c<cols;c++){
-
-      var required=
-        allowedGenderForColumn(c);
-
-      if(
-        required!==""
-      ){
-
-        var pool=
-          shuffleArray(
-            pools[required]
-          );
-
-        for(var r=0;r<rows;r++){
-
-          var idx=r*cols+c;
-
-          if(used[idx])continue;
-
-          if(pool.length){
-
-            var source=
-              pool.shift();
-
-            if(!used[source]){
-
-              result[idx]={
-                name:
-                  original[source].name,
-                gender:
-                  original[source].gender
-              };
-
-              used[source]=true;
-
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  /*
-    まだ配置されていない生徒
-  */
-
-  var remaining=[];
-
-  for(var s=0;s<original.length;s++){
-
-    if(!used[s]){
-
-      remaining.push(s);
-
-    }
-
-  }
-
-
-  remaining=
-    shuffleArray(remaining);
-
-
-  /*
-    残りの席へ配置
-  */
-
-  for(var target=0;
-      target<result.length;
-      target++){
-
-    if(used[target])continue;
-
-    if(result[target].name)continue;
-
-    if(!remaining.length)break;
-
-
-    var chosen=-1;
-
-
-    /*
-      列男女指定がある場合、
-      その性別を優先
-    */
-
-    var requiredGender=
-      allowedGenderForColumn(
-        colOf(target)
-      );
-
-
-    if(requiredGender){
-
-      for(var q=0;q<remaining.length;q++){
-
-        var sourceIndex=
-          remaining[q];
-
-        if(
-          original[sourceIndex].gender===
-          requiredGender
-        ){
-
-          chosen=q;
-          break;
-
-        }
-
-      }
-
-    }
-
-
-    if(chosen<0){
-
-      chosen=0;
-
-    }
-
-
-    var source=
-      remaining.splice(
-        chosen,
-        1
-      )[0];
-
-
-    result[target]={
-      name:
-        original[source].name,
-
-      gender:
-        original[source].gender
-    };
-
-  }
-
-
-  return result;
-
-    }
-  /* ================================
-   条件を満たしているか確認
-================================ */
-
-function checkColumnRules(candidate,rules){
-
-  for(var i=0;i<rules.column.length;i++){
-
-    var rule=rules.column[i];
-
-    if(!rule.name)continue;
-
-    var index=findStudent(
-      rule.name,
-      candidate
-    );
-
-    if(index<0)return false;
-
-    var row=rowOf(index);
-
-    var target=
-      rule.direction==="front"
-        ? rule.number-1
-        : rows-rule.number;
-
-    if(rule.direction==="front"){
-
-      if(row>target)return false;
-
-    }else{
-
-      if(row<target)return false;
-
-    }
-
-  }
-
-  return true;
-
-}
-
-
-/* ================================
-   位置指定
-================================ */
-
-function checkPositionRules(candidate,rules){
-
-  for(var i=0;i<rules.position.length;i++){
-
-    var rule=rules.position[i];
-
-    if(!rule.name)continue;
-
-    var index=findStudent(
-      rule.name,
-      candidate
-    );
-
-    if(index<0)return false;
-
-    if(
-      rowOf(index)!==rule.row-1 ||
-      colOf(index)!==rule.col-1
-    ){
-
-      return false;
-
-    }
-
-  }
-
-  return true;
-
-}
-
-
-/* ================================
-   近づける条件
-================================ */
-
-function checkNearRules(candidate,rules){
-
-  for(var i=0;i<rules.near.length;i++){
-
-    var rule=rules.near[i];
-
-    if(!rule.a || !rule.b)continue;
-
-    var a=findStudent(
-      rule.a,
-      candidate
-    );
-
-    var b=findStudent(
-      rule.b,
-      candidate
-    );
-
-    if(a<0 || b<0)return false;
-
-    if(
-      seatDistance(a,b)>
-      rule.distance
-    ){
-
-      return false;
-
-    }
-
-  }
-
-  return true;
-
-}
-
-
-/* ================================
-   離す条件
-================================ */
-
-function checkFarRules(candidate,rules){
-
-  for(var i=0;i<rules.far.length;i++){
-
-    var rule=rules.far[i];
-
-    if(!rule.a || !rule.b)continue;
-
-    var a=findStudent(
-      rule.a,
-      candidate
-    );
-
-    var b=findStudent(
-      rule.b,
-      candidate
-    );
-
-    if(a<0 || b<0)return false;
-
-    if(
-      seatDistance(a,b)<
-      rule.distance
-    ){
-
-      return false;
-
-    }
-
-  }
-
-  return true;
-
-}
-
-
-/* ================================
-   班の配置
-================================ */
-
-function groupInfo(index){
-
-  var gc=+$("groupCols").value;
-  var gr=+$("groupRows").value;
-
-  if(!gc && !gr){
-
-    return {
-      x:0,
-      y:0
-    };
-
-  }
-
-  return {
-
-    x:gc
-      ? Math.floor(colOf(index)/gc)
-      : 0,
-
-    y:gr
-      ? Math.floor(rowOf(index)/gr)
-      : 0
-
-  };
-
-}
-
-
-/* ================================
-   班長チェック
-================================ */
-
-function checkLeaders(candidate,rules){
-
-  if(!rules.leader.length){
-    return true;
-  }
-
-  var leaders=
-    rules.leader.map(function(name){
-
-      return findStudent(
-        name,
-        candidate
-      );
-
-    });
-
-
-  for(var i=0;i<leaders.length;i++){
-
-    if(leaders[i]<0){
-      return false;
-    }
-
-  }
-
-
-  /*
-    班長同士が同じ班にならないようにする
-  */
-
-  for(var a=0;a<leaders.length;a++){
-
-    for(var b=a+1;b<leaders.length;b++){
-
-      var ga=groupInfo(leaders[a]);
-      var gb=groupInfo(leaders[b]);
-
-      if(
-        ga.x===gb.x &&
-        ga.y===gb.y
-      ){
-
-        return false;
-
-      }
-
-    }
-
-  }
-
-  return true;
-
-}
-
-
-/* ================================
-   条件判定
-================================ */
-
-function isValidCandidate(candidate,rules){
-
-  if(
-    !checkColumnRules(
-      candidate,
-      rules
-    )
-  ){
-
-    return false;
-
-  }
-
-
-  if(
-    !checkPositionRules(
-      candidate,
-      rules
-    )
-  ){
-
-    return false;
-
-  }
-
-
-  if(
-    !checkNearRules(
-      candidate,
-      rules
-    )
-  ){
-
-    return false;
-
-  }
-
-
-  if(
-    !checkFarRules(
-      candidate,
-      rules
-    )
-  ){
-
-    return false;
-
-  }
-
-
-  if(
-    !checkLeaders(
-      candidate,
-      rules
-    )
-  ){
-
-    return false;
-
-  }
-
-
-  return true;
-
-}
-
-
-/* ================================
-   席替え結果を作る
-================================ */
-
-function generateSeats(){
-
-  var rules=getRuleValues();
-
-  var best=null;
-
-  var attempts=0;
-
-  /*
-    条件を満たすまで何度か試す
-  */
-
-  while(
-    attempts<5000
-  ){
-
-    var candidate=
-      createCandidate();
-
-    if(
-      isValidCandidate(
-        candidate,
-        rules
-      )
-    ){
-
-      best=candidate;
-
-      break;
-
-    }
-
-    attempts++;
-
-  }
-
-
-  /*
-    条件が厳しすぎる場合でも
-    完全に停止しないようにする
-  */
-
-  if(!best){
-
-    for(
-      var retry=0;
-      retry<100;
-      retry++
-    ){
-
-      var candidate=
-        createCandidate();
-
-      if(
-        isValidCandidate(
-          candidate,
-          rules
-        )
-      ){
-
-        best=candidate;
-
-        break;
-
-      }
-
-    }
-
-  }
-
-
-  if(!best){
-
-    best=createCandidate();
-
-    $("status").textContent=
-      "条件をすべて満たす座席を作れなかったため、近い配置を作成しました。";
-
-  }
-
-
-  return best;
-
-}
-
-
-/* ================================
-   座席をリセット
-   → 席替え前に戻す
-================================ */
-
-$("resetBtn").onclick=function(){
-
-  if(
-    !beforeShuffleStudents
-  ){
-
-    $("status").textContent=
-      "戻せる座席がありません。";
-
-    return;
-
-  }
-
-
-  students=
-    cloneStudents(
-      beforeShuffleStudents
-    );
-
-
-  render();
-
-  refreshSelects();
-
-  saveState();
-
-
-  $("status").textContent=
-    "席替え前の座席に戻しました。";
-
+return {
+row:Math.floor(i/cols),
+col:i%cols
 };
 
+}
+}
 
-/* ================================
-   発表用座席HTML
-================================ */
+return null;
+}
 
-function createPresentationBoard(){
+function validColumnRule(result,rule){
 
-  var board=
-    document.createElement("div");
+var p=getPosition(result,rule.name);
 
-  board.className=
-    "presentation-board";
+if(!p)return true;
 
+if(rule.direction==="front"){
+return p.col+1<=rule.limit;
+}
 
-  var front=
-    document.createElement("div");
+return cols-p.col<=rule.limit;
+}
 
-  front.className=
-    "presentation-front";
+function sameGroup(a,b){
 
-  front.textContent=
-    "黒板（前）";
+var gc=+$("groupCols").value;
+var gr=+$("groupRows").value;
 
-  board.appendChild(front);
+if(gc){
 
+var ga=Math.floor(a.col/gc);
+var gb=Math.floor(b.col/gc);
 
-  var table=
-    document.createElement("div");
+if(ga!==gb)return false;
+}
 
-  table.className=
-    "presentation-table";
+if(gr){
 
-  table.style.gridTemplateColumns=
-    "repeat("+cols+",100px)";
+var ga2=Math.floor(a.row/gr);
+var gb2=Math.floor(b.row/gr);
 
+if(ga2!==gb2)return false;
+}
 
-  var seats=[];
+return true;
+}
 
+function validLeaderGroups(result){
 
-  for(var i=0;i<students.length;i++){
+if(!$("leaderSeparate").checked)return true;
 
-    var seat=
-      document.createElement("div");
+var leaders=getLeaderNames();
 
-    seat.className=
-      "presentation-seat hidden-seat";
+if(leaders.length<2)return true;
 
+for(var i=0;i<leaders.length;i++){
+for(var j=i+1;j<leaders.length;j++){
 
-    seat.dataset.index=i;
+var a=getPosition(result,leaders[i]);
+var b=getPosition(result,leaders[j]);
 
+if(!a||!b)continue;
 
-    table.appendChild(seat);
+if(sameGroup(a,b)){
+return false;
+}
+}
+}
 
-    seats.push(seat);
+return true;
+}
 
-  }
+function makeResult(){
 
+var people=students.filter(function(s){
+return s.name;
+});
 
-  board.appendChild(table);
+if(!people.length){
+alert("先に座席へ名前を入力してください。");
+return null;
+}
 
-  return {
-    board:board,
-    seats:seats
-  };
+var result=Array(rows*cols).fill(null);
+var fixed={};
+
+if($("fixEmpty").checked){
+
+students.forEach(function(s,index){
+
+if(!s.name){
+
+result[index]={
+name:"",
+gender:""
+};
 
 }
 
-
-/* ================================
-   発表順を作る
-================================ */
-
-function makeRevealOrder(axis){
-
-  var order=[];
-
-
-  if(axis==="row"){
-
-    /*
-      横一列ずつ
-      左上 → 右
-    */
-
-    for(var r=0;r<rows;r++){
-
-      for(var c=0;c<cols;c++){
-
-        order.push(
-          r*cols+c
-        );
-
-      }
-
-    }
-
-  }else{
-
-    /*
-      縦一列ずつ
-      左上 → 下
-    */
-
-    for(var c=0;c<cols;c++){
-
-      for(var r=0;r<rows;r++){
-
-        order.push(
-          r*cols+c
-        );
-
-      }
-
-    }
-
-  }
-
-
-  return order;
+});
 
 }
 
+var available=[];
 
-/* ================================
-   通常演出
-================================ */
+for(var i=0;i<result.length;i++){
 
-function runNormalPresentation(){
-
-  var presentation=
-    $("presentation");
-
-  var stage=
-    $("presentationStage");
-
-  stage.innerHTML="";
-
-
-  var data=
-    createPresentationBoard();
-
-
-  stage.appendChild(
-    data.board
-  );
-
-
-  presentation.classList.add("show");
-
-
-  var order=
-    makeRevealOrder(
-      $("animationAxis").value
-    );
-
-
-  var count=0;
-
-
-  function revealNext(){
-
-    if(count>=order.length){
-
-      return;
-
-    }
-
-
-    var index=
-      order[count];
-
-    var seat=
-      data.seats[index];
-
-    var person=
-      students[index];
-
-
-    seat.classList.remove(
-      "hidden-seat"
-    );
-
-    seat.classList.add(
-      "revealed"
-    );
-
-
-    seat.textContent=
-      person.name || "空席";
-
-
-    if(person.gender==="男"){
-
-      seat.classList.add("male");
-
-    }
-
-    if(person.gender==="女"){
-
-      seat.classList.add("female");
-
-    }
-
-
-    count++;
-
-
-    setTimeout(
-      revealNext,
-      600
-    );
-
-  }
-
-
-  setTimeout(
-    revealNext,
-    600
-  );
+if(!result[i]){
+available.push(i);
+}
 
 }
 
+var pos=getPositionRules();
 
-/* ================================
-   スロット演出
-================================ */
+for(var p=0;p<pos.length;p++){
 
-function runSlotPresentation(){
+var rule=pos[p];
 
-  var presentation=
-    $("presentation");
+if(result[rule.index]){
+return null;
+}
 
-  var stage=
-    $("presentationStage");
+if(fixed[rule.name]){
+return null;
+}
 
-  stage.innerHTML="";
+var person=people.find(function(x){
+return x.name===rule.name;
+});
 
+if(person){
 
-  var data=
-    createPresentationBoard();
+result[rule.index]={
+name:person.name,
+gender:person.gender
+};
 
+fixed[person.name]=true;
+}
+}
 
-  stage.appendChild(
-    data.board
-  );
+var remaining=people.filter(function(p){
+return !fixed[p.name];
+});
 
+var candidates=available.filter(function(index){
+return !result[index];
+});
 
-  presentation.classList.add("show");
+if($("fixGender").checked){
 
+var male=shuffle(
+remaining.filter(function(p){
+return p.gender==="男";
+})
+);
 
-  var order=
-    makeRevealOrder(
-      $("animationAxis").value
-    );
+var female=shuffle(
+remaining.filter(function(p){
+return p.gender==="女";
+})
+);
 
+var unknown=shuffle(
+remaining.filter(function(p){
+return p.gender!=="男"&&p.gender!=="女";
+})
+);
 
-  var count=0;
+var maleSeats=candidates.filter(function(index){
+return students[index].gender==="男";
+});
 
+var femaleSeats=candidates.filter(function(index){
+return students[index].gender==="女";
+});
 
-  function slotOne(){
+var used={};
 
-    if(count>=order.length){
+for(var m=0;m<male.length;m++){
 
-      return;
+if(maleSeats[m]){
 
-    }
+result[maleSeats[m]]=male[m];
+used[male[m].name]=true;
 
+}
+}
 
-    var index=
-      order[count];
+for(var f=0;f<female.length;f++){
 
-    var seat=
-      data.seats[index];
+if(femaleSeats[f]){
 
+result[femaleSeats[f]]=female[f];
+used[female[f].name]=true;
 
-    var person=
-      students[index];
+}
+}
 
+var rest=remaining.filter(function(p){
+return !used[p.name];
+});
 
-    /*
-      名前が高速で切り替わる
-    */
+var restSeats=[];
 
-    var pool=
-      students
-        .filter(function(s){
-          return s.name;
-        });
+for(var x=0;x<result.length;x++){
+if(!result[x])restSeats.push(x);
+}
 
+restSeats=shuffle(restSeats);
+rest=shuffle(rest);
 
-    var ticks=0;
+for(var z=0;z<rest.length&&z<restSeats.length;z++){
 
-    var interval=
-      setInterval(function(){
-
-        if(pool.length){
-
-          var random=
-            pool[
-              Math.floor(
-                Math.random()*
-                pool.length
-              )
-            ];
-
-          seat.textContent=
-            random.name;
-
-        }
-
-        ticks++;
-
-      },70);
-
-
-    setTimeout(function(){
-
-      clearInterval(interval);
-
-
-      seat.classList.remove(
-        "hidden-seat"
-      );
-
-      seat.classList.add(
-        "revealed"
-      );
-
-
-      seat.textContent=
-        person.name || "空席";
-
-
-      if(person.gender==="男"){
-
-        seat.classList.add("male");
-
-      }
-
-      if(person.gender==="女"){
-
-        seat.classList.add("female");
-
-      }
-
-
-      count++;
-
-
-      setTimeout(
-        slotOne,
-        600
-      );
-
-
-    },700);
-
-  }
-
-
-  setTimeout(
-    slotOne,
-    600
-  );
+result[restSeats[z]]=rest[z];
 
 }
 
+}else{
 
-/* ================================
-   席替えボタン
-================================ */
+candidates=shuffle(candidates);
+remaining=shuffle(remaining);
+
+for(var q=0;q<remaining.length&&q<candidates.length;q++){
+
+result[candidates[q]]=remaining[q];
+
+}
+
+}
+
+var columnRules=getColumnRules();
+
+for(var cr=0;cr<columnRules.length;cr++){
+
+if(!validColumnRule(result,columnRules[cr])){
+return null;
+}
+
+}
+
+var near=document.querySelectorAll("#nearRules .distance");
+
+for(var nr=0;nr<near.length;nr++){
+
+var ss=near[nr].querySelectorAll("select");
+var num=+near[nr].querySelector("input").value;
+
+if(ss.length<2||!ss[0].value||!ss[1].value)continue;
+
+var a=getPosition(result,ss[0].value);
+var b=getPosition(result,ss[1].value);
+
+if(a&&b&&distance(a,b)>num){
+return null;
+}
+}
+
+var far=document.querySelectorAll("#farRules .distance");
+
+for(var fr=0;fr<far.length;fr++){
+
+var fs=far[fr].querySelectorAll("select");
+var fn=+far[fr].querySelector("input").value;
+
+if(fs.length<2||!fs[0].value||!fs[1].value)continue;
+
+var fa=getPosition(result,fs[0].value);
+var fb=getPosition(result,fs[1].value);
+
+if(fa&&fb&&distance(fa,fb)<fn){
+return null;
+}
+}
+
+if(!validLeaderGroups(result)){
+return null;
+}
+
+return result;
+}
+
+function generateResult(){
+
+for(var attempt=0;attempt<10000;attempt++){
+
+var result=makeResult();
+
+if(result)return result;
+}
+
+alert("条件をすべて満たす座席を作れませんでした。条件を少し減らして試してください。");
+return null;
+}
+  function startPresentation(result){
+
+var overlay=$("presentation");
+var stage=$("presentationStage");
+
+stage.innerHTML="";
+overlay.classList.add("show");
+
+var type=$("animationType").value||"normal";
+var direction=$("animationDirection").value||"row";
+
+if(type==="slot"){
+startSlotPresentation(result,direction);
+}else{
+startNormalPresentation(result,direction);
+}
+
+}
+
+function startNormalPresentation(result,direction){
+
+var stage=$("presentationStage");
+
+stage.innerHTML="";
+
+var table=document.createElement("div");
+table.className="presentation-table";
+table.style.gridTemplateColumns="repeat("+cols+",100px)";
+
+for(var x=0;x<result.length;x++){
+
+var hidden=document.createElement("div");
+
+hidden.className="seat";
+hidden.style.background="#000";
+hidden.style.color="#000";
+hidden.textContent="";
+
+table.appendChild(hidden);
+}
+
+stage.appendChild(table);
+
+var order=[];
+
+if(direction==="row"){
+
+for(var r=0;r<rows;r++){
+for(var c=0;c<cols;c++){
+order.push(r*cols+c);
+}
+}
+
+}else{
+
+for(var c2=0;c2<cols;c2++){
+for(var r2=0;r2<rows;r2++){
+order.push(r2*cols+c2);
+}
+}
+
+}
+
+var n=0;
+
+var timer=setInterval(function(){
+
+if(n>=order.length){
+
+clearInterval(timer);
+return;
+
+}
+
+var idx=order[n];
+var p=result[idx];
+var box=table.children[idx];
+
+box.style.background="#fff";
+box.style.color=
+p&&p.gender==="男"
+?"var(--blue)"
+:p&&p.gender==="女"
+?"var(--red)"
+:"#333";
+
+box.textContent=p&&p.name?p.name:"空席";
+
+n++;
+
+},600);
+
+}
+
+function startSlotPresentation(result,direction){
+
+var stage=$("presentationStage");
+
+stage.innerHTML="";
+
+var order=[];
+
+if(direction==="row"){
+
+for(var r=0;r<rows;r++){
+for(var c=0;c<cols;c++){
+order.push(r*cols+c);
+}
+}
+
+}else{
+
+for(var c2=0;c2<cols;c2++){
+for(var r2=0;r2<rows;r2++){
+order.push(r2*cols+c2);
+}
+}
+
+}
+
+var table=document.createElement("div");
+table.className="presentation-table";
+table.style.gridTemplateColumns="repeat("+cols+",100px)";
+
+for(var i=0;i<result.length;i++){
+
+var b=document.createElement("div");
+
+b.className="seat";
+b.style.background="#000";
+b.style.color="#000";
+b.textContent="";
+
+table.appendChild(b);
+}
+
+stage.appendChild(table);
+
+var current=0;
+
+function nextSlot(){
+
+if(current>=order.length)return;
+
+var idx=order[current];
+var p=result[idx];
+var box=table.children[idx];
+
+box.style.background="#fff";
+
+var allNames=result
+.filter(function(x){return x&&x.name;})
+.map(function(x){return x.name;});
+
+if(!p||!p.name){
+
+box.style.color="#333";
+box.textContent="空席";
+
+current++;
+
+setTimeout(nextSlot,450);
+return;
+}
+
+var count=0;
+
+var rolling=setInterval(function(){
+
+var randomName=
+allNames[Math.floor(Math.random()*allNames.length)];
+
+box.style.color="#333";
+box.textContent=randomName;
+
+count++;
+
+if(count>=9){
+
+clearInterval(rolling);
+
+box.textContent=p.name;
+
+if(p.gender==="男"){
+box.style.color="var(--blue)";
+}else if(p.gender==="女"){
+box.style.color="var(--red)";
+}else{
+box.style.color="#333";
+}
+
+current++;
+
+setTimeout(nextSlot,180);
+
+}
+
+},55);
+
+}
+
+nextSlot();
+}
+
+$("closePresentation").onclick=function(){
+$("presentation").classList.remove("show");
+};
 
 $("shuffleBtn").onclick=function(){
 
-  /*
-    席替え前の状態を保存
-  */
-
-  beforeShuffleStudents=
-    cloneStudents(students);
-
-
-  /*
-    新しい座席を生成
-  */
-
-  var result=
-    generateSeats();
-
-
-  /*
-    発表中に表示するため、
-    先に新しい座席をセット
-  */
-
-  students=
-    cloneStudents(result);
-
-
-  saveState();
-
-
-  /*
-    通常画面では黒くするので
-    renderは発表終了後に行う
-  */
-
-  if(
-    $("animation").value==="slot"
-  ){
-
-    runSlotPresentation();
-
-  }else{
-
-    runNormalPresentation();
-
-  }
-
+originalSeats=students.map(function(s){
+return {
+name:s.name,
+gender:s.gender
 };
+});
 
+hasPreviousSeat=true;
 
-/* ================================
-   発表終了
-================================ */
+var result=generateResult();
 
-$("closePresentation").onclick=function(){
+if(!result)return;
 
-  $("presentation")
-    .classList.remove("show");
+startPresentation(result);
 
+var type=$("animationType").value||"normal";
+var delay=type==="slot"
+?result.length*650
+:result.length*600;
 
-  render();
+setTimeout(function(){
 
-  refreshSelects();
-
-  saveState();
-
+students=result.map(function(x){
+return x||{
+name:"",
+gender:""
 };
-
-
-/* ================================
-   ESCで閉じる
-================================ */
-
-document.addEventListener(
-  "keydown",
-  function(e){
-
-    if(
-      e.key==="Escape" &&
-      $("presentation")
-        .classList.contains("show")
-    ){
-
-      $("presentation")
-        .classList.remove("show");
-
-      render();
-
-      refreshSelects();
-
-      saveState();
-
-    }
-
-  }
-);
-  <!-- ================================
-     初期化
-================================ -->
-
-loadState();
-
-fillSelect(
-  "cols",
-  6,
-  cols
-);
-
-fillSelect(
-  "rows",
-  6,
-  rows
-);
-
-restoreSettings();
-
-
-/* ================================
-   現在の列数に合わせて
-   列指定セレクトを調整
-================================ */
-
-function updateRuleSelects(){
-
-  document
-    .querySelectorAll(
-      "#columnRules .rule"
-    )
-    .forEach(function(rule){
-
-      var select=
-        rule.querySelectorAll("select")[2];
-
-      if(!select)return;
-
-      var current=
-        parseInt(select.value,10) || 1;
-
-      select.innerHTML="";
-
-      for(
-        var i=1;
-        i<=rows;
-        i++
-      ){
-
-        var option=
-          document.createElement("option");
-
-        option.value=i;
-
-        option.textContent=
-          i+"列目まで";
-
-        if(i===current){
-
-          option.selected=true;
-
-        }
-
-        select.appendChild(option);
-
-      }
-
-    });
-
-
-  document
-    .querySelectorAll(
-      "#positionRules .rule"
-    )
-    .forEach(function(rule){
-
-      var selects=
-        rule.querySelectorAll("select");
-
-      if(selects.length<3)return;
-
-
-      var rowSelect=selects[1];
-
-      var colSelect=selects[2];
-
-
-      var currentRow=
-        parseInt(rowSelect.value,10) || 1;
-
-      var currentCol=
-        parseInt(colSelect.value,10) || 1;
-
-
-      rowSelect.innerHTML="";
-
-      for(
-        var r=1;
-        r<=rows;
-        r++
-      ){
-
-        var ro=
-          document.createElement("option");
-
-        ro.value=r;
-
-        ro.textContent=
-          "前から"+r+"列目";
-
-        if(r===currentRow){
-
-          ro.selected=true;
-
-        }
-
-        rowSelect.appendChild(ro);
-
-      }
-
-
-      colSelect.innerHTML="";
-
-      for(
-        var c=1;
-        c<=cols;
-        c++
-      ){
-
-        var co=
-          document.createElement("option");
-
-        co.value=c;
-
-        co.textContent=
-          "左から"+c+"列目";
-
-        if(c===currentCol){
-
-          co.selected=true;
-
-        }
-
-        colSelect.appendChild(co);
-
-      }
-
-    });
-
-}
-
-
-/* ================================
-   座席数変更時に
-   条件欄も更新
-================================ */
-
-$("cols").addEventListener(
-  "change",
-  updateRuleSelects
-);
-
-$("rows").addEventListener(
-  "change",
-  updateRuleSelects
-);
-
-
-/* ================================
-   班の間隔を視覚的に反映
-================================ */
-
-function applyGroupGaps(){
-
-  var grid=
-    $("seatGrid");
-
-  if(!grid)return;
-
-  var gc=
-    parseInt(
-      $("groupCols").value,
-      10
-    ) || 0;
-
-  var gr=
-    parseInt(
-      $("groupRows").value,
-      10
-    ) || 0;
-
-
-  var seats=
-    grid.querySelectorAll(".seat");
-
-
-  seats.forEach(function(seat,index){
-
-    var r=rowOf(index);
-    var c=colOf(index);
-
-
-    seat.classList.remove(
-      "gap-r",
-      "gap-b"
-    );
-
-
-    /*
-      横方向の班分け
-      → 班と班の間に横の隙間
-    */
-
-    if(
-      gc>0 &&
-      (c+1)%gc===0 &&
-      c<cols-1
-    ){
-
-      seat.classList.add(
-        "gap-r"
-      );
-
-    }
-
-
-    /*
-      縦方向の班分け
-      → 班と班の間に縦の隙間
-    */
-
-    if(
-      gr>0 &&
-      (r+1)%gr===0 &&
-      r<rows-1
-    ){
-
-      seat.classList.add(
-        "gap-b"
-      );
-
-    }
-
-  });
-
-}
-
-
-/* ================================
-   班変更時
-================================ */
-
-$("groupCols").addEventListener(
-  "change",
-  function(){
-
-    render();
-
-    applyGroupGaps();
-
-    saveState();
-
-  }
-);
-
-
-$("groupRows").addEventListener(
-  "change",
-  function(){
-
-    render();
-
-    applyGroupGaps();
-
-    saveState();
-
-  }
-);
-
-
-/* ================================
-   生徒選択欄の自動更新
-================================ */
-
-document.addEventListener(
-  "input",
-  function(e){
-
-    if(
-      e.target.matches(
-        "#bulkInput"
-      )
-    ){
-
-      /*
-        入力途中では
-        列男女などを消さない
-      */
-
-      return;
-
-    }
-
-  }
-);
-
-
-/* ================================
-   ルール追加後の保存
-================================ */
-
-function watchRuleArea(id){
-
-  var area=$(id);
-
-  if(!area)return;
-
-
-  area.addEventListener(
-    "change",
-    function(){
-
-      saveState();
-
-    }
-  );
-
-  area.addEventListener(
-    "input",
-    function(){
-
-      saveState();
-
-    }
-  );
-
-}
-
-
-watchRuleArea("columnRules");
-watchRuleArea("positionRules");
-watchRuleArea("nearRules");
-watchRuleArea("farRules");
-watchRuleArea("leaderRules");
-
-
-/* ================================
-   名前が入力されている生徒だけ
-   列男女設定を適用
-================================ */
-
-function applyStoredColumnGender(){
-
-  for(
-    var c=0;
-    c<cols;
-    c++
-  ){
-
-    var gender=
-      columnGenders[c];
-
-    if(
-      gender!=="男" &&
-      gender!=="女"
-    ){
-
-      continue;
-
-    }
-
-
-    for(
-      var r=0;
-      r<rows;
-      r++
-    ){
-
-      var index=
-        r*cols+c;
-
-
-      /*
-        空席には性別を付けない
-      */
-
-      if(
-        students[index] &&
-        students[index].name
-      ){
-
-        students[index].gender=
-          gender;
-
-      }
-
-    }
-
-  }
-
-}
-
-
-/* ================================
-   クリア後も
-   列ごとの男女設定を保持
-================================ */
-
-var originalClear=
-  $("clearSeatsBtn").onclick;
-
-
-$("clearSeatsBtn").onclick=function(){
-
-  if(
-    !confirm(
-      "座席表の名前をすべて消しますか？"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  for(
-    var i=0;
-    i<students.length;
-    i++
-  ){
-
-    students[i]={
-      name:"",
-      gender:""
-    };
-
-  }
-
-
-  /*
-    columnGendersは絶対に変更しない
-  */
-
-  render();
-
-  refreshSelects();
-
-  saveState();
-
-
-  $("status").textContent=
-    "座席表をクリアしました。";
-
-};
-
-
-/* ================================
-   ページ読み込み時の表示
-================================ */
-
-applyStoredColumnGender();
+});
 
 render();
-
 refreshSelects();
+renderGenderColumns();
 
-updateRuleSelects();
+$("status").textContent="席替えが完了しました！";
 
-applyGroupGaps();
+},delay+1000);
 
+};
 
-/* ================================
-   localStorageへの自動保存
-================================ */
+$("resetBtn").onclick=function(){
 
-setInterval(
-  function(){
+if(!hasPreviousSeat){
 
-    saveState();
+$("status").textContent="戻せる席替え前の座席がありません。";
+return;
 
-  },
-  1000
-);
+}
 
+students=originalSeats.map(function(s){
 
-/* ================================
-   ページを離れる直前にも保存
-================================ */
+return {
+name:s.name,
+gender:s.gender
+};
 
-window.addEventListener(
-  "beforeunload",
-  function(){
+});
 
-    saveState();
+render();
+refreshSelects();
+renderGenderColumns();
 
-  }
-);
+$("status").textContent="席替え前の座席に戻しました。";
+};
 
+$("bulkToggle").onclick=function(){
+$("bulkArea").classList.toggle("hidden");
+};
 
-/* ================================
-   タブを閉じたり戻った場合にも
-   状態を保存
-================================ */
+$("clearBtn").onclick=function(){
 
-document.addEventListener(
-  "visibilitychange",
-  function(){
+students=[];
 
-    if(
-      document.visibilityState===
-      "hidden"
-    ){
+for(var i=0;i<rows*cols;i++){
 
-      saveState();
+students.push({
+name:"",
+gender:""
+});
 
-    }
+}
 
-  }
-);
+originalSeats=[];
+hasPreviousSeat=false;
 
+render();
+refreshSelects();
+renderGenderColumns();
 
-/* ================================
-   画像保存
-================================ */
+$("status").textContent="座席表をクリアしました。";
+};
+
+$("applyBulk").onclick=function(){
+
+var text=$("bulkInput").value.trim();
+
+if(!text)return;
+
+var lines=text.split(/\r?\n/);
+
+var next=[];
+
+for(var i=0;i<rows*cols;i++){
+
+next.push({
+name:"",
+gender:""
+});
+
+}
+
+var index=0;
+
+lines.forEach(function(line){
+
+if(index>=next.length)return;
+
+var values=line
+.trim()
+.split(/[　\t,]+/)
+.filter(function(x){
+return x.trim();
+});
+
+values.forEach(function(value){
+
+if(index>=next.length)return;
+
+value=value.trim();
+
+if(value==="空席"){
+
+next[index]={
+name:"",
+gender:""
+};
+
+}else{
+
+next[index]={
+name:value,
+gender:""
+};
+
+}
+
+index++;
+
+});
+
+});
+
+students=next;
+
+render();
+refreshSelects();
+renderGenderColumns();
+
+$("status").textContent="一括入力を反映しました。";
+};
 
 $("saveBtn").onclick=function(){
 
-  if(
-    typeof html2canvas!=="function"
-  ){
+var canvas=drawSeatImage();
 
-    $("status").textContent=
-      "画像保存機能の読み込みに失敗しました。";
+var a=document.createElement("a");
 
-    return;
+a.download="席替え_"+Date.now()+".png";
+a.href=canvas.toDataURL("image/png");
 
-  }
-
-
-  var wrapper=
-    document.createElement("div");
-
-  wrapper.style.position=
-    "fixed";
-
-  wrapper.style.left=
-    "-100000px";
-
-  wrapper.style.top=
-    "0";
-
-  wrapper.style.background=
-    "#fff";
-
-  wrapper.style.padding=
-    "30px";
-
-  wrapper.style.width=
-    Math.max(
-      700,
-      cols*120+80
-    )+"px";
-
-
-  var title=
-    document.createElement("div");
-
-  title.textContent=
-    "席替え";
-
-  title.style.textAlign=
-    "center";
-
-  title.style.fontSize=
-    "28px";
-
-  title.style.fontWeight=
-    "800";
-
-  title.style.marginBottom=
-    "20px";
-
-
-  var front=
-    document.createElement("div");
-
-  front.textContent=
-    "黒板（前）";
-
-  front.style.background=
-    "#eee";
-
-  front.style.padding=
-    "10px";
-
-  front.style.textAlign=
-    "center";
-
-  front.style.marginBottom=
-    "20px";
-
-
-  var grid=
-    document.createElement("div");
-
-  grid.style.display=
-    "grid";
-
-  grid.style.gridTemplateColumns=
-    "repeat("+cols+",100px)";
-
-  grid.style.gap=
-    "8px";
-
-  grid.style.justifyContent=
-    "center";
-
-
-  students.forEach(function(person,index){
-
-    var cell=
-      document.createElement("div");
-
-    cell.style.width=
-      "100px";
-
-    cell.style.minHeight=
-      "65px";
-
-    cell.style.border=
-      "2px solid #333";
-
-    cell.style.borderRadius=
-      "9px";
-
-    cell.style.display=
-      "flex";
-
-    cell.style.alignItems=
-      "center";
-
-    cell.style.justifyContent=
-      "center";
-
-    cell.style.textAlign=
-      "center";
-
-    cell.style.padding=
-      "7px";
-
-    cell.style.fontWeight=
-      "800";
-
-    cell.style.overflowWrap=
-      "anywhere";
-
-
-    cell.textContent=
-      person.name || "空席";
-
-
-    if(person.gender==="男"){
-
-      cell.style.color=
-        "#4a90e2";
-
-    }
-
-    if(person.gender==="女"){
-
-      cell.style.color=
-        "#e85b67";
-
-    }
-
-
-    grid.appendChild(cell);
-
-  });
-
-
-  wrapper.append(
-    title,
-    front,
-    grid
-  );
-
-
-  document.body.appendChild(
-    wrapper
-  );
-
-
-  html2canvas(wrapper,{
-    backgroundColor:"#ffffff",
-    scale:2
-  }).then(function(canvas){
-
-    var link=
-      document.createElement("a");
-
-    link.download=
-      "席替え.png";
-
-    link.href=
-      canvas.toDataURL(
-        "image/png"
-      );
-
-    link.click();
-
-
-    document.body.removeChild(
-      wrapper
-    );
-
-
-    $("status").textContent=
-      "画像を保存しました。";
-
-
-  }).catch(function(){
-
-    if(wrapper.parentNode){
-
-      wrapper.parentNode.removeChild(
-        wrapper
-      );
-
-    }
-
-
-    $("status").textContent=
-      "画像の保存に失敗しました。";
-
-  });
-
+a.click();
 };
 
+function drawSeatImage(){
 
-/* ================================
-   印刷用データ作成
-================================ */
+var scale=2;
+var pad=50;
+var cellW=130;
+var cellH=90;
+var gap=12;
 
-function createPrintArea(
-  blackboardBottom
-){
+var w=
+pad*2+
+cols*cellW+
+(cols-1)*gap;
 
-  var area=
-    $("printArea");
+var h=
+pad*2+
+rows*cellH+
+(rows-1)*gap+
+70;
 
-  area.innerHTML="";
+var canvas=$("exportCanvas");
 
+canvas.width=w*scale;
+canvas.height=h*scale;
 
-  var title=
-    document.createElement("div");
+var ctx=canvas.getContext("2d");
 
-  title.className=
-    "print-page-title";
+ctx.scale(scale,scale);
 
-  title.textContent=
-    "席替え";
+ctx.fillStyle="#fff";
+ctx.fillRect(0,0,w,h);
 
+ctx.fillStyle="#F5E342";
+ctx.fillRect(0,0,w,70);
 
-  var board=
-    document.createElement("div");
+ctx.fillStyle="#333";
+ctx.font="bold 28px sans-serif";
+ctx.textAlign="center";
 
-  board.className=
-    "print-board";
+ctx.fillText(
+"席替えメーカー",
+w/2,
+45
+);
 
+ctx.fillStyle="#eee";
 
-  var blackboard=
-    document.createElement("div");
+ctx.fillRect(
+pad,
+85,
+w-pad*2,
+28
+);
 
-  blackboard.className=
-    "print-blackboard";
+ctx.fillStyle="#666";
+ctx.font="14px sans-serif";
 
+ctx.fillText(
+"黒板（前）",
+w/2,
+104
+);
 
-  blackboard.textContent=
-    "黒板";
+for(var r=0;r<rows;r++){
 
+for(var c=0;c<cols;c++){
 
-  var grid=
-    document.createElement("div");
+var x=
+pad+c*(cellW+gap);
 
-  grid.className=
-    "print-grid";
+var y=
+130+r*(cellH+gap);
 
-  grid.style.gridTemplateColumns=
-    "repeat("+cols+",80px)";
+var p=students[r*cols+c];
 
+ctx.strokeStyle="#333";
+ctx.lineWidth=2;
 
-  students.forEach(function(person){
+ctx.strokeRect(
+x,
+y,
+cellW,
+cellH
+);
 
-    var seat=
-      document.createElement("div");
+ctx.fillStyle=
+p.gender==="男"
+?"#4A90E2"
+:p.gender==="女"
+?"#E85B67"
+:"#333";
 
-    seat.className=
-      "print-seat";
+ctx.font="bold 18px sans-serif";
+ctx.textAlign="center";
+ctx.textBaseline="middle";
 
+ctx.fillText(
+p.name||"空席",
+x+cellW/2,
+y+cellH/2,
+cellW-12
+);
 
-    seat.textContent=
-      person.name || "空席";
+}
+}
 
-
-    if(person.gender==="男"){
-
-      seat.classList.add(
-        "male"
-      );
-
-    }
-
-
-    if(person.gender==="女"){
-
-      seat.classList.add(
-        "female"
-      );
-
-    }
-
-
-    grid.appendChild(
-      seat
-    );
-
-  });
-
-
-  board.appendChild(
-    blackboardBottom
-      ? grid
-      : blackboard
-  );
-
-
-  if(blackboardBottom){
-
-    board.appendChild(
-      blackboard
-    );
-
-  }else{
-
-    board.appendChild(
-      grid
-    );
-
+return canvas;
   }
+  function printSeats(bottom){
 
+var area=$("printArea");
 
-  area.append(
-    title,
-    board
-  );
+area.innerHTML="";
+
+var title=document.createElement("div");
+
+title.className="print-page-title";
+title.textContent="席替え表";
+
+area.appendChild(title);
+
+var board=document.createElement("div");
+
+board.className="print-board";
+
+function black(){
+
+var b=document.createElement("div");
+
+b.className=
+"print-blackboard"+
+(bottom?" bottom":"");
+
+b.textContent="黒板";
+
+return b;
+}
+
+if(!bottom){
+board.appendChild(black());
+}
+
+var grid=document.createElement("div");
+
+grid.className="print-grid";
+grid.style.gridTemplateColumns=
+"repeat("+cols+",80px)";
+
+for(var r=0;r<rows;r++){
+
+for(var c=0;c<cols;c++){
+
+var p=students[r*cols+c];
+
+var d=document.createElement("div");
+
+d.className=
+"print-seat "+
+(
+p.gender==="男"
+?"male"
+:p.gender==="女"
+?"female"
+:""
+);
+
+d.textContent=p.name||"空席";
+
+grid.appendChild(d);
+
+}
+}
+
+board.appendChild(grid);
+
+if(bottom){
+board.appendChild(black());
+}
+
+area.appendChild(board);
+
+setTimeout(function(){
+window.print();
+},100);
+}
+
+$("printTopBtn").onclick=function(){
+printSeats(false);
+};
+
+$("printBottomBtn").onclick=function(){
+printSeats(true);
+};
+
+$("groupCols").onchange=render;
+$("groupRows").onchange=render;
+
+$("cols").onchange=function(){
+resizeSeats(+this.value,rows);
+};
+
+$("rows").onchange=function(){
+resizeSeats(cols,+this.value);
+};
+
+function resizeSeats(nc,nr){
+
+var next=[];
+
+for(var i=0;i<nc*nr;i++){
+
+next.push({
+name:"",
+gender:""
+});
 
 }
 
+for(var r=0;r<Math.min(rows,nr);r++){
 
-/* ================================
-   印刷
-================================ */
+for(var c=0;c<Math.min(cols,nc);c++){
 
-$("printTopBtn").onclick=function(){
+next[r*nc+c]=students[r*cols+c];
 
-  createPrintArea(false);
+}
+}
 
-  setTimeout(function(){
+cols=nc;
+rows=nr;
+students=next;
 
-    window.print();
+render();
+refreshSelects();
+renderGenderColumns();
+updatePositionOptions();
+}
 
-  },100);
+function updatePositionOptions(){
+
+document.querySelectorAll("#positionRules .position").forEach(function(r){
+
+var ss=r.querySelectorAll("select");
+
+if(ss.length<3)return;
+
+var av=+ss[1].value;
+var bv=+ss[2].value;
+
+ss[1].innerHTML="";
+
+for(var i=1;i<=rows;i++){
+
+var o=document.createElement("option");
+
+o.value=i;
+o.textContent="前から"+i+"列目";
+
+ss[1].appendChild(o);
+}
+
+ss[1].value=Math.min(av||1,rows);
+
+ss[2].innerHTML="";
+
+for(var j=1;j<=cols;j++){
+
+var q=document.createElement("option");
+
+q.value=j;
+q.textContent="横から"+j+"列目";
+
+ss[2].appendChild(q);
+}
+
+ss[2].value=Math.min(bv||1,cols);
+
+});
+}
+
+$("addColumn").onclick=function(){
+
+addColumnRule();
+refreshSelects();
 
 };
 
+$("addPosition").onclick=function(){
 
-$("printBottomBtn").onclick=function(){
-
-  createPrintArea(true);
-
-  setTimeout(function(){
-
-    window.print();
-
-  },100);
+addPositionRule();
+refreshSelects();
 
 };
 
+$("addNear").onclick=function(){
 
-/* ================================
-   印刷終了後
-================================ */
+addDistanceRule("nearRules","席以下");
+refreshSelects();
 
-window.addEventListener(
-  "afterprint",
-  function(){
+};
 
-    $("printArea").innerHTML="";
+$("addFar").onclick=function(){
 
-  }
-);
+addDistanceRule("farRules","席以上空ける");
+refreshSelects();
 
+};
 
-/* ================================
-   初期表示メッセージ
-================================ */
+$("addLeader").onclick=function(){
 
-$("status").textContent="";
+addLeaderRule();
+refreshSelects();
+refreshLeaderEvents();
 
+};
+
+render();
+renderGenderColumns();
+refreshLeaderEvents();
 
 })();
-</script>
-
-<!-- 画像保存用ライブラリ -->
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
 </script>
 
 </body>
