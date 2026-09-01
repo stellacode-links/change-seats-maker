@@ -4,1729 +4,4092 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>席替えメーカー</title>
-<style>
-:root{--yellow:#F5E342;--dark:#333;--line:#ddd;--blue:#4A90E2;--red:#E85B67}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP","Yu Gothic",sans-serif;color:var(--dark);background:#fafafa}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.header{background:var(--yellow);padding:23px 16px;text-align:center;box-shadow:0 2px 8px #0002}
-.header h1{margin:0;font-size:30px;font-weight:800}
-.container{max-width:1100px;margin:auto;padding:20px}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 3px 15px #0000000a}
-.title{font-size:21px;font-weight:800;margin:0 0 16px}
-.front{width:min(650px,90%);margin:0 auto 16px;background:#eee;border-radius:7px;text-align:center;padding:7px;color:#666;font-size:13px}
-.seat-wrap{overflow:auto;padding:5px}
-.seat-grid{display:grid;justify-content:center;width:max-content;margin:auto}
-.seat{width:92px;min-height:64px;border:2px solid #d6d6d6;background:#fff;border-radius:10px;color:#333;font-weight:700;padding:6px;overflow-wrap:anywhere}
-.seat:hover{border-color:#c9b800}
-.gap-r{margin-right:15px}
-.gap-b{margin-bottom:15px}
-.setting-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field label{font-size:13px;font-weight:700;display:block}
-select,input[type=number],input[type=text],textarea{width:100%;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:9px;background:white;outline:none}
-select:focus,input:focus,textarea:focus{border-color:#c9b800;box-shadow:0 0 0 3px #f5e34255}
-.sub{font-size:16px;font-weight:800;margin:25px 0 10px}
-.rule-list{display:flex;flex-direction:column;gap:8px}
-.rule{display:grid;gap:7px;align-items:end}
-.rule.column{grid-template-columns:minmax(130px,1fr) 120px 120px 44px}
-.rule.position{grid-template-columns:minmax(130px,1fr) 145px 145px 44px}
-.rule.distance{grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) 90px 80px 44px}
-.rule.leader{grid-template-columns:minmax(130px,1fr) 44px}
-.remove{height:42px;border:0;border-radius:9px;background:#eee;font-weight:800}
-.add{margin-top:9px;border:0;background:#eee;border-radius:9px;padding:10px 14px;font-weight:700}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.main-btn,.sub-btn{border:0;border-radius:11px;padding:13px 22px;font-weight:800}
-.main-btn{background:var(--yellow)}
-.main-btn:hover{background:#d9c900}
-.sub-btn{background:#eee}
-.sub-btn:hover{background:#ddd}
-.check{display:flex;gap:9px;align-items:center;margin-top:12px;font-weight:600;font-size:14px}
-.check input{width:19px;height:19px;margin:0;accent-color:#d3c300}
-.status{text-align:center;color:#777;font-size:13px;margin-top:10px;min-height:20px}
-.gender-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:8px}
-.gender-column{border:1px solid #ddd;border-radius:10px;padding:10px;background:#fafafa}
-.gender-column-title{font-size:13px;font-weight:800;margin-bottom:5px}
-.bulk-area{margin-top:12px}
-.bulk-area textarea{min-height:130px;resize:vertical}
-.student-input-note{font-size:13px;color:#777;margin:0 0 10px}
-.hidden{display:none!important}
 
-.presentation{display:none;position:fixed;inset:0;background:#fff;z-index:10000;overflow:auto}
-.presentation.show{display:block}
-.presentation-head{height:72px;background:var(--yellow);display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:2}
-.presentation-head h2{margin:0;font-size:24px}
-.presentation-close{position:absolute;right:18px;top:15px;border:0;background:#fff;border-radius:10px;padding:10px 16px;font-weight:800}
-.presentation-stage{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:35px}
-.presentation-table{display:grid;gap:8px;justify-content:center}
-.presentation-table .seat{width:100px;min
-.presentation-table .seat{width:100px;min-height:65px}
-.big-seat{width:min(850px,90vw);border:3px solid #ddd;border-radius:22px;text-align:center;padding:70px 25px;font-size:clamp(34px,7vw,80px);font-weight:900}
-.slot-box{display:flex;flex-direction:column;align-items:center;justify-content:center}
-.slot-name{font-size:clamp(38px,8vw,90px);font-weight:900;min-height:1.3em}
-.slot-sub{font-size:16px;color:#888;margin-top:12px}
-.animation-settings{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.print-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.print-btn{border:0;border-radius:10px;padding:11px 15px;background:#eee;font-weight:700}
-#exportCanvas{display:none}
+<style>
+:root{
+  --yellow:#F5E342;
+  --dark:#333;
+  --line:#ddd;
+  --blue:#4A90E2;
+  --red:#E85B67;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP","Yu Gothic",sans-serif;
+  color:var(--dark);
+  background:#fafafa;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  background:var(--yellow);
+  padding:23px 16px;
+  text-align:center;
+  box-shadow:0 2px 8px #0002;
+}
+
+.header h1{
+  margin:0;
+  font-size:30px;
+  font-weight:800;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 3px 15px #0000000a;
+}
+
+.title{
+  font-size:21px;
+  font-weight:800;
+  margin:0 0 16px;
+}
+
+.front{
+  width:min(650px,90%);
+  margin:0 auto 16px;
+  background:#eee;
+  border-radius:7px;
+  text-align:center;
+  padding:7px;
+  color:#666;
+  font-size:13px;
+}
+
+.seat-wrap{
+  overflow:auto;
+  padding:5px;
+}
+
+.seat-grid{
+  display:grid;
+  justify-content:center;
+  width:max-content;
+  margin:auto;
+}
+
+.seat{
+  width:92px;
+  min-height:64px;
+  border:2px solid #d6d6d6;
+  background:#fff;
+  border-radius:10px;
+  color:#333;
+  font-weight:700;
+  padding:6px;
+  overflow-wrap:anywhere;
+  transition:.12s;
+}
+
+.seat:hover{
+  border-color:#c9b800;
+}
+
+.seat.empty{
+  color:#999;
+  font-weight:500;
+}
+
+.seat-gap{
+  margin-right:3px;
+  margin-bottom:3px;
+}
+
+.group-gap-right{
+  margin-right:18px;
+}
+
+.group-gap-bottom{
+  margin-bottom:18px;
+}
+
+.setting-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.field label{
+  font-size:13px;
+  font-weight:700;
+  display:block;
+}
+
+select,
+input[type=number],
+input[type=text],
+textarea{
+  width:100%;
+  margin-top:6px;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  background:white;
+  outline:none;
+}
+
+select:focus,
+input:focus,
+textarea:focus{
+  border-color:#c9b800;
+  box-shadow:0 0 0 3px #f5e34255;
+}
+
+.sub{
+  font-size:16px;
+  font-weight:800;
+  margin:25px 0 10px;
+}
+
+.rule-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.rule{
+  display:grid;
+  gap:7px;
+  align-items:end;
+}
+
+.rule.column{
+  grid-template-columns:minmax(130px,1fr) 120px 120px 44px;
+}
+
+.rule.position{
+  grid-template-columns:minmax(130px,1fr) 145px 145px 44px;
+}
+
+.rule.distance{
+  grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) 90px 80px 44px;
+}
+
+.rule.leader{
+  grid-template-columns:minmax(130px,1fr) 44px;
+}
+
+.remove{
+  height:42px;
+  border:0;
+  border-radius:9px;
+  background:#eee;
+  font-weight:800;
+}
+
+.remove:hover{
+  background:#ddd;
+}
+
+.add{
+  margin-top:9px;
+  border:0;
+  background:#eee;
+  border-radius:9px;
+  padding:10px 14px;
+  font-weight:700;
+}
+
+.add:hover{
+  background:#ddd;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+.main-btn,
+.sub-btn{
+  border:0;
+  border-radius:11px;
+  padding:13px 22px;
+  font-weight:800;
+}
+
+.main-btn{
+  background:var(--yellow);
+}
+
+.main-btn:hover{
+  background:#d9c900;
+}
+
+.sub-btn{
+  background:#eee;
+}
+
+.sub-btn:hover{
+  background:#ddd;
+}
+
+.check{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  margin-top:12px;
+  font-weight:600;
+  font-size:14px;
+}
+
+.check input{
+  width:19px;
+  height:19px;
+  margin:0;
+  accent-color:#d3c300;
+}
+
+.status{
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  margin-top:10px;
+  min-height:20px;
+}
+
+.student-input-note{
+  font-size:13px;
+  color:#777;
+  margin:0 0 10px;
+}
+
+.bulk-area{
+  margin-top:12px;
+}
+
+.bulk-area textarea{
+  min-height:140px;
+  resize:vertical;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.gender-columns{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:8px;
+  margin-top:8px;
+}
+
+.gender-column{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:10px;
+  background:#fafafa;
+}
+
+.gender-column-title{
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.presentation{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#fff;
+  z-index:10000;
+  overflow:auto;
+}
+
+.presentation.show{
+  display:block;
+}
+
+.presentation-head{
+  height:72px;
+  background:var(--yellow);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+.presentation-head h2{
+  margin:0;
+  font-size:24px;
+}
+
+.presentation-close{
+  position:absolute;
+  right:18px;
+  top:15px;
+  border:0;
+  background:#fff;
+  border-radius:10px;
+  padding:10px 16px;
+  font-weight:800;
+}
+
+.presentation-stage{
+  min-height:calc(100vh - 72px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:35px;
+}
+
+.presentation-table{
+  display:grid;
+  gap:8px;
+  justify-content:center;
+}
+
+.presentation-table .seat{
+  width:100px;
+  min-height:65px;
+}
+
+.slot-name{
+  font-size:clamp(38px,8vw,90px);
+  font-weight:900;
+}
+
+.slot-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+#printArea{
+  display:none;
+}
+
+.print-page-title{
+  text-align:center;
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:20px;
+}
+
+.print-board{
+  border:2px solid #333;
+  padding:20px;
+  display:inline-block;
+  min-width:80%;
+  margin-left:10%;
+  margin-right:10%;
+}
+
+.print-blackboard{
+  text-align:center;
+  border:2px solid #333;
+  padding:8px;
+  margin-bottom:20px;
+  font-weight:800;
+}
+
+.print-blackboard.bottom{
+  margin-top:20px;
+  margin-bottom:0;
+}
+
+.print-grid{
+  display:grid;
+  justify-content:center;
+  gap:8px;
+}
+
+.print-seat{
+  border:2px solid #333;
+  border-radius:7px;
+  min-width:80px;
+  min-height:55px;
+  padding:8px;
+  text-align:center;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.print-seat.male{
+  color:var(--blue);
+}
+
+.print-seat.female{
+  color:var(--red);
+}
+
+#exportCanvas{
+  display:none;
+}
+
 @media(max-width:750px){
-.container{padding:12px 9px}
-.card{padding:15px}
-.setting-grid,.animation-settings{grid-template-columns:1fr}
-.rule.column,.rule.position,.rule.distance,.rule.leader{grid-template-columns:1fr 1fr}
-.remove{width:100%}
-.seat{width:72px;min-height:56px;font-size:12px}
+
+  .container{
+    padding:12px 9px;
+  }
+
+  .card{
+    padding:15px;
+  }
+
+  .setting-grid{
+    grid-template-columns:1fr;
+  }
+
+  .rule.column,
+  .rule.position,
+  .rule.distance,
+  .rule.leader{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .remove{
+    width:100%;
+  }
+
+  .seat{
+    width:72px;
+    min-height:56px;
+    font-size:12px;
+  }
 }
+
 @media print{
-body{background:white}
-body>*:not(#printArea){display:none!important}
-#printArea{display:block!important;padding:25px}
+
+  body{
+    background:white;
+  }
+
+  body>*:not(#printArea){
+    display:none!important;
+  }
+
+  #printArea{
+    display:block!important;
+    padding:25px;
+  }
 }
-#printArea{display:none}
-.print-page-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:20px}
-.print-board{border:2px solid #333;padding:20px;display:inline-block;min-width:80%;margin-left:10%;margin-right:10%}
-.print-blackboard{text-align:center;border:2px solid #333;padding:8px;margin-bottom:20px;font-weight:800}
-.print-blackboard.bottom{margin-top:20px;margin-bottom:0}
-.print-grid{display:grid;justify-content:center;gap:8px}
-.print-seat{border:2px solid #333;border-radius:7px;min-width:80px;min-height:55px;padding:8px;text-align:center;font-weight:800;display:flex;align-items:center;justify-content:center}
-.print-seat.male{color:var(--blue)}
-.print-seat.female{color:var(--red)}
 </style>
 </head>
+
 <body>
 
 <header class="header">
-<h1>席替えメーカー</h1>
+  <h1>席替えメーカー</h1>
 </header>
 
 <main class="container">
 
 <section class="card">
-<h2 class="title">座席表</h2>
-<div class="front">黒板（前）</div>
-<div class="seat-wrap">
-<div id="seatGrid" class="seat-grid"></div>
-</div>
+
+  <h2 class="title">座席表</h2>
+
+  <div class="front">
+    黒板（前）
+  </div>
+
+  <div class="seat-wrap">
+    <div id="seatGrid" class="seat-grid"></div>
+  </div>
+
 </section>
 
 <section class="card">
-<h2 class="title">生徒入力</h2>
 
-<p class="student-input-note">座席をタップすると、その席の名前と男女を入力できます。</p>
+  <h2 class="title">生徒入力</h2>
 
-<div class="actions">
-<button id="bulkToggle" class="sub-btn">一括入力</button>
-<button id="clearBtn" class="sub-btn">座席表をクリア</button>
-</div>
+  <p class="student-input-note">
+    座席をタップすると、その席の名前と男女を入力できます。
+  </p>
 
-<div id="bulkArea" class="bulk-area hidden">
-<textarea id="bulkInput" placeholder="田中　佐藤　空席　山田
+  <div class="actions">
+
+    <button
+      id="bulkToggle"
+      type="button"
+      class="sub-btn">
+      一括入力
+    </button>
+
+    <button
+      id="clearBtn"
+      type="button"
+      class="sub-btn">
+      座席表をクリア
+    </button>
+
+  </div>
+
+  <div
+    id="bulkArea"
+    class="bulk-area hidden">
+
+    <textarea
+      id="bulkInput"
+      placeholder="田中　佐藤　空席　山田
 高橋　橋本　鈴木　空席"></textarea>
-<div class="actions">
-<button id="applyBulk" class="main-btn">一括入力を反映</button>
-</div>
-</div>
 
-<h3 class="sub">列ごとの男女指定</h3>
-<div id="genderColumns" class="gender-columns"></div>
+    <div class="actions">
+
+      <button
+        id="applyBulk"
+        type="button"
+        class="main-btn">
+        一括入力を反映
+      </button>
+
+    </div>
+
+  </div>
+
+  <h3 class="sub">
+    列ごとの男女指定
+  </h3>
+
+  <div
+    id="genderColumns"
+    class="gender-columns">
+  </div>
+
+    </section>
+    <section class="card">
+
+  <h2 class="title">
+    設定
+  </h2>
+
+  <h3 class="sub">
+    座席数の指定
+  </h3>
+
+  <div class="setting-grid">
+
+    <div class="field">
+
+      <label>
+        全体：横
+        <select id="cols"></select>
+      </label>
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        縦
+        <select id="rows"></select>
+      </label>
+
+    </div>
+
+  </div>
+
+  <h3 class="sub">
+    班
+  </h3>
+
+  <div class="setting-grid">
+
+    <div class="field">
+
+      <label>
+        横
+        <select id="groupCols">
+
+          <option value="0">
+            なし
+          </option>
+
+          <option value="2">
+            2
+          </option>
+
+          <option value="3">
+            3
+          </option>
+
+          <option value="4">
+            4
+          </option>
+
+          <option value="5">
+            5
+          </option>
+
+          <option value="6">
+            6
+          </option>
+
+        </select>
+      </label>
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        縦
+        <select id="groupRows">
+
+          <option value="0">
+            なし
+          </option>
+
+          <option value="2">
+            2
+          </option>
+
+          <option value="3">
+            3
+          </option>
+
+          <option value="4">
+            4
+          </option>
+
+          <option value="5">
+            5
+          </option>
+
+          <option value="6">
+            6
+          </option>
+
+        </select>
+      </label>
+
+    </div>
+
+  </div>
+
+  <h3 class="sub">
+    列の指定
+  </h3>
+
+  <div
+    id="columnRules"
+    class="rule-list">
+  </div>
+
+  <button
+    id="addColumn"
+    type="button"
+    class="add">
+    + 条件を指定
+  </button>
+
+  <h3 class="sub">
+    生徒の位置を指定
+  </h3>
+
+  <div
+    id="positionRules"
+    class="rule-list">
+  </div>
+
+  <button
+    id="addPosition"
+    type="button"
+    class="add">
+    + 条件を指定
+  </button>
+
+  <h3 class="sub">
+    生徒同士を近づける
+  </h3>
+
+  <div
+    id="nearRules"
+    class="rule-list">
+  </div>
+
+  <button
+    id="addNear"
+    type="button"
+    class="add">
+    + 条件を追加
+  </button>
+
+  <h3 class="sub">
+    生徒同士を離す
+  </h3>
+
+  <div
+    id="farRules"
+    class="rule-list">
+  </div>
+
+  <button
+    id="addFar"
+    type="button"
+    class="add">
+    + 条件を追加
+  </button>
+
+  <h3 class="sub">
+    班長を指定する
+  </h3>
+
+  <div
+    id="leaderRules"
+    class="rule-list">
+  </div>
+
+  <button
+    id="addLeader"
+    type="button"
+    class="add">
+    + 班長を追加
+  </button>
+
+  <label
+    id="leaderSeparateWrap"
+    class="check hidden">
+
+    <input
+      type="checkbox"
+      id="leaderSeparate">
+
+    班長同士を同じ班にしない
+
+  </label>
+
 </section>
 
 <section class="card">
-<h2 class="title">設定</h2>
 
-<h3 class="sub">座席数の指定</h3>
-<div class="setting-grid">
-<div class="field">
-<label>全体：横
-<select id="cols"></select>
-</label>
-</div>
-<div class="field">
-<label>縦
-<select id="rows"></select>
-</label>
-</div>
-</div>
+  <div class="setting-grid">
 
-<h3 class="sub">班</h3>
-<div class="setting-grid">
-<div class="field">
-<label>横
-<select id="groupCols">
-<option value="0">なし</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<option>6</option>
-</select>
-</label>
-</div>
-<div class="field">
-<label>縦
-<select id="groupRows">
-<option value="0">なし</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<option>6</option>
-</select>
-</label>
-</div>
-</div>
+    <div class="field">
 
-<h3 class="sub">列の指定</h3>
-<div id="columnRules" class="rule-list"></div>
-<button id="addColumn" type="button" class="add">+ 条件を指定</button>
+      <select id="animationType">
 
-<h3 class="sub">生徒の位置を指定</h3>
-<div id="positionRules" class="rule-list"></div>
-<button id="addPosition" type="button" class="add">+ 条件を指定</button>
+        <option value="normal">
+          ノーマル
+        </option>
 
-<h3 class="sub">生徒同士を近づける</h3>
-<div id="nearRules" class="rule-list"></div>
-<button id="addNear" type="button" class="add">+ 条件を追加</button>
+        <option value="slot">
+          スロット
+        </option>
 
-<h3 class="sub">生徒同士を離す</h3>
-<div id="farRules" class="rule-list"></div>
-<button id="addFar" type="button" class="add">+ 条件を追加</button>
+      </select>
 
-<h3 class="sub">班長を指定する</h3>
-<div id="leaderRules" class="rule-list"></div>
-<button id="addLeader" type="button" class="add">+ 班長を追加</button>
+    </div>
 
-<label id="leaderSeparateWrap" class="check hidden">
-<input type="checkbox" id="leaderSeparate">
-班長同士を同じ班にしない
-</label>
+    <div class="field">
+
+      <select id="animationDirection">
+
+        <option value="row">
+          横
+        </option>
+
+        <option value="col">
+          縦
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+  <label class="check">
+
+    <input
+      type="checkbox"
+      id="moveAll">
+
+    全員が席を移動する
+
+  </label>
+
+  <label class="check">
+
+    <input
+      type="checkbox"
+      id="fixGender">
+
+    男女を固定する
+
+  </label>
+
+  <label class="check">
+
+    <input
+      type="checkbox"
+      id="fixEmpty">
+
+    空席の位置を固定する
+
+  </label>
+
+  <div class="actions">
+
+    <button
+      id="shuffleBtn"
+      type="button"
+      class="main-btn">
+
+      席替えする！
+
+    </button>
+
+    <button
+      id="resetBtn"
+      type="button"
+      class="sub-btn">
+
+      座席をリセット
+
+    </button>
+
+  </div>
+
+  <div
+    id="status"
+    class="status">
+  </div>
 
 </section>
 
 <section class="card">
 
-<div class="animation-settings">
-<div class="field">
-<select id="animationType">
-<option value="normal">ノーマル</option>
-<option value="slot">スロット</option>
-</select>
-</div>
+  <h2 class="title">
+    保存・印刷
+  </h2>
 
-<div class="field">
-<select id="animationDirection">
-<option value="row">横</option>
-<option value="col">縦</option>
-</select>
-</div>
-</div>
+  <p style="font-size:13px">
+    席替え後の座席表を画像として保存したり、印刷できます。
+  </p>
 
-<label class="check">
-<input type="checkbox" id="fixGender">
-男女を固定する
-</label>
+  <div class="actions">
 
-<label class="check">
-<input type="checkbox" id="fixEmpty">
-空席の位置を固定する
-</label>
+    <button
+      id="saveBtn"
+      type="button"
+      class="main-btn">
+      画像として保存
+    </button>
 
-<label class="check">
-<input type="checkbox" id="moveAll">
-全員が席を移動する
-</label>
+    <button
+      id="printTopBtn"
+      type="button"
+      class="sub-btn">
+      印刷（黒板が上）
+    </button>
 
-<div class="actions">
-<button id="shuffleBtn" class="main-btn">席替えする！</button>
-<button id="resetBtn" class="sub-btn">座席をリセット</button>
-</div>
+    <button
+      id="printBottomBtn"
+      type="button"
+      class="sub-btn">
+      印刷（黒板が下）
+    </button>
 
-<div id="status" class="status"></div>
-</section>
+  </div>
 
-<section class="card">
-<h2 class="title">保存・印刷</h2>
-<p style="font-size:13px">席替え後の座席表を画像として保存したり、印刷できます。</p>
-<div class="actions">
-<button id="saveBtn" class="main-btn">画像として保存</button>
-<button id="printTopBtn" class="sub-btn">印刷（黒板が上）</button>
-<button id="printBottomBtn" class="sub-btn">印刷（黒板が下）</button>
-</div>
 </section>
 
 </main>
 
-<div id="presentation" class="presentation">
-<div class="presentation-head">
-<h2>席替え発表</h2>
-<button id="closePresentation" class="presentation-close">閉じる</button>
-</div>
-<div id="presentationStage" class="presentation-stage"></div>
+<div
+  id="presentation"
+  class="presentation">
+
+  <div class="presentation-head">
+
+    <h2>
+      席替え発表
+    </h2>
+
+    <button
+      id="closePresentation"
+      type="button"
+      class="presentation-close">
+
+      閉じる
+
+    </button>
+
+  </div>
+
+  <div
+    id="presentationStage"
+    class="presentation-stage">
+  </div>
+
 </div>
 
 <div id="printArea"></div>
+
 <canvas id="exportCanvas"></canvas>
 
 <script>
+
 (function(){
+
 "use strict";
 
-var rows=6,cols=6;
+var rows=6;
+var cols=6;
+
 var students=[];
+
 var originalSeats=[];
+
 var hasPreviousSeat=false;
 
 for(var i=0;i<36;i++){
-students.push({name:"",gender:""});
+
+  students.push({
+    name:"",
+    gender:""
+  });
+
 }
 
 function $(id){
-return document.getElementById(id);
+
+  return document.getElementById(id);
+
 }
 
 function fillSelect(id,max,selected){
-var s=$(id);
-s.innerHTML="";
-for(var i=1;i<=max;i++){
-var o=document.createElement("option");
-o.value=i;
-o.textContent=i;
-if(i===selected)o.selected=true;
-s.appendChild(o);
-}
+
+  var select=$(id);
+
+  select.innerHTML="";
+
+  for(var i=1;i<=max;i++){
+
+    var option=document.createElement("option");
+
+    option.value=i;
+
+    option.textContent=i;
+
+    if(i===selected){
+      option.selected=true;
+    }
+
+    select.appendChild(option);
+
+  }
+
 }
 
 fillSelect("cols",10,6);
+
 fillSelect("rows",10,6);
 
 function names(){
-var a=[];
-students.forEach(function(s){
-if(s.name&&a.indexOf(s.name)<0)a.push(s.name);
-});
-return a;
+
+  var result=[];
+
+  students.forEach(function(student){
+
+    if(
+      student.name &&
+      result.indexOf(student.name)===-1
+    ){
+
+      result.push(student.name);
+
+    }
+
+  });
+
+  return result;
+
 }
 
 function studentSelect(){
-var s=document.createElement("select");
-s.className="student-select";
 
-var first=document.createElement("option");
-first.value="";
-first.textContent="生徒を選択";
-s.appendChild(first);
+  var select=document.createElement("select");
 
-names().forEach(function(n){
-var o=document.createElement("option");
-o.value=n;
-o.textContent=n;
-s.appendChild(o);
-});
+  select.className="student-select";
 
-return s;
+  var first=document.createElement("option");
+
+  first.value="";
+
+  first.textContent="生徒を選択";
+
+  select.appendChild(first);
+
+  names().forEach(function(name){
+
+    var option=document.createElement("option");
+
+    option.value=name;
+
+    option.textContent=name;
+
+    select.appendChild(option);
+
+  });
+
+  return select;
+
 }
 
 function refreshSelects(){
-document.querySelectorAll(".student-select").forEach(function(old){
-var v=old.value;
-var n=studentSelect();
-n.value=v;
-old.parentNode.replaceChild(n,old);
-});
-updateLeaderVisibility();
-refreshLeaderEvents();
+
+  document
+    .querySelectorAll(".student-select")
+    .forEach(function(old){
+
+      var value=old.value;
+
+      var replacement=studentSelect();
+
+      replacement.value=value;
+
+      old.parentNode.replaceChild(
+        replacement,
+        old
+      );
+
+    });
+
+  updateLeaderVisibility();
+
+  refreshLeaderEvents();
+
 }
 
 function render(){
-var grid=$("seatGrid");
-grid.innerHTML="";
-grid.style.gridTemplateColumns="repeat("+cols+",92px)";
 
-var gc=+$("groupCols").value;
-var gr=+$("groupRows").value;
+  var grid=$("seatGrid");
 
-for(var r=0;r<rows;r++){
-for(var c=0;c<cols;c++){
+  grid.innerHTML="";
 
-var idx=r*cols+c;
-var b=document.createElement("button");
+  grid.style.gridTemplateColumns=
+    "repeat("+cols+",92px)";
 
-b.type="button";
-b.className="seat";
+  var groupCols=
+    +$("groupCols").value;
 
-var person=students[idx];
+  var groupRows=
+    +$("groupRows").value;
 
-b.textContent=person.name||"空席";
+  for(var r=0;r<rows;r++){
 
-if(!person.name)b.className+=" empty";
+    for(var c=0;c<cols;c++){
 
-if(gc&&c<cols-1&&(c+1)%gc===0)b.className+=" gap-r";
-if(gr&&r<rows-1&&(r+1)%gr===0)b.className+=" gap-b";
+      var index=
+        r*cols+c;
 
-if(person.gender==="男")b.style.color="var(--blue)";
-if(person.gender==="女")b.style.color="var(--red)";
+      var button=
+        document.createElement("button");
 
-(function(i){
-b.onclick=function(){
+      button.type="button";
 
-var current=students[i];
+      button.className="seat seat-gap";
 
-var name=prompt(
-"名前を入力してください。\n空欄で空席になります。",
-current.name
-);
+      var person=
+        students[index];
 
-if(name===null)return;
+      button.textContent=
+        person.name ||
+        "空席";
 
-name=name.trim();
+      if(!person.name){
 
-if(!name){
-students[i]={name:"",gender:""};
-render();
-refreshSelects();
-renderGenderColumns();
-return;
-}
+        button.classList.add("empty");
 
-if(name==="空席"){
-students[i]={name:"",gender:""};
-render();
-refreshSelects();
-renderGenderColumns();
-return;
-}
+      }
 
-var gender=prompt(
-"性別を入力してください。\n「男」または「女」を入力（任意）",
-current.gender
-);
+      if(
+        groupCols &&
+        c<cols-1 &&
+        (c+1)%groupCols===0
+      ){
 
-if(gender===null)gender=current.gender;
+        button.classList.add(
+          "group-gap-right"
+        );
 
-gender=gender.trim();
+      }
 
-if(gender!=="男"&&gender!=="女")gender="";
+      if(
+        groupRows &&
+        r<rows-1 &&
+        (r+1)%groupRows===0
+      ){
 
-students[i]={
-name:name,
-gender:gender
-};
+        button.classList.add(
+          "group-gap-bottom"
+        );
 
-render();
-refreshSelects();
-renderGenderColumns();
-};
-})(idx);
+      }
 
-grid.appendChild(b);
-}
-}
+      if(person.gender==="男"){
 
-renderGenderColumns();
+        button.style.color=
+          "var(--blue)";
+
+      }
+
+      else if(person.gender==="女"){
+
+        button.style.color=
+          "var(--red)";
+
+      }
+
+      (function(index){
+
+        button.onclick=function(){
+
+          var current=
+            students[index];
+
+          var name=
+            prompt(
+              "名前を入力してください。\n空欄で空席になります。",
+              current.name
+            );
+
+          if(name===null){
+
+            return;
+
+          }
+
+          name=name.trim();
+
+          if(
+            !name ||
+            name==="空席"
+          ){
+
+            students[index]={
+              name:"",
+              gender:""
+            };
+
+            render();
+
+            refreshSelects();
+
+            renderGenderColumns();
+
+            return;
+
+          }
+
+          var gender=
+            prompt(
+              "性別を入力してください。\n「男」または「女」を入力（任意）",
+              current.gender
+            );
+
+          if(gender===null){
+
+            gender=
+              current.gender;
+
+          }
+
+          gender=
+            gender.trim();
+
+          if(
+            gender!=="男" &&
+            gender!=="女"
+          ){
+
+            gender="";
+
+          }
+
+          students[index]={
+            name:name,
+            gender:gender
+          };
+
+          render();
+
+          refreshSelects();
+
+          renderGenderColumns();
+
+        };
+
+      })(index);
+
+      grid.appendChild(button);
+
+    }
+
+  }
+
+  renderGenderColumns();
+
 }
 
 function renderGenderColumns(){
 
-var area=$("genderColumns");
-area.innerHTML="";
+  var area=
+    $("genderColumns");
 
-for(var c=0;c<cols;c++){
+  area.innerHTML="";
 
-var box=document.createElement("div");
-box.className="gender-column";
+  for(var c=0;c<cols;c++){
 
-var title=document.createElement("div");
-title.className="gender-column-title";
-title.textContent=(c+1)+"列目";
+    var box=
+      document.createElement("div");
 
-var select=document.createElement("select");
-select.dataset.column=c;
+    box.className=
+      "gender-column";
 
-select.innerHTML=
-"<option value=''>指定なし</option>"+
-"<option value='男'>男子</option>"+
-"<option value='女'>女子</option>";
+    var title=
+      document.createElement("div");
 
-var existing=[];
+    title.className=
+      "gender-column-title";
 
-for(var r=0;r<rows;r++){
-if(students[r*cols+c].name){
-existing.push(students[r*cols+c].gender);
+    title.textContent=
+      (c+1)+"列目";
+
+    var select=
+      document.createElement("select");
+
+    select.dataset.column=
+      c;
+
+    select.innerHTML=
+      "<option value=''>指定なし</option>"+
+      "<option value='男'>男子</option>"+
+      "<option value='女'>女子</option>";
+
+    var genders=[];
+
+    for(var r=0;r<rows;r++){
+
+      var person=
+        students[r*cols+c];
+
+      if(person.name){
+
+        genders.push(
+          person.gender
+        );
+
+      }
+
+    }
+
+    if(
+      genders.length &&
+      genders.every(function(g){
+        return g==="男";
+      })
+    ){
+
+      select.value="男";
+
+    }
+
+    else if(
+      genders.length &&
+      genders.every(function(g){
+        return g==="女";
+      })
+    ){
+
+      select.value="女";
+
+    }
+
+    select.onchange=function(){
+
+      var column=
+        +this.dataset.column;
+
+      var gender=
+        this.value;
+
+      if(!gender){
+
+        return;
+
+      }
+
+      for(
+        var row=0;
+        row<rows;
+        row++
+      ){
+
+        var index=
+          row*cols+column;
+
+        if(
+          students[index].name
+        ){
+
+          students[index].gender=
+            gender;
+
+        }
+
+      }
+
+      render();
+
+    };
+
+    box.appendChild(title);
+
+    box.appendChild(select);
+
+    area.appendChild(box);
+
+  }
+
 }
-}
+  function removeButton(
+  parent,
+  rule
+){
 
-if(existing.length&&existing.every(function(x){return x==="男";})){
-select.value="男";
-}else if(existing.length&&existing.every(function(x){return x==="女";})){
-select.value="女";
-}else{
-select.value="";
-}
+  var button=
+    document.createElement("button");
 
-select.onchange=function(){
+  button.type="button";
 
-var col=+this.dataset.column;
-var value=this.value;
+  button.className=
+    "remove";
 
-if(!value)return;
+  button.textContent="×";
 
-for(var rr=0;rr<rows;rr++){
-var index=rr*cols+col;
+  button.onclick=function(){
 
-if(students[index].name){
-students[index].gender=value;
-}
-}
+    if(
+      rule &&
+      rule.parentNode===parent
+    ){
 
-render();
-};
+      parent.removeChild(rule);
 
-box.appendChild(title);
-box.appendChild(select);
-area.appendChild(box);
-}
-}
-  function removeButton(parent,rule){
+    }
 
-var x=document.createElement("button");
-x.type="button";
-x.className="remove";
-x.textContent="×";
+  };
 
-x.onclick=function(){
-parent.removeChild(rule);
-};
+  return button;
 
-return x;
 }
 
 function addColumnRule(){
 
-var p=$("columnRules");
-var r=document.createElement("div");
-r.className="rule column";
+  var parent=
+    $("columnRules");
 
-var s=studentSelect();
+  var rule=
+    document.createElement("div");
 
-var dir=document.createElement("select");
+  rule.className=
+    "rule column";
 
-dir.innerHTML=
-"<option value='front'>前から</option>"+
-"<option value='back'>後ろから</option>";
+  var student=
+    studentSelect();
 
-var n=document.createElement("select");
+  var direction=
+    document.createElement("select");
 
-for(var i=1;i<=cols;i++){
-var o=document.createElement("option");
-o.value=i;
-o.textContent=i+"列目まで";
-n.appendChild(o);
-}
+  direction.innerHTML=
+    "<option value='front'>前から</option>"+
+    "<option value='back'>後ろから</option>";
 
-r.append(
-s,
-dir,
-n,
-removeButton(p,r)
-);
+  var limit=
+    document.createElement("select");
 
-p.appendChild(r);
+  for(
+    var i=1;
+    i<=cols;
+    i++
+  ){
+
+    var option=
+      document.createElement("option");
+
+    option.value=i;
+
+    option.textContent=
+      i+"列目まで";
+
+    limit.appendChild(option);
+
+  }
+
+  rule.append(
+    student,
+    direction,
+    limit,
+    removeButton(
+      parent,
+      rule
+    )
+  );
+
+  parent.appendChild(rule);
+
 }
 
 function addPositionRule(){
 
-var p=$("positionRules");
-var r=document.createElement("div");
-r.className="rule position";
+  var parent=
+    $("positionRules");
 
-var s=studentSelect();
-var a=document.createElement("select");
-var b=document.createElement("select");
+  var rule=
+    document.createElement("div");
 
-for(var i=1;i<=rows;i++){
-var o=document.createElement("option");
-o.value=i;
-o.textContent="前から"+i+"列目";
-a.appendChild(o);
+  rule.className=
+    "rule position";
+
+  var student=
+    studentSelect();
+
+  var row=
+    document.createElement("select");
+
+  for(
+    var i=1;
+    i<=rows;
+    i++
+  ){
+
+    var option=
+      document.createElement("option");
+
+    option.value=i;
+
+    option.textContent=
+      "前から"+i+"列目";
+
+    row.appendChild(option);
+
+  }
+
+  var column=
+    document.createElement("select");
+
+  for(
+    var j=1;
+    j<=cols;
+    j++
+  ){
+
+    var option2=
+      document.createElement("option");
+
+    option2.value=j;
+
+    option2.textContent=
+      "横から"+j+"列目";
+
+    column.appendChild(option2);
+
+  }
+
+  rule.append(
+    student,
+    row,
+    column,
+    removeButton(
+      parent,
+      rule
+    )
+  );
+
+  parent.appendChild(rule);
+
 }
 
-for(var j=1;j<=cols;j++){
-var q=document.createElement("option");
-q.value=j;
-q.textContent="横から"+j+"列目";
-b.appendChild(q);
-}
+function addDistanceRule(
+  id,
+  text
+){
 
-r.append(
-s,
-a,
-b,
-removeButton(p,r)
-);
+  var parent=$(id);
 
-p.appendChild(r);
-}
+  var rule=
+    document.createElement("div");
 
-function addDistanceRule(id,text){
+  rule.className=
+    "rule distance";
 
-var p=$(id);
-var r=document.createElement("div");
-r.className="rule distance";
+  var first=
+    studentSelect();
 
-var a=studentSelect();
-var b=studentSelect();
+  var second=
+    studentSelect();
 
-var n=document.createElement("input");
-n.type="number";
-n.min=0;
-n.max=36;
-n.value=1;
+  var number=
+    document.createElement("input");
 
-var label=document.createElement("div");
-label.textContent=text;
-label.style.paddingBottom="12px";
-label.style.fontSize="12px";
+  number.type="number";
 
-r.append(
-a,
-b,
-n,
-label,
-removeButton(p,r)
-);
+  number.min=0;
 
-p.appendChild(r);
+  number.max=36;
+
+  number.value=1;
+
+  var label=
+    document.createElement("div");
+
+  label.textContent=text;
+
+  label.style.paddingBottom=
+    "12px";
+
+  label.style.fontSize=
+    "12px";
+
+  rule.append(
+    first,
+    second,
+    number,
+    label,
+    removeButton(
+      parent,
+      rule
+    )
+  );
+
+  parent.appendChild(rule);
+
 }
 
 function addLeaderRule(){
 
-var p=$("leaderRules");
-var r=document.createElement("div");
-r.className="rule leader";
+  var parent=
+    $("leaderRules");
 
-r.append(
-studentSelect(),
-removeButton(p,r)
-);
+  var rule=
+    document.createElement("div");
 
-p.appendChild(r);
+  rule.className=
+    "rule leader";
 
-updateLeaderVisibility();
-refreshLeaderEvents();
+  rule.append(
+    studentSelect(),
+    removeButton(
+      parent,
+      rule
+    )
+  );
+
+  parent.appendChild(rule);
+
+  updateLeaderVisibility();
+
+  refreshLeaderEvents();
+
 }
 
 function updateLeaderVisibility(){
 
-var selected=[];
+  var selected=[];
 
-document.querySelectorAll("#leaderRules .student-select").forEach(function(s){
+  document
+    .querySelectorAll(
+      "#leaderRules .student-select"
+    )
+    .forEach(function(select){
 
-if(
-s.value&&
-selected.indexOf(s.value)<0
-){
-selected.push(s.value);
-}
+      if(
+        select.value &&
+        selected.indexOf(
+          select.value
+        )===-1
+      ){
 
-});
+        selected.push(
+          select.value
+        );
 
-$("leaderSeparateWrap").classList.toggle(
-"hidden",
-selected.length<2
-);
+      }
+
+    });
+
+  $("leaderSeparateWrap")
+    .classList.toggle(
+      "hidden",
+      selected.length<2
+    );
+
 }
 
 function refreshLeaderEvents(){
 
-document.querySelectorAll("#leaderRules .student-select").forEach(function(s){
-s.onchange=updateLeaderVisibility;
-});
+  document
+    .querySelectorAll(
+      "#leaderRules .student-select"
+    )
+    .forEach(function(select){
+
+      select.onchange=
+        updateLeaderVisibility;
+
+    });
+
 }
 
 function getPositionRules(){
 
-var out=[];
+  var result=[];
 
-document.querySelectorAll("#positionRules .position").forEach(function(r){
+  document
+    .querySelectorAll(
+      "#positionRules .position"
+    )
+    .forEach(function(rule){
 
-var s=r.querySelectorAll("select");
+      var selects=
+        rule.querySelectorAll(
+          "select"
+        );
 
-if(s.length<3||!s[0].value)return;
+      if(
+        selects.length<3 ||
+        !selects[0].value
+      ){
 
-out.push({
-name:s[0].value,
-index:(+s[1].value-1)*cols+(+s[2].value-1)
-});
+        return;
 
-});
+      }
 
-return out;
+      result.push({
+
+        name:
+          selects[0].value,
+
+        index:
+          (+selects[1].value-1)*
+            cols+
+          (+selects[2].value-1)
+
+      });
+
+    });
+
+  return result;
+
 }
 
 function getColumnRules(){
 
-var out=[];
+  var result=[];
 
-document.querySelectorAll("#columnRules .column").forEach(function(r){
+  document
+    .querySelectorAll(
+      "#columnRules .column"
+    )
+    .forEach(function(rule){
 
-var s=r.querySelectorAll("select");
+      var selects=
+        rule.querySelectorAll(
+          "select"
+        );
 
-if(s.length<3||!s[0].value)return;
+      if(
+        selects.length<3 ||
+        !selects[0].value
+      ){
 
-out.push({
-name:s[0].value,
-direction:s[1].value,
-limit:+s[2].value
-});
+        return;
 
-});
+      }
 
-return out;
+      result.push({
+
+        name:
+          selects[0].value,
+
+        direction:
+          selects[1].value,
+
+        limit:
+          +selects[2].value
+
+      });
+
+    });
+
+  return result;
+
 }
 
 function getLeaderNames(){
 
-var out=[];
+  var result=[];
 
-document.querySelectorAll("#leaderRules .student-select").forEach(function(s){
+  document
+    .querySelectorAll(
+      "#leaderRules .student-select"
+    )
+    .forEach(function(select){
 
-if(
-s.value&&
-out.indexOf(s.value)<0
-){
-out.push(s.value);
-}
-
-});
-
-return out;
-}
-
-function shuffle(a){
-
-a=a.slice();
-
-for(var i=a.length-1;i>0;i--){
-
-var j=Math.floor(Math.random()*(i+1));
-
-var t=a[i];
-a[i]=a[j];
-a[j]=t;
-}
-
-return a;
-}
-
-function distance(a,b){
-
-return Math.abs(a.row-b.row)+Math.abs(a.col-b.col);
-}
-
-function getPosition(result,name){
-
-for(var i=0;i<result.length;i++){
-
-if(
-result[i]&&
-result[i].name===name
-){
-
-return {
-row:Math.floor(i/cols),
-col:i%cols
-};
-
-}
-}
-
-return null;
-}
-
-function validColumnRule(result,rule){
-
-var p=getPosition(result,rule.name);
-
-if(!p)return true;
-
-if(rule.direction==="front"){
-return p.col+1<=rule.limit;
-}
-
-return cols-p.col<=rule.limit;
-}
-
-function sameGroup(a,b){
-
-var gc=+$("groupCols").value;
-var gr=+$("groupRows").value;
-
-if(gc){
-
-var ga=Math.floor(a.col/gc);
-var gb=Math.floor(b.col/gc);
-
-if(ga!==gb)return false;
-}
-
-if(gr){
-
-var ga2=Math.floor(a.row/gr);
-var gb2=Math.floor(b.row/gr);
-
-if(ga2!==gb2)return false;
-}
-
-return true;
-}
-
-function validLeaderGroups(result){
-
-if(!$("leaderSeparate").checked)return true;
-
-var leaders=getLeaderNames();
-
-if(leaders.length<2)return true;
-
-for(var i=0;i<leaders.length;i++){
-for(var j=i+1;j<leaders.length;j++){
-
-var a=getPosition(result,leaders[i]);
-var b=getPosition(result,leaders[j]);
-
-if(!a||!b)continue;
-
-if(sameGroup(a,b)){
-return false;
-}
-}
-}
-
-return true;
-}
-
-function makeResult(){
-
-var people=students.filter(function(s){
-return s.name;
-});
-
-if(!people.length){
-alert("先に座席へ名前を入力してください。");
-return null;
-}
-
-var result=Array(rows*cols).fill(null);
-var fixed={};
-
-if($("fixEmpty").checked){
-
-students.forEach(function(s,index){
-
-if(!s.name){
-
-result[index]={
-name:"",
-gender:""
-};
-
-}
-
-});
-
-}
-
-var available=[];
-
-for(var i=0;i<result.length;i++){
-
-if(!result[i]){
-available.push(i);
-}
-
-}
-
-var pos=getPositionRules();
-
-for(var p=0;p<pos.length;p++){
-
-var rule=pos[p];
-
-if(result[rule.index]){
-return null;
-}
-
-if(fixed[rule.name]){
-return null;
-}
-
-var person=people.find(function(x){
-return x.name===rule.name;
-});
-
-if(person){
-
-result[rule.index]={
-name:person.name,
-gender:person.gender
-};
-
-fixed[person.name]=true;
-}
-}
-
-var remaining=people.filter(function(p){
-return !fixed[p.name];
-});
-
-var candidates=available.filter(function(index){
-return !result[index];
-});
-
-if($("fixGender").checked){
-
-var male=shuffle(
-remaining.filter(function(p){
-return p.gender==="男";
-})
-);
-
-var female=shuffle(
-remaining.filter(function(p){
-return p.gender==="女";
-})
-);
-
-var unknown=shuffle(
-remaining.filter(function(p){
-return p.gender!=="男"&&p.gender!=="女";
-})
-);
-
-var maleSeats=candidates.filter(function(index){
-return students[index].gender==="男";
-});
-
-var femaleSeats=candidates.filter(function(index){
-return students[index].gender==="女";
-});
-
-var used={};
-
-for(var m=0;m<male.length;m++){
-
-if(maleSeats[m]){
-
-result[maleSeats[m]]=male[m];
-used[male[m].name]=true;
-
-}
-}
-
-for(var f=0;f<female.length;f++){
-
-if(femaleSeats[f]){
-
-result[femaleSeats[f]]=female[f];
-used[female[f].name]=true;
-
-}
-}
-
-var rest=remaining.filter(function(p){
-return !used[p.name];
-});
-
-var restSeats=[];
-
-for(var x=0;x<result.length;x++){
-if(!result[x])restSeats.push(x);
-}
-
-restSeats=shuffle(restSeats);
-rest=shuffle(rest);
-
-for(var z=0;z<rest.length&&z<restSeats.length;z++){
-
-result[restSeats[z]]=rest[z];
-
-}
-
-}else{
-
-candidates=shuffle(candidates);
-remaining=shuffle(remaining);
-
-for(var q=0;q<remaining.length&&q<candidates.length;q++){
-
-result[candidates[q]]=remaining[q];
-
-}
-
-}
-
-var columnRules=getColumnRules();
-
-for(var cr=0;cr<columnRules.length;cr++){
-
-if(!validColumnRule(result,columnRules[cr])){
-return null;
-}
-
-}
-
-var near=document.querySelectorAll("#nearRules .distance");
-
-for(var nr=0;nr<near.length;nr++){
-
-var ss=near[nr].querySelectorAll("select");
-var num=+near[nr].querySelector("input").value;
-
-if(ss.length<2||!ss[0].value||!ss[1].value)continue;
-
-var a=getPosition(result,ss[0].value);
-var b=getPosition(result,ss[1].value);
-
-if(a&&b&&distance(a,b)>num){
-return null;
-}
-}
-
-var far=document.querySelectorAll("#farRules .distance");
-
-for(var fr=0;fr<far.length;fr++){
-
-var fs=far[fr].querySelectorAll("select");
-var fn=+far[fr].querySelector("input").value;
-
-if(fs.length<2||!fs[0].value||!fs[1].value)continue;
-
-var fa=getPosition(result,fs[0].value);
-var fb=getPosition(result,fs[1].value);
-
-if(fa&&fb&&distance(fa,fb)<fn){
-return null;
-}
-}
-
-if(!validLeaderGroups(result)){
-return null;
-}
-
-return result;
-}
-
-function generateResult(){
-
-for(var attempt=0;attempt<10000;attempt++){
-
-var result=makeResult();
-
-if(result)return result;
-}
-
-alert("条件をすべて満たす座席を作れませんでした。条件を少し減らして試してください。");
-return null;
-}
-  function startPresentation(result){
-
-var overlay=$("presentation");
-var stage=$("presentationStage");
-
-stage.innerHTML="";
-overlay.classList.add("show");
-
-var type=$("animationType").value||"normal";
-var direction=$("animationDirection").value||"row";
-
-if(type==="slot"){
-startSlotPresentation(result,direction);
-}else{
-startNormalPresentation(result,direction);
-}
-
-}
-
-function startNormalPresentation(result,direction){
+      if(
+        select.value &&
+        result.indexOf(
+          select.value
+        )===-1
+      ){
 
-var stage=$("presentationStage");
+        result.push(
+          select.value
+        );
 
-stage.innerHTML="";
+      }
 
-var table=document.createElement("div");
-table.className="presentation-table";
-table.style.gridTemplateColumns="repeat("+cols+",100px)";
+    });
 
-for(var x=0;x<result.length;x++){
+  return result;
 
-var hidden=document.createElement("div");
-
-hidden.className="seat";
-hidden.style.background="#000";
-hidden.style.color="#000";
-hidden.textContent="";
-
-table.appendChild(hidden);
-}
-
-stage.appendChild(table);
-
-var order=[];
-
-if(direction==="row"){
-
-for(var r=0;r<rows;r++){
-for(var c=0;c<cols;c++){
-order.push(r*cols+c);
-}
-}
-
-}else{
-
-for(var c2=0;c2<cols;c2++){
-for(var r2=0;r2<rows;r2++){
-order.push(r2*cols+c2);
-}
-}
-
-}
-
-var n=0;
-
-var timer=setInterval(function(){
-
-if(n>=order.length){
-
-clearInterval(timer);
-return;
-
-}
-
-var idx=order[n];
-var p=result[idx];
-var box=table.children[idx];
-
-box.style.background="#fff";
-box.style.color=
-p&&p.gender==="男"
-?"var(--blue)"
-:p&&p.gender==="女"
-?"var(--red)"
-:"#333";
-
-box.textContent=p&&p.name?p.name:"空席";
-
-n++;
-
-},600);
-
-}
-
-function startSlotPresentation(result,direction){
-
-var stage=$("presentationStage");
-
-stage.innerHTML="";
-
-var order=[];
-
-if(direction==="row"){
-
-for(var r=0;r<rows;r++){
-for(var c=0;c<cols;c++){
-order.push(r*cols+c);
-}
-}
-
-}else{
-
-for(var c2=0;c2<cols;c2++){
-for(var r2=0;r2<rows;r2++){
-order.push(r2*cols+c2);
-}
-}
-
-}
-
-var table=document.createElement("div");
-table.className="presentation-table";
-table.style.gridTemplateColumns="repeat("+cols+",100px)";
-
-for(var i=0;i<result.length;i++){
-
-var b=document.createElement("div");
-
-b.className="seat";
-b.style.background="#000";
-b.style.color="#000";
-b.textContent="";
-
-table.appendChild(b);
-}
-
-stage.appendChild(table);
-
-var current=0;
-
-function nextSlot(){
-
-if(current>=order.length)return;
-
-var idx=order[current];
-var p=result[idx];
-var box=table.children[idx];
-
-box.style.background="#fff";
-
-var allNames=result
-.filter(function(x){return x&&x.name;})
-.map(function(x){return x.name;});
-
-if(!p||!p.name){
-
-box.style.color="#333";
-box.textContent="空席";
-
-current++;
-
-setTimeout(nextSlot,450);
-return;
-}
-
-var count=0;
-
-var rolling=setInterval(function(){
-
-var randomName=
-allNames[Math.floor(Math.random()*allNames.length)];
-
-box.style.color="#333";
-box.textContent=randomName;
-
-count++;
-
-if(count>=9){
-
-clearInterval(rolling);
-
-box.textContent=p.name;
-
-if(p.gender==="男"){
-box.style.color="var(--blue)";
-}else if(p.gender==="女"){
-box.style.color="var(--red)";
-}else{
-box.style.color="#333";
-}
-
-current++;
-
-setTimeout(nextSlot,180);
-
-}
-
-},55);
-
-}
-
-nextSlot();
-}
-
-$("closePresentation").onclick=function(){
-$("presentation").classList.remove("show");
-};
-
-$("shuffleBtn").onclick=function(){
-
-originalSeats=students.map(function(s){
-return {
-name:s.name,
-gender:s.gender
-};
-});
-
-hasPreviousSeat=true;
-
-var result=generateResult();
-
-if(!result)return;
-
-startPresentation(result);
-
-var type=$("animationType").value||"normal";
-var delay=type==="slot"
-?result.length*650
-:result.length*600;
-
-setTimeout(function(){
-
-students=result.map(function(x){
-return x||{
-name:"",
-gender:""
-};
-});
-
-render();
-refreshSelects();
-renderGenderColumns();
-
-$("status").textContent="席替えが完了しました！";
-
-},delay+1000);
-
-};
-
-$("resetBtn").onclick=function(){
-
-if(!hasPreviousSeat){
-
-$("status").textContent="戻せる席替え前の座席がありません。";
-return;
-
-}
-
-students=originalSeats.map(function(s){
-
-return {
-name:s.name,
-gender:s.gender
-};
-
-});
-
-render();
-refreshSelects();
-renderGenderColumns();
-
-$("status").textContent="席替え前の座席に戻しました。";
-};
-
-$("bulkToggle").onclick=function(){
-$("bulkArea").classList.toggle("hidden");
-};
-
-$("clearBtn").onclick=function(){
-
-students=[];
-
-for(var i=0;i<rows*cols;i++){
-
-students.push({
-name:"",
-gender:""
-});
-
-}
-
-originalSeats=[];
-hasPreviousSeat=false;
-
-render();
-refreshSelects();
-renderGenderColumns();
-
-$("status").textContent="座席表をクリアしました。";
-};
-
-$("applyBulk").onclick=function(){
-
-var text=$("bulkInput").value.trim();
-
-if(!text)return;
-
-var lines=text.split(/\r?\n/);
-
-var next=[];
-
-for(var i=0;i<rows*cols;i++){
-
-next.push({
-name:"",
-gender:""
-});
-
-}
-
-var index=0;
-
-lines.forEach(function(line){
-
-if(index>=next.length)return;
-
-var values=line
-.trim()
-.split(/[　\t,]+/)
-.filter(function(x){
-return x.trim();
-});
-
-values.forEach(function(value){
-
-if(index>=next.length)return;
-
-value=value.trim();
-
-if(value==="空席"){
-
-next[index]={
-name:"",
-gender:""
-};
-
-}else{
-
-next[index]={
-name:value,
-gender:""
-};
-
 }
-
-index++;
-
-});
-
-});
-
-students=next;
-
-render();
-refreshSelects();
-renderGenderColumns();
-
-$("status").textContent="一括入力を反映しました。";
-};
-
-$("saveBtn").onclick=function(){
-
-var canvas=drawSeatImage();
-
-var a=document.createElement("a");
-
-a.download="席替え_"+Date.now()+".png";
-a.href=canvas.toDataURL("image/png");
-
-a.click();
-};
-
-function drawSeatImage(){
-
-var scale=2;
-var pad=50;
-var cellW=130;
-var cellH=90;
-var gap=12;
+  function shuffleArray(array){
 
-var w=
-pad*2+
-cols*cellW+
-(cols-1)*gap;
+  var copy=array.slice();
 
-var h=
-pad*2+
-rows*cellH+
-(rows-1)*gap+
-70;
+  for(
+    var i=copy.length-1;
+    i>0;
+    i--
+  ){
 
-var canvas=$("exportCanvas");
+    var j=
+      Math.floor(
+        Math.random()*(i+1)
+      );
 
-canvas.width=w*scale;
-canvas.height=h*scale;
+    var temp=copy[i];
 
-var ctx=canvas.getContext("2d");
+    copy[i]=copy[j];
 
-ctx.scale(scale,scale);
-
-ctx.fillStyle="#fff";
-ctx.fillRect(0,0,w,h);
-
-ctx.fillStyle="#F5E342";
-ctx.fillRect(0,0,w,70);
-
-ctx.fillStyle="#333";
-ctx.font="bold 28px sans-serif";
-ctx.textAlign="center";
-
-ctx.fillText(
-"席替えメーカー",
-w/2,
-45
-);
-
-ctx.fillStyle="#eee";
-
-ctx.fillRect(
-pad,
-85,
-w-pad*2,
-28
-);
-
-ctx.fillStyle="#666";
-ctx.font="14px sans-serif";
-
-ctx.fillText(
-"黒板（前）",
-w/2,
-104
-);
-
-for(var r=0;r<rows;r++){
-
-for(var c=0;c<cols;c++){
-
-var x=
-pad+c*(cellW+gap);
-
-var y=
-130+r*(cellH+gap);
-
-var p=students[r*cols+c];
-
-ctx.strokeStyle="#333";
-ctx.lineWidth=2;
-
-ctx.strokeRect(
-x,
-y,
-cellW,
-cellH
-);
-
-ctx.fillStyle=
-p.gender==="男"
-?"#4A90E2"
-:p.gender==="女"
-?"#E85B67"
-:"#333";
-
-ctx.font="bold 18px sans-serif";
-ctx.textAlign="center";
-ctx.textBaseline="middle";
-
-ctx.fillText(
-p.name||"空席",
-x+cellW/2,
-y+cellH/2,
-cellW-12
-);
-
-}
-}
+    copy[j]=temp;
 
-return canvas;
   }
-  function printSeats(bottom){
 
-var area=$("printArea");
-
-area.innerHTML="";
-
-var title=document.createElement("div");
-
-title.className="print-page-title";
-title.textContent="席替え表";
-
-area.appendChild(title);
-
-var board=document.createElement("div");
-
-board.className="print-board";
-
-function black(){
-
-var b=document.createElement("div");
-
-b.className=
-"print-blackboard"+
-(bottom?" bottom":"");
-
-b.textContent="黒板";
-
-return b;
-}
-
-if(!bottom){
-board.appendChild(black());
-}
-
-var grid=document.createElement("div");
-
-grid.className="print-grid";
-grid.style.gridTemplateColumns=
-"repeat("+cols+",80px)";
-
-for(var r=0;r<rows;r++){
-
-for(var c=0;c<cols;c++){
-
-var p=students[r*cols+c];
-
-var d=document.createElement("div");
-
-d.className=
-"print-seat "+
-(
-p.gender==="男"
-?"male"
-:p.gender==="女"
-?"female"
-:""
-);
-
-d.textContent=p.name||"空席";
-
-grid.appendChild(d);
+  return copy;
 
 }
+
+
+function cloneStudents(list){
+
+  return list.map(function(student){
+
+    return {
+      name:student.name,
+      gender:student.gender
+    };
+
+  });
+
 }
 
-board.appendChild(grid);
 
-if(bottom){
-board.appendChild(black());
+function getFixedGender(){
+
+  var result=[];
+
+  for(var i=0;i<students.length;i++){
+
+    result.push(
+      students[i].gender
+    );
+
+  }
+
+  return result;
+
 }
 
-area.appendChild(board);
 
-setTimeout(function(){
-window.print();
-},100);
+function getEmptyPositions(){
+
+  var result=[];
+
+  students.forEach(function(student,index){
+
+    if(!student.name){
+
+      result.push(index);
+
+    }
+
+  });
+
+  return result;
+
 }
 
-$("printTopBtn").onclick=function(){
-printSeats(false);
-};
 
-$("printBottomBtn").onclick=function(){
-printSeats(true);
-};
+function getGenderAt(index){
 
-$("groupCols").onchange=render;
-$("groupRows").onchange=render;
+  if(
+    index<0 ||
+    index>=students.length
+  ){
+
+    return "";
+
+  }
+
+  return students[index].gender || "";
+
+}
+
+
+function sameGender(a,b){
+
+  if(!a || !b){
+
+    return true;
+
+  }
+
+  return a===b;
+
+}
+
+
+function findStudentIndex(
+  list,
+  name
+){
+
+  for(
+    var i=0;
+    i<list.length;
+    i++
+  ){
+
+    if(
+      list[i].name===name
+    ){
+
+      return i;
+
+    }
+
+  }
+
+  return -1;
+
+}
+
+
+function positionDistance(
+  a,
+  b
+){
+
+  var ar=Math.floor(a/cols);
+  var ac=a%cols;
+
+  var br=Math.floor(b/cols);
+  var bc=b%cols;
+
+  return Math.abs(ar-br)+
+         Math.abs(ac-bc);
+
+}
+
+
+function getGroupNumber(index){
+
+  var r=Math.floor(index/cols);
+  var c=index%cols;
+
+  var gc=
+    +$("groupCols").value;
+
+  var gr=
+    +$("groupRows").value;
+
+  var gx=
+    gc?
+    Math.floor(c/gc):
+    0;
+
+  var gy=
+    gr?
+    Math.floor(r/gr):
+    0;
+
+  if(!gc && !gr){
+
+    return 0;
+
+  }
+
+  if(!gc){
+
+    return gy;
+
+  }
+
+  if(!gr){
+
+    return gx;
+
+  }
+
+  return gy+"-"+gx;
+
+}
+
+
+function makeCandidates(
+  person,
+  available,
+  targetIndex,
+  fixedGender,
+  fixedEmpty
+){
+
+  var candidates=[];
+
+  available.forEach(function(index){
+
+    if(
+      fixedEmpty &&
+      !person.name
+    ){
+
+      return;
+
+    }
+
+    if(
+      fixedGender &&
+      person.gender &&
+      fixedGender[index] &&
+      person.gender!==fixedGender[index]
+    ){
+
+      return;
+
+    }
+
+    candidates.push(index);
+
+  });
+
+  return candidates;
+
+}
+
+
+function applyPositionRules(
+  result,
+  available
+){
+
+  var rules=
+    getPositionRules();
+
+  rules.forEach(function(rule){
+
+    var oldIndex=
+      findStudentIndex(
+        result,
+        rule.name
+      );
+
+    if(oldIndex<0){
+
+      return;
+
+    }
+
+    var target=
+      rule.index;
+
+    if(
+      available.indexOf(target)<0
+    ){
+
+      return;
+
+    }
+
+    var occupant=
+      result[target];
+
+    result[target]=
+      result[oldIndex];
+
+    result[oldIndex]=
+      occupant;
+
+    var ai=
+      available.indexOf(oldIndex);
+
+    var at=
+      available.indexOf(target);
+
+    if(ai>=0 && at>=0){
+
+      available[ai]=target;
+
+      available[at]=oldIndex;
+
+    }
+
+  });
+
+}
+
+
+function applyColumnRules(
+  result
+){
+
+  var rules=
+    getColumnRules();
+
+  rules.forEach(function(rule){
+
+    var index=
+      findStudentIndex(
+        result,
+        rule.name
+      );
+
+    if(index<0){
+
+      return;
+
+    }
+
+    var person=
+      result[index];
+
+    var currentRow=
+      Math.floor(index/cols);
+
+    var currentCol=
+      index%cols;
+
+    var limit=
+      Math.max(
+        1,
+        Math.min(
+          cols,
+          rule.limit
+        )
+      );
+
+    var targetCols=[];
+
+    for(
+      var c=0;
+      c<limit;
+      c++
+    ){
+
+      targetCols.push(
+        rule.direction==="front"
+        ?c
+        :cols-1-c
+      );
+
+    }
+
+    var target=
+      targetCols
+      .map(function(c){
+
+        return currentRow*cols+c;
+
+      })
+      .filter(function(i){
+
+        return i>=0 &&
+               i<result.length;
+
+      });
+
+    if(!target.length){
+
+      return;
+
+    }
+
+    var best=
+      target
+      .slice()
+      .sort(function(a,b){
+
+        return Math.abs(
+          (a%cols)-
+          currentCol
+        )-
+        Math.abs(
+          (b%cols)-
+          currentCol
+        );
+
+      })[0];
+
+    if(best===index){
+
+      return;
+
+    }
+
+    var other=
+      result[best];
+
+    result[best]=person;
+
+    result[index]=other;
+
+  });
+
+}
+
+
+function respectGender(
+  result,
+  originalGender,
+  fixed
+){
+
+  if(!fixed){
+
+    return result;
+
+  }
+
+  for(
+    var i=0;
+    i<result.length;
+    i++
+  ){
+
+    var person=
+      result[i];
+
+    if(
+      !person.name ||
+      !person.gender
+    ){
+
+      continue;
+
+    }
+
+    if(
+      originalGender[i] &&
+      person.gender===
+      originalGender[i]
+    ){
+
+      continue;
+
+    }
+
+    var swap=-1;
+
+    for(
+      var j=i+1;
+      j<result.length;
+      j++
+    ){
+
+      if(
+        result[j].gender===
+        originalGender[i]
+      ){
+
+        swap=j;
+        break;
+
+      }
+
+    }
+
+    if(swap>=0){
+
+      var temp=
+        result[i];
+
+      result[i]=
+        result[swap];
+
+      result[swap]=
+        temp;
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+function respectEmpty(
+  result,
+  emptyPositions
+){
+
+  var current=[];
+
+  result.forEach(function(person,index){
+
+    if(!person.name){
+
+      current.push(index);
+
+    }
+
+  });
+
+
+  emptyPositions.forEach(function(target,k){
+
+    if(
+      !current.length
+    ){
+
+      return;
+
+    }
+
+    var source=
+      current[k%current.length];
+
+    if(source===target){
+
+      return;
+
+    }
+
+    var temp=
+      result[target];
+
+    result[target]=
+      result[source];
+
+    result[source]=
+      temp;
+
+  });
+
+  return result;
+
+}
+
+
+function enforceLeaders(
+  result
+){
+
+  var leaders=
+    getLeaderNames();
+
+  if(leaders.length<2){
+
+    return result;
+
+  }
+
+  if(
+    !$("leaderSeparate").checked
+  ){
+
+    return result;
+
+  }
+
+  var gc=
+    +$("groupCols").value;
+
+  var gr=
+    +$("groupRows").value;
+
+
+  if(!gc && !gr){
+
+    return result;
+
+  }
+
+
+  for(
+    var i=0;
+    i<leaders.length;
+    i++
+  ){
+
+    for(
+      var j=i+1;
+      j<leaders.length;
+      j++
+    ){
+
+      var a=
+        findStudentIndex(
+          result,
+          leaders[i]
+        );
+
+      var b=
+        findStudentIndex(
+          result,
+          leaders[j]
+        );
+
+      if(
+        a<0 ||
+        b<0
+      ){
+
+        continue;
+
+      }
+
+      if(
+        getGroupNumber(a)!==
+        getGroupNumber(b)
+      ){
+
+        continue;
+
+      }
+
+      var swapped=false;
+
+      for(
+        var x=0;
+        x<result.length;
+        x++
+      ){
+
+        if(
+          x===a ||
+          x===b
+        ){
+
+          continue;
+
+        }
+
+        if(
+          getGroupNumber(x)===
+          getGroupNumber(a)
+        ){
+
+          continue;
+
+        }
+
+        var occupant=
+          result[x];
+
+        if(
+          !occupant.name
+        ){
+
+          continue;
+
+        }
+
+        var y=
+          findStudentIndex(
+            result,
+            occupant.name
+          );
+
+        if(y<0){
+
+          continue;
+
+        }
+
+        result[b]=
+          occupant;
+
+        result[x]=
+          result[b];
+
+        result[x]=
+          result[a];
+
+        result[a]=
+          occupant;
+
+        swapped=true;
+
+        break;
+
+      }
+
+      if(!swapped){
+
+        var fallback=-1;
+
+        for(
+          var z=0;
+          z<result.length;
+          z++
+        ){
+
+          if(
+            z!==a &&
+            z!==b &&
+            getGroupNumber(z)!==
+            getGroupNumber(a)
+          ){
+
+            fallback=z;
+            break;
+
+          }
+
+        }
+
+        if(fallback>=0){
+
+          var t=
+            result[b];
+
+          result[b]=
+            result[fallback];
+
+          result[fallback]=
+            t;
+
+        }
+
+      }
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+function applyDistanceRules(
+  result
+){
+
+  var near=
+    $("nearRules")
+    .querySelectorAll(".distance");
+
+  var far=
+    $("farRules")
+    .querySelectorAll(".distance");
+
+
+  near.forEach(function(rule){
+
+    var selects=
+      rule.querySelectorAll(
+        "select"
+      );
+
+    if(selects.length<2){
+
+      return;
+
+    }
+
+    var a=
+      findStudentIndex(
+        result,
+        selects[0].value
+      );
+
+    var b=
+      findStudentIndex(
+        result,
+        selects[1].value
+      );
+
+    if(
+      a<0 ||
+      b<0
+    ){
+
+      return;
+
+    }
+
+    var limit=
+      +rule.querySelector(
+        "input[type=number]"
+      ).value || 1;
+
+    if(
+      positionDistance(a,b)<=limit
+    ){
+
+      return;
+
+    }
+
+    var best=-1;
+    var bestDistance=Infinity;
+
+    for(
+      var i=0;
+      i<result.length;
+      i++
+    ){
+
+      if(
+        i===a ||
+        i===b
+      ){
+
+        continue;
+
+      }
+
+      var d=
+        positionDistance(
+          i,
+          b
+        );
+
+      if(d<bestDistance){
+
+        bestDistance=d;
+        best=i;
+
+      }
+
+    }
+
+    if(best>=0){
+
+      var temp=
+        result[a];
+
+      result[a]=
+        result[best];
+
+      result[best]=
+        temp;
+
+    }
+
+  });
+
+
+  far.forEach(function(rule){
+
+    var selects=
+      rule.querySelectorAll(
+        "select"
+      );
+
+    if(selects.length<2){
+
+      return;
+
+    }
+
+    var a=
+      findStudentIndex(
+        result,
+        selects[0].value
+      );
+
+    var b=
+      findStudentIndex(
+        result,
+        selects[1].value
+      );
+
+    if(
+      a<0 ||
+      b<0
+    ){
+
+      return;
+
+    }
+
+    var limit=
+      +rule.querySelector(
+        "input[type=number]"
+      ).value || 1;
+
+    if(
+      positionDistance(a,b)>=limit
+    ){
+
+      return;
+
+    }
+
+    var best=-1;
+    var bestDistance=-1;
+
+    for(
+      var i=0;
+      i<result.length;
+      i++
+    ){
+
+      if(
+        i===a ||
+        i===b
+      ){
+
+        continue;
+
+      }
+
+      var d=
+        positionDistance(
+          i,
+          b
+        );
+
+      if(d>bestDistance){
+
+        bestDistance=d;
+        best=i;
+
+      }
+
+    }
+
+    if(best>=0){
+
+      var temp2=
+        result[a];
+
+      result[a]=
+        result[best];
+
+      result[best]=
+        temp2;
+
+    }
+
+  });
+
+  return result;
+
+}
+
+
+function generateSeats(){
+
+  var original=
+    cloneStudents(
+      students
+    );
+
+  originalSeats=
+    cloneStudents(
+      students
+    );
+
+  hasPreviousSeat=true;
+
+
+  var fixedGender=
+    getFixedGender();
+
+  var emptyPositions=
+    getEmptyPositions();
+
+
+  var result=
+    shuffleArray(
+      cloneStudents(
+        students
+      )
+    );
+
+
+  /*
+   * 空席固定
+   */
+
+  if(
+    $("fixEmpty").checked
+  ){
+
+    result=
+      respectEmpty(
+        result,
+        emptyPositions
+      );
+
+  }
+
+
+  /*
+   * 男女固定
+   */
+
+  if(
+    $("fixGender").checked
+  ){
+
+    result=
+      respectGender(
+        result,
+        fixedGender,
+        true
+      );
+
+  }
+
+
+  /*
+   * 位置指定
+   */
+
+  var available=[];
+
+  for(
+    var i=0;
+    i<result.length;
+    i++
+  ){
+
+    available.push(i);
+
+  }
+
+  applyPositionRules(
+    result,
+    available
+  );
+
+
+  /*
+   * 列指定
+   */
+
+  applyColumnRules(
+    result
+  );
+
+
+  /*
+   * 班長
+   */
+
+  enforceLeaders(
+    result
+  );
+
+
+  /*
+   * 距離条件
+   */
+
+  applyDistanceRules(
+    result
+  );
+
+
+  /*
+   * 最終的な固定処理
+   */
+
+  if(
+    $("fixEmpty").checked
+  ){
+
+    result=
+      respectEmpty(
+        result,
+        emptyPositions
+      );
+
+  }
+
+
+  if(
+    $("fixGender").checked
+  ){
+
+    result=
+      respectGender(
+        result,
+        fixedGender,
+        true
+      );
+
+  }
+
+
+  /*
+   * 全員移動
+   */
+
+  if(
+    $("moveAll").checked
+  ){
+
+    var changed=false;
+
+    for(
+      var n=0;
+      n<result.length;
+      n++
+    ){
+
+      if(
+        result[n].name &&
+        result[n].name===
+        original[n].name
+      ){
+
+        changed=true;
+
+        break;
+
+      }
+
+    }
+
+    if(changed){
+
+      result=
+        shuffleArray(
+          result
+        );
+
+      if(
+        $("fixEmpty").checked
+      ){
+
+        result=
+          respectEmpty(
+            result,
+            emptyPositions
+          );
+
+      }
+
+      if(
+        $("fixGender").checked
+      ){
+
+        result=
+          respectGender(
+            result,
+            fixedGender,
+            true
+          );
+
+      }
+
+    }
+
+  }
+
+
+  students=
+    result;
+
+  return result;
+
+    }
+  function saveAsImage(){
+
+  var grid=
+    $("seatGrid");
+
+  if(!grid){
+
+    return;
+
+  }
+
+  var canvas=
+    $("exportCanvas");
+
+  var scale=2;
+
+  var seatWidth=92;
+  var seatHeight=64;
+
+  var gap=3;
+
+  var groupCols=
+    +$("groupCols").value;
+
+  var groupRows=
+    +$("groupRows").value;
+
+  var extraX=
+    groupCols
+    ? Math.ceil(cols/groupCols)*15
+    : 0;
+
+  var extraY=
+    groupRows
+    ? Math.ceil(rows/groupRows)*15
+    : 0;
+
+  canvas.width=
+    cols*seatWidth*scale+
+    (cols-1)*gap*scale+
+    extraX*scale;
+
+  canvas.height=
+    rows*seatHeight*scale+
+    (rows-1)*gap*scale+
+    extraY*scale;
+
+  var ctx=
+    canvas.getContext("2d");
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.fillStyle="#ffffff";
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+
+  for(
+    var r=0;
+    r<rows;
+    r++
+  ){
+
+    for(
+      var c=0;
+      c<cols;
+      c++
+    ){
+
+      var index=
+        r*cols+c;
+
+      var x=
+        c*seatWidth*scale+
+        c*gap*scale;
+
+      var y=
+        r*seatHeight*scale+
+        r*gap*scale;
+
+      if(
+        groupCols &&
+        c>0 &&
+        c%groupCols===0
+      ){
+
+        x+=
+          Math.floor(
+            c/groupCols
+          )*15*scale;
+
+      }
+
+      if(
+        groupRows &&
+        r>0 &&
+        r%groupRows===0
+      ){
+
+        y+=
+          Math.floor(
+            r/groupRows
+          )*15*scale;
+
+      }
+
+      ctx.strokeStyle=
+        "#d6d6d6";
+
+      ctx.lineWidth=
+        2*scale;
+
+      roundRect(
+        ctx,
+        x,
+        y,
+        seatWidth*scale,
+        seatHeight*scale,
+        10*scale
+      );
+
+      ctx.stroke();
+
+      var person=
+        students[index];
+
+      ctx.font=
+        "bold 15px sans-serif";
+
+      if(
+        person.gender==="男"
+      ){
+
+        ctx.fillStyle=
+          "#4A90E2";
+
+      }
+
+      else if(
+        person.gender==="女"
+      ){
+
+        ctx.fillStyle=
+          "#E85B67";
+
+      }
+
+      else{
+
+        ctx.fillStyle=
+          "#333333";
+
+      }
+
+      ctx.fillText(
+        person.name ||
+        "空席",
+        x+
+          seatWidth*scale/2,
+        y+
+          seatHeight*scale/2,
+        seatWidth*scale-12*scale
+      );
+
+    }
+
+  }
+
+  var link=
+    document.createElement("a");
+
+  link.download=
+    "座席表.png";
+
+  link.href=
+    canvas.toDataURL(
+      "image/png"
+    );
+
+  link.click();
+
+}
+
+
+function roundRect(
+  ctx,
+  x,
+  y,
+  width,
+  height,
+  radius
+){
+
+  var r=
+    Math.min(
+      radius,
+      width/2,
+      height/2
+    );
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x+r,
+    y
+  );
+
+  ctx.arcTo(
+    x+width,
+    y,
+    x+width,
+    y+height,
+    r
+  );
+
+  ctx.arcTo(
+    x+width,
+    y+height,
+    x,
+    y+height,
+    r
+  );
+
+  ctx.arcTo(
+    x,
+    y+height,
+    x,
+    y,
+    r
+  );
+
+  ctx.arcTo(
+    x,
+    y,
+    x+width,
+    y,
+    r
+  );
+
+  ctx.closePath();
+
+}
+
+
+function createPrintArea(
+  bottom
+){
+
+  var area=
+    $("printArea");
+
+  area.innerHTML="";
+
+  var title=
+    document.createElement("div");
+
+  title.className=
+    "print-page-title";
+
+  title.textContent=
+    "座席表";
+
+  area.appendChild(title);
+
+  var board=
+    document.createElement("div");
+
+  board.className=
+    "print-board";
+
+  var blackboard=
+    document.createElement("div");
+
+  blackboard.className=
+    "print-blackboard";
+
+  blackboard.textContent=
+    "黒板";
+
+  if(!bottom){
+
+    board.appendChild(
+      blackboard
+    );
+
+  }
+
+  var grid=
+    document.createElement("div");
+
+  grid.className=
+    "print-grid";
+
+  grid.style.gridTemplateColumns=
+    "repeat("+cols+",80px)";
+
+  var groupCols=
+    +$("groupCols").value;
+
+  var groupRows=
+    +$("groupRows").value;
+
+  for(
+    var r=0;
+    r<rows;
+    r++
+  ){
+
+    for(
+      var c=0;
+      c<cols;
+      c++
+    ){
+
+      var index=
+        r*cols+c;
+
+      var seat=
+        document.createElement("div");
+
+      seat.className=
+        "print-seat";
+
+      var person=
+        students[index];
+
+      if(
+        person.gender==="男"
+      ){
+
+        seat.classList.add(
+          "male"
+        );
+
+      }
+
+      if(
+        person.gender==="女"
+      ){
+
+        seat.classList.add(
+          "female"
+        );
+
+      }
+
+      seat.textContent=
+        person.name ||
+        "空席";
+
+      if(
+        groupCols &&
+        c<cols-1 &&
+        (c+1)%groupCols===0
+      ){
+
+        seat.style.marginRight=
+          "20px";
+
+      }
+
+      if(
+        groupRows &&
+        r<rows-1 &&
+        (r+1)%groupRows===0
+      ){
+
+        seat.style.marginBottom=
+          "20px";
+
+      }
+
+      grid.appendChild(
+        seat
+      );
+
+    }
+
+  }
+
+  board.appendChild(
+    grid
+  );
+
+  if(bottom){
+
+    var bottomBoard=
+      document.createElement("div");
+
+    bottomBoard.className=
+      "print-blackboard bottom";
+
+    bottomBoard.textContent=
+      "黒板";
+
+    board.appendChild(
+      bottomBoard
+    );
+
+  }
+
+  area.appendChild(
+    board
+  );
+
+}
+
+
+function printSeats(
+  bottom
+){
+
+  createPrintArea(
+    bottom
+  );
+
+  setTimeout(function(){
+
+    window.print();
+
+  },100);
+
+}
+
+
+function showStatus(
+  message
+){
+
+  $("status").textContent=
+    message;
+
+  setTimeout(function(){
+
+    if(
+      $("status").textContent===
+      message
+    ){
+
+      $("status").textContent="";
+
+    }
+
+  },2500);
+
+}
+
+
+function getAnimationOrder(){
+
+  var order=[];
+
+  if(
+    $("animationDirection").value===
+    "col"
+  ){
+
+    for(
+      var c=0;
+      c<cols;
+      c++
+    ){
+
+      for(
+        var r=0;
+        r<rows;
+        r++
+      ){
+
+        order.push(
+          r*cols+c
+        );
+
+      }
+
+    }
+
+  }
+
+  else{
+
+    for(
+      var r=0;
+      r<rows;
+      r++
+    ){
+
+      for(
+        var c=0;
+        c<cols;
+        c++
+      ){
+
+        order.push(
+          r*cols+c
+        );
+
+      }
+
+    }
+
+  }
+
+  return order;
+
+}
+
+
+function renderPresentationSeat(
+  index
+){
+
+  var seat=
+    document.createElement("div");
+
+  seat.className=
+    "seat";
+
+  var person=
+    students[index];
+
+  seat.textContent=
+    person.name ||
+    "空席";
+
+  if(!person.name){
+
+    seat.classList.add(
+      "empty"
+    );
+
+  }
+
+  if(
+    person.gender==="男"
+  ){
+
+    seat.style.color=
+      "var(--blue)";
+
+  }
+
+  else if(
+    person.gender==="女"
+  ){
+
+    seat.style.color=
+      "var(--red)";
+
+  }
+
+  return seat;
+
+}
+
+
+function showNormalAnimation(){
+
+  var stage=
+    $("presentationStage");
+
+  stage.innerHTML="";
+
+  var grid=
+    document.createElement("div");
+
+  grid.className=
+    "presentation-table";
+
+  grid.style.gridTemplateColumns=
+    "repeat("+cols+",100px)";
+
+  stage.appendChild(
+    grid
+  );
+
+  var order=
+    getAnimationOrder();
+
+  var pointer=0;
+
+  function addNext(){
+
+    if(
+      pointer>=order.length
+    ){
+
+      return;
+
+    }
+
+    grid.appendChild(
+      renderPresentationSeat(
+        order[pointer]
+      )
+    );
+
+    pointer++;
+
+    setTimeout(
+      addNext,
+      600
+    );
+
+  }
+
+  addNext();
+
+}
+
+
+function showSlotAnimation(){
+
+  var stage=
+    $("presentationStage");
+
+  stage.innerHTML="";
+
+  var box=
+    document.createElement("div");
+
+  box.className=
+    "slot-box";
+
+  var name=
+    document.createElement("div");
+
+  name.className=
+    "slot-name";
+
+  box.appendChild(
+    name
+  );
+
+  stage.appendChild(
+    box
+  );
+
+  var pool=
+    students
+    .filter(function(person){
+
+      return !!person.name;
+
+    });
+
+  if(!pool.length){
+
+    name.textContent=
+      "空席";
+
+    return;
+
+  }
+
+  var counter=0;
+
+  var timer=
+    setInterval(function(){
+
+      var random=
+        pool[
+          Math.floor(
+            Math.random()*
+            pool.length
+          )
+        ];
+
+      name.textContent=
+        random.name;
+
+      counter++;
+
+      if(counter>=18){
+
+        clearInterval(
+          timer
+        );
+
+        showFinalPresentation();
+
+      }
+
+    },90);
+
+}
+
+
+function showFinalPresentation(){
+
+  var stage=
+    $("presentationStage");
+
+  stage.innerHTML="";
+
+  var grid=
+    document.createElement("div");
+
+  grid.className=
+    "presentation-table";
+
+  grid.style.gridTemplateColumns=
+    "repeat("+cols+",100px)";
+
+  var order=
+    getAnimationOrder();
+
+  order.forEach(function(index){
+
+    grid.appendChild(
+      renderPresentationSeat(
+        index
+      )
+    );
+
+  });
+
+  stage.appendChild(
+    grid
+  );
+
+}
+
+
+function startPresentation(){
+
+  $("presentation")
+    .classList.add("show");
+
+  if(
+    $("animationType").value===
+    "slot"
+  ){
+
+    showSlotAnimation();
+
+  }
+
+  else{
+
+    showNormalAnimation();
+
+  }
+
+}
+
+
+function clearSeats(){
+
+  if(
+    !confirm(
+      "座席表をクリアしますか？"
+    )
+  ){
+
+    return;
+
+  }
+
+  for(
+    var i=0;
+    i<students.length;
+    i++
+  ){
+
+    students[i]={
+      name:"",
+      gender:""
+    };
+
+  }
+
+  originalSeats=
+    cloneStudents(
+      students
+    );
+
+  hasPreviousSeat=false;
+
+  render();
+
+  refreshSelects();
+
+  renderGenderColumns();
+
+  showStatus(
+    "座席表をクリアしました"
+  );
+
+}
+
+
+function resetSeats(){
+
+  if(
+    !hasPreviousSeat
+  ){
+
+    showStatus(
+      "席替え前の座席がありません"
+    );
+
+    return;
+
+  }
+
+  students=
+    cloneStudents(
+      originalSeats
+    );
+
+  render();
+
+  refreshSelects();
+
+  renderGenderColumns();
+
+  showStatus(
+    "席替え前の座席に戻しました"
+  );
+
+}
+
 
 $("cols").onchange=function(){
-resizeSeats(+this.value,rows);
+
+  var oldStudents=
+    cloneStudents(
+      students
+    );
+
+  cols=
+    +this.value;
+
+  var newLength=
+    rows*cols;
+
+  students=[];
+
+  for(
+    var i=0;
+    i<newLength;
+    i++
+  ){
+
+    students.push(
+      oldStudents[i] ||
+      {
+        name:"",
+        gender:""
+      }
+    );
+
+  }
+
+  render();
+
+  refreshSelects();
+
 };
+
 
 $("rows").onchange=function(){
-resizeSeats(cols,+this.value);
+
+  var oldStudents=
+    cloneStudents(
+      students
+    );
+
+  rows=
+    +this.value;
+
+  var newLength=
+    rows*cols;
+
+  students=[];
+
+  for(
+    var i=0;
+    i<newLength;
+    i++
+  ){
+
+    students.push(
+      oldStudents[i] ||
+      {
+        name:"",
+        gender:""
+      }
+    );
+
+  }
+
+  render();
+
+  refreshSelects();
+
 };
 
-function resizeSeats(nc,nr){
 
-var next=[];
+$("groupCols").onchange=
+  render;
 
-for(var i=0;i<nc*nr;i++){
+$("groupRows").onchange=
+  render;
 
-next.push({
-name:"",
-gender:""
-});
 
-}
+$("bulkToggle").onclick=
+  function(){
 
-for(var r=0;r<Math.min(rows,nr);r++){
+    $("bulkArea")
+      .classList.toggle(
+        "hidden"
+      );
 
-for(var c=0;c<Math.min(cols,nc);c++){
+  };
 
-next[r*nc+c]=students[r*cols+c];
 
-}
-}
+$("applyBulk").onclick=
+  function(){
 
-cols=nc;
-rows=nr;
-students=next;
+    var text=
+      $("bulkInput").value
+      .trim();
+
+    if(!text){
+
+      return;
+
+    }
+
+    var lines=
+      text
+      .split(/\r?\n/)
+      .filter(function(line){
+
+        return line.trim();
+
+      });
+
+    var values=[];
+
+    lines.forEach(function(line){
+
+      line
+        .split(/[,\t、\s]+/)
+        .forEach(function(value){
+
+          if(
+            value.trim()
+          ){
+
+            values.push(
+              value.trim()
+            );
+
+          }
+
+        });
+
+    });
+
+    students=[];
+
+    var total=
+      rows*cols;
+
+    for(
+      var i=0;
+      i<total;
+      i++
+    ){
+
+      var value=
+        values[i] || "";
+
+      if(
+        value==="空席"
+      ){
+
+        value="";
+
+      }
+
+      students.push({
+
+        name:value,
+
+        gender:""
+
+      });
+
+    }
+
+    originalSeats=
+      cloneStudents(
+        students
+      );
+
+    hasPreviousSeat=true;
+
+    render();
+
+    refreshSelects();
+
+    showStatus(
+      "一括入力を反映しました"
+    );
+
+  };
+
+
+$("clearBtn").onclick=
+  clearSeats;
+
+
+$("resetBtn").onclick=
+  resetSeats;
+
+
+$("addColumn").onclick=
+  function(){
+
+    addColumnRule();
+
+  };
+
+
+$("addPosition").onclick=
+  function(){
+
+    addPositionRule();
+
+  };
+
+
+$("addNear").onclick=
+  function(){
+
+    addDistanceRule(
+      "nearRules",
+      "以内"
+    );
+
+  };
+
+
+$("addFar").onclick=
+  function(){
+
+    addDistanceRule(
+      "farRules",
+      "以上"
+    );
+
+  };
+
+
+$("addLeader").onclick=
+  function(){
+
+    addLeaderRule();
+
+  };
+
+
+$("shuffleBtn").onclick=
+  function(){
+
+    if(
+      students.every(function(person){
+
+        return !person.name;
+
+      })
+    ){
+
+      showStatus(
+        "生徒を入力してください"
+      );
+
+      return;
+
+    }
+
+    generateSeats();
+
+    render();
+
+    refreshSelects();
+
+    renderGenderColumns();
+
+    startPresentation();
+
+  };
+
+
+$("closePresentation").onclick=
+  function(){
+
+    $("presentation")
+      .classList.remove(
+        "show"
+      );
+
+  };
+
+
+$("saveBtn").onclick=
+  function(){
+
+    saveAsImage();
+
+  };
+
+
+$("printTopBtn").onclick=
+  function(){
+
+    printSeats(false);
+
+  };
+
+
+$("printBottomBtn").onclick=
+  function(){
+
+    printSeats(true);
+
+  };
+
+
+/*
+ * 初期表示
+ */
 
 render();
+
 refreshSelects();
+
 renderGenderColumns();
-updatePositionOptions();
-}
-
-function updatePositionOptions(){
-
-document.querySelectorAll("#positionRules .position").forEach(function(r){
-
-var ss=r.querySelectorAll("select");
-
-if(ss.length<3)return;
-
-var av=+ss[1].value;
-var bv=+ss[2].value;
-
-ss[1].innerHTML="";
-
-for(var i=1;i<=rows;i++){
-
-var o=document.createElement("option");
-
-o.value=i;
-o.textContent="前から"+i+"列目";
-
-ss[1].appendChild(o);
-}
-
-ss[1].value=Math.min(av||1,rows);
-
-ss[2].innerHTML="";
-
-for(var j=1;j<=cols;j++){
-
-var q=document.createElement("option");
-
-q.value=j;
-q.textContent="横から"+j+"列目";
-
-ss[2].appendChild(q);
-}
-
-ss[2].value=Math.min(bv||1,cols);
-
-});
-}
-
-$("addColumn").onclick=function(){
-
-addColumnRule();
-refreshSelects();
-
-};
-
-$("addPosition").onclick=function(){
-
-addPositionRule();
-refreshSelects();
-
-};
-
-$("addNear").onclick=function(){
-
-addDistanceRule("nearRules","席以下");
-refreshSelects();
-
-};
-
-$("addFar").onclick=function(){
-
-addDistanceRule("farRules","席以上空ける");
-refreshSelects();
-
-};
-
-$("addLeader").onclick=function(){
-
-addLeaderRule();
-refreshSelects();
-refreshLeaderEvents();
-
-};
-
-render();
-renderGenderColumns();
-refreshLeaderEvents();
 
 })();
 </script>
