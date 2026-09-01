@@ -14,9 +14,7 @@
   --red:#e85b67;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
@@ -26,13 +24,8 @@ html,body{
   background:#fafafa;
 }
 
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
 
 .header{
   background:var(--yellow);
@@ -40,7 +33,6 @@ button{
   text-align:center;
   box-shadow:0 2px 8px #0002;
 }
-
 .header h1{
   margin:0;
   font-size:30px;
@@ -85,10 +77,7 @@ button{
   font-size:13px;
 }
 
-.seat-wrap{
-  overflow:auto;
-  padding:5px;
-}
+.seat-wrap{overflow:auto;padding:5px}
 
 .seat-grid{
   display:grid;
@@ -120,21 +109,11 @@ button{
   font-weight:500;
 }
 
-.seat.male{
-  color:var(--blue);
-}
+.seat.male{color:var(--blue)}
+.seat.female{color:var(--red)}
 
-.seat.female{
-  color:var(--red);
-}
-
-.gap-r{
-  margin-right:15px;
-}
-
-.gap-b{
-  margin-bottom:15px;
-}
+.gap-r{margin-right:15px}
+.gap-b{margin-bottom:15px}
 
 .setting-grid{
   display:grid;
@@ -174,9 +153,7 @@ textarea{
   margin-top:7px;
 }
 
-.bulk-btn,
-.add,
-.remove{
+.bulk-btn,.add,.remove{
   border:0;
   background:#eee;
   border-radius:9px;
@@ -188,11 +165,7 @@ textarea{
   margin-top:10px;
 }
 
-.bulk-btn:hover,
-.add:hover,
-.remove:hover{
-  background:#ddd;
-}
+.bulk-btn:hover,.add:hover,.remove:hover{background:#ddd}
 
 .rule-list{
   display:flex;
@@ -200,11 +173,7 @@ textarea{
   gap:8px;
 }
 
-/* 近づける・離すの条件追加部分だけ間隔を確保 */
-#nearRules,
-#farRules{
-  margin-bottom:14px;
-}
+#nearRules,#farRules{margin-bottom:14px}
 
 #nearRules + .add,
 #farRules + .add{
@@ -245,29 +214,18 @@ textarea{
   margin-top:18px;
 }
 
-.main-btn,
-.sub-btn{
+.main-btn,.sub-btn{
   border:0;
   border-radius:11px;
   padding:13px 22px;
   font-weight:800;
 }
 
-.main-btn{
-  background:var(--yellow);
-}
+.main-btn{background:var(--yellow)}
+.main-btn:hover{background:#d9c900}
 
-.main-btn:hover{
-  background:#d9c900;
-}
-
-.sub-btn{
-  background:#eee;
-}
-
-.sub-btn:hover{
-  background:#ddd;
-}
+.sub-btn{background:#eee}
+.sub-btn:hover{background:#ddd}
 
 .check{
   display:flex;
@@ -348,9 +306,7 @@ textarea{
   color:white;
 }
 
-
 /* モーダル */
-
 .modal{
   display:none;
   position:fixed;
@@ -362,9 +318,7 @@ textarea{
   padding:20px;
 }
 
-.modal.show{
-  display:flex;
-}
+.modal.show{display:flex}
 
 .modal-box{
   width:min(430px,100%);
@@ -374,9 +328,7 @@ textarea{
   box-shadow:0 15px 50px #0004;
 }
 
-.modal-box h3{
-  margin:0 0 18px;
-}
+.modal-box h3{margin:0 0 18px}
 
 .modal-actions{
   display:flex;
@@ -391,7 +343,10 @@ textarea{
   padding:12px;
   font-weight:800;
 }
- .presentation{
+
+/* 続き */
+
+.presentation{
   display:none;
   position:fixed;
   inset:0;
@@ -400,9 +355,7 @@ textarea{
   overflow:auto;
 }
 
-.presentation.show{
-  display:block;
-}
+.presentation.show{display:block}
 
 .presentation-head{
   height:72px;
@@ -485,23 +438,12 @@ textarea{
   animation:seatPop .28s ease;
 }
 
-.presentation-seat.male{
-  color:var(--blue);
-}
-
-.presentation-seat.female{
-  color:var(--red);
-}
+.presentation-seat.male{color:var(--blue)}
+.presentation-seat.female{color:var(--red)}
 
 @keyframes seatPop{
-  from{
-    transform:scale(.75);
-    opacity:0;
-  }
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
+  from{transform:scale(.75);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 .slot-seat{
@@ -509,23 +451,13 @@ textarea{
 }
 
 @keyframes slotFlash{
-  0%{
-    transform:scale(.97);
-  }
-  50%{
-    transform:scale(1.03);
-  }
-  100%{
-    transform:scale(.97);
-  }
+  0%{transform:scale(.97)}
+  50%{transform:scale(1.03)}
+  100%{transform:scale(.97)}
 }
-
 
 /* 印刷 */
-
-#printArea{
-  display:none;
-}
+#printArea{display:none}
 
 .print-page-title{
   text-align:center;
@@ -575,28 +507,13 @@ textarea{
   justify-content:center;
 }
 
-.print-seat.male{
-  color:var(--blue);
-}
-
-.print-seat.female{
-  color:var(--red);
-}
-
+.print-seat.male{color:var(--blue)}
+.print-seat.female{color:var(--red)}
 
 @media(max-width:750px){
-
-  .container{
-    padding:12px 9px;
-  }
-
-  .card{
-    padding:15px;
-  }
-
-  .setting-grid{
-    grid-template-columns:1fr;
-  }
+  .container{padding:12px 9px}
+  .card{padding:15px}
+  .setting-grid{grid-template-columns:1fr}
 
   .rule.column,
   .rule.position,
@@ -605,9 +522,7 @@ textarea{
     grid-template-columns:1fr 1fr;
   }
 
-  .remove{
-    width:100%;
-  }
+  .remove{width:100%}
 
   .seat{
     width:72px;
@@ -615,9 +530,7 @@ textarea{
     font-size:12px;
   }
 
-  .presentation-stage{
-    padding:15px;
-  }
+  .presentation-stage{padding:15px}
 
   .presentation-seat{
     width:70px;
@@ -626,12 +539,8 @@ textarea{
   }
 }
 
-
 @media print{
-
-  body{
-    background:white;
-  }
+  body{background:white}
 
   body>*:not(#printArea){
     display:none!important;
@@ -645,13 +554,11 @@ textarea{
 </style>
 </head>
 
-
 <body>
 
 <header class="header">
   <h1>席替えメーカー</h1>
 </header>
-
 
 <main class="container">
 
@@ -694,7 +601,6 @@ textarea{
 </section>
 
 
-
 <section class="card">
 
 <h2 class="title">設定</h2>
@@ -718,7 +624,6 @@ textarea{
 </div>
 
 </div>
-
 
 <h3 class="sub">班</h3>
 
@@ -748,53 +653,32 @@ textarea{
 
 </div>
 
-
 <h3 class="sub">列の指定</h3>
-
 <div id="columnRules" class="rule-list"></div>
 
-<button id="addColumn" class="add">
-＋ 条件を追加
-</button>
-
+<button id="addColumn" class="add">＋ 条件を追加</button>
 
 <h3 class="sub">位置の指定</h3>
-
 <div id="positionRules" class="rule-list"></div>
 
-<button id="addPosition" class="add">
-＋ 条件を追加
-</button>
-
+<button id="addPosition" class="add">＋ 条件を追加</button>
 
 <h3 class="sub">生徒同士を近づける</h3>
-
 <div id="nearRules" class="rule-list"></div>
 
-<button id="addNear" class="add">
-＋ 条件を追加
-</button>
-
+<button id="addNear" class="add">＋ 条件を追加</button>
 
 <h3 class="sub">生徒同士を離す</h3>
-
 <div id="farRules" class="rule-list"></div>
 
-<button id="addFar" class="add">
-＋ 条件を追加
-</button>
-
+<button id="addFar" class="add">＋ 条件を追加</button>
 
 <h3 class="sub">班長を指定する</h3>
-
 <div id="leaderRules" class="rule-list"></div>
 
-<button id="addLeader" class="add">
-＋ 条件を追加
-</button>
+<button id="addLeader" class="add">＋ 条件を追加</button>
 
 </section>
-
 
 
 <section class="card">
@@ -824,7 +708,6 @@ textarea{
 
 </div>
 
-
 <label class="check">
 <input type="checkbox" id="moveAll">
 今の座席から全員移動させる
@@ -835,6 +718,10 @@ textarea{
 男女の座席を固定する
 </label>
 
+<label class="check">
+<input type="checkbox" id="fixEmpty">
+空席の位置を固定する
+</label>
 
 <div class="actions">
 
@@ -851,7 +738,6 @@ textarea{
 <div id="status" class="status"></div>
 
 </section>
-
 
 
 <section class="card">
@@ -883,7 +769,6 @@ textarea{
 </main>
 
 
-
 <div id="inputModal" class="modal">
 
 <div class="modal-box">
@@ -898,7 +783,6 @@ textarea{
 </div>
 
 <div class="field" style="margin-top:12px">
-
 <label>
 男女
 <select id="modalGender">
@@ -907,7 +791,6 @@ textarea{
 <option value="女">女</option>
 </select>
 </label>
-
 </div>
 
 <div class="modal-actions">
@@ -924,7 +807,6 @@ textarea{
 
 </div>
 </div>
-
 
 
 <div id="presentation" class="presentation">
@@ -949,23 +831,26 @@ textarea{
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 
-
 <script>
 (function(){
 
 "use strict";
-
 
 var rows=6;
 var cols=6;
 
 var students=[];
 
+var seatGender=[];
+
 var columnGenders=[];
 
 var currentEditingIndex=-1;
 
+var beforeShuffleStudents=null;
 
+
+/* 初期状態 */
 for(var i=0;i<36;i++){
 
   students.push({
@@ -973,17 +858,31 @@ for(var i=0;i<36;i++){
     gender:""
   });
 
-}
+  seatGender.push("");
 
+}
 
 for(var c=0;c<6;c++){
   columnGenders.push("");
 }
 
 
-
 function $(id){
   return document.getElementById(id);
+}
+
+
+function cloneStudents(arr){
+
+  return arr.map(function(s){
+
+    return {
+      name:s.name || "",
+      gender:s.gender || ""
+    };
+
+  });
+
 }
 
 
@@ -1011,7 +910,6 @@ function fillSelect(id,max,selected){
 }
 
 
-
 function saveState(){
 
   try{
@@ -1019,27 +917,28 @@ function saveState(){
     var state={
 
       rows:rows,
-
       cols:cols,
 
       students:students,
 
+      seatGender:seatGender,
+
       columnGenders:columnGenders,
 
-      groupCols:$("groupCols").value,
+      beforeShuffleStudents:
+        beforeShuffleStudents,
 
+      groupCols:$("groupCols").value,
       groupRows:$("groupRows").value,
 
       animation:$("animation").value,
-
       animationAxis:$("animationAxis").value,
 
       moveAll:$("moveAll").checked,
-
-      fixGender:$("fixGender").checked
+      fixGender:$("fixGender").checked,
+      fixEmpty:$("fixEmpty").checked
 
     };
-
 
     localStorage.setItem(
       "changeSeatsMakerState",
@@ -1051,7 +950,6 @@ function saveState(){
 }
 
 
-
 function loadState(){
 
   try{
@@ -1061,14 +959,11 @@ function loadState(){
         "changeSeatsMakerState"
       );
 
-
     if(!raw){
       return;
     }
 
-
     var data=JSON.parse(raw);
-
 
     if(
       typeof data.rows==="number" &&
@@ -1080,24 +975,29 @@ function loadState(){
 
     }
 
-
     if(Array.isArray(data.students)){
       students=data.students;
     }
 
-
-    if(Array.isArray(data.columnGenders)){
-
-      columnGenders=
-        data.columnGenders.slice(0,cols);
-
+    if(Array.isArray(data.seatGender)){
+      seatGender=data.seatGender;
     }
 
+    while(seatGender.length<rows*cols){
+      seatGender.push("");
+    }
+
+    seatGender=
+      seatGender.slice(0,rows*cols);
+
+    if(Array.isArray(data.columnGenders)){
+      columnGenders=
+        data.columnGenders.slice(0,cols);
+    }
 
     while(columnGenders.length<cols){
       columnGenders.push("");
     }
-
 
     while(students.length<rows*cols){
 
@@ -1108,20 +1008,25 @@ function loadState(){
 
     }
 
-
     students=
       students.slice(0,rows*cols);
+
+
+    if(Array.isArray(data.beforeShuffleStudents)){
+
+      beforeShuffleStudents=
+        data.beforeShuffleStudents;
+
+    }
 
   }catch(e){}
 
 }
 
 
-
 function names(){
 
   var result=[];
-
 
   students.forEach(function(s){
 
@@ -1136,11 +1041,9 @@ function names(){
 
   });
 
-
   return result;
 
 }
-
 
 
 function studentSelect(){
@@ -1149,7 +1052,6 @@ function studentSelect(){
 
   s.className="student-select";
 
-
   var first=document.createElement("option");
 
   first.value="";
@@ -1157,7 +1059,6 @@ function studentSelect(){
   first.textContent="生徒を選択";
 
   s.appendChild(first);
-
 
   names().forEach(function(name){
 
@@ -1171,11 +1072,9 @@ function studentSelect(){
 
   });
 
-
   return s;
 
 }
-
 
 
 function refreshSelects(){
@@ -1200,7 +1099,6 @@ function refreshSelects(){
 }
 
 
-
 function render(){
 
   var grid=$("seatGrid");
@@ -1209,7 +1107,6 @@ function render(){
 
   grid.style.gridTemplateColumns=
     "repeat("+cols+",92px)";
-
 
   var groupCols=
     +$("groupCols").value;
@@ -1224,7 +1121,6 @@ function render(){
 
       var index=r*cols+c;
 
-
       var seat=
         document.createElement("button");
 
@@ -1232,23 +1128,18 @@ function render(){
 
       seat.className="seat";
 
-
       var person=students[index];
-
 
       seat.textContent=
         person.name || "空席";
-
 
       if(!person.name){
         seat.classList.add("empty");
       }
 
-
       if(person.gender==="男"){
         seat.classList.add("male");
       }
-
 
       if(person.gender==="女"){
         seat.classList.add("female");
@@ -1300,7 +1191,6 @@ function render(){
 }
 
 
-
 function openSeatModal(index){
 
   currentEditingIndex=index;
@@ -1313,7 +1203,6 @@ function openSeatModal(index){
 
   $("inputModal").classList.add("show");
 
-
   setTimeout(function(){
 
     $("modalName").focus();
@@ -1321,7 +1210,6 @@ function openSeatModal(index){
   },50);
 
 }
-
 
 
 $("modalCancel").onclick=function(){
@@ -1332,13 +1220,11 @@ $("modalCancel").onclick=function(){
 };
 
 
-
 $("modalSave").onclick=function(){
 
   if(currentEditingIndex<0){
     return;
   }
-
 
   students[currentEditingIndex]={
 
@@ -1348,10 +1234,8 @@ $("modalSave").onclick=function(){
 
   };
 
-
   $("inputModal")
     .classList.remove("show");
-
 
   render();
 
@@ -1360,7 +1244,6 @@ $("modalSave").onclick=function(){
   saveState();
 
 };
-
 
 
 $("inputModal").addEventListener(
@@ -1375,7 +1258,6 @@ $("inputModal").addEventListener(
 
   }
 );
-
 
 
 function renderGenderColumns(){
@@ -1404,7 +1286,6 @@ function renderGenderColumns(){
     title.textContent=
       (c+1)+"列目";
 
-
     box.appendChild(title);
 
 
@@ -1416,27 +1297,21 @@ function renderGenderColumns(){
     var none=document.createElement("button");
 
     none.type="button";
-
     none.textContent="指定なし";
-
     none.className="none";
 
 
     var male=document.createElement("button");
 
     male.type="button";
-
     male.textContent="男";
-
     male.className="male";
 
 
     var female=document.createElement("button");
 
     female.type="button";
-
     female.textContent="女";
-
     female.className="female";
 
 
@@ -1504,7 +1379,6 @@ function renderGenderColumns(){
 }
 
 
-
 function setColumnGender(column,gender){
 
   columnGenders[column]=gender;
@@ -1513,7 +1387,6 @@ function setColumnGender(column,gender){
   for(var r=0;r<rows;r++){
 
     var index=r*cols+column;
-
 
     if(students[index].name){
 
@@ -1529,7 +1402,6 @@ function setColumnGender(column,gender){
   saveState();
 
 }
-
 
 
 function removeButton(parent,rule){
@@ -1555,7 +1427,6 @@ function removeButton(parent,rule){
 }
 
 
-
 function addColumnRule(){
 
   var parent=$("columnRules");
@@ -1566,7 +1437,6 @@ function addColumnRule(){
 
 
   var person=studentSelect();
-
 
   var direction=
     document.createElement("select");
@@ -1606,7 +1476,6 @@ function addColumnRule(){
   parent.appendChild(rule);
 
 }
-
 
 
 function addPositionRule(){
@@ -1665,13 +1534,16 @@ function addPositionRule(){
 
   parent.appendChild(rule);
 
- }
- function addDistanceRule(type){
+}
+
+
+function addDistanceRule(type){
 
   var parent=
     type==="near"
       ? $("nearRules")
       : $("farRules");
+
 
   var rule=document.createElement("div");
 
@@ -1690,8 +1562,7 @@ function addPositionRule(){
 
   number.min="0";
 
-  number.value=
-    type==="near" ? "2" : "2";
+  number.value="2";
 
 
   var label=
@@ -1725,7 +1596,6 @@ function addPositionRule(){
 }
 
 
-
 function addLeaderRule(){
 
   var parent=$("leaderRules");
@@ -1749,37 +1619,107 @@ function addLeaderRule(){
 }
 
 
+$("addColumn").onclick=addColumnRule;
 
-$("addColumn").onclick=
-  addColumnRule;
+$("addPosition").onclick=addPositionRule;
+
+$("addNear").onclick=function(){
+  addDistanceRule("near");
+};
+
+$("addFar").onclick=function(){
+  addDistanceRule("far");
+};
+
+$("addLeader").onclick=addLeaderRule;
+  /* ================================
+   座席数変更
+================================ */
+
+function rebuildSeats(){
+
+  var newCount=rows*cols;
+
+  var oldStudents=students.slice();
+
+  students=[];
+
+  for(var i=0;i<newCount;i++){
+
+    if(oldStudents[i]){
+
+      students.push({
+        name:oldStudents[i].name || "",
+        gender:oldStudents[i].gender || ""
+      });
+
+    }else{
+
+      students.push({
+        name:"",
+        gender:""
+      });
+
+    }
+
+  }
+
+  seatGender=[];
+
+  for(var j=0;j<newCount;j++){
+
+    seatGender.push("");
+
+  }
+
+  columnGenders=
+    columnGenders.slice(0,cols);
+
+  while(columnGenders.length<cols){
+    columnGenders.push("");
+  }
+
+  render();
+  saveState();
+
+}
 
 
-$("addPosition").onclick=
-  addPositionRule;
+/* ================================
+   座席数変更イベント
+================================ */
 
-
-$("addNear").onclick=
+$("cols").addEventListener(
+  "change",
   function(){
-    addDistanceRule("near");
-  };
+
+    cols=parseInt(this.value,10);
+
+    rebuildSeats();
+
+  }
+);
 
 
-$("addFar").onclick=
+$("rows").addEventListener(
+  "change",
   function(){
-    addDistanceRule("far");
-  };
+
+    rows=parseInt(this.value,10);
+
+    rebuildSeats();
+
+  }
+);
 
 
-$("addLeader").onclick=
-  addLeaderRule;
-
-
+/* ================================
+   一括入力
+================================ */
 
 $("bulkBtn").onclick=function(){
 
-  var text=
-    $("bulkInput").value.trim();
-
+  var text=$("bulkInput").value.trim();
 
   if(!text){
 
@@ -1791,63 +1731,72 @@ $("bulkBtn").onclick=function(){
   }
 
 
-  var lines=
-    text
-      .split(/\r?\n/)
-      .map(function(line){
-        return line.trim();
-      })
-      .filter(function(line){
-        return line!=="";
-      });
+  /*
+   空白・全角空白・改行のいずれでも区切れる
+  */
 
-
-  var tokens=[];
-
-
-  lines.forEach(function(line){
-
-    var parts=
-      line.split(/[\s　]+/);
-
-
-    parts.forEach(function(p){
-
-      if(p.trim()){
-        tokens.push(p.trim());
-      }
-
+  var list=text
+    .split(/[\s　]+/)
+    .filter(function(x){
+      return x.trim()!=="";
     });
 
-  });
 
+  var max=rows*cols;
 
-  for(var i=0;i<rows*cols;i++){
+  for(var i=0;i<max;i++){
 
-    var value=
-      tokens[i] || "";
+    var value=list[i] || "";
 
+    /*
+      「空席」は空欄として扱う
+    */
 
     if(value==="空席"){
 
       students[i]={
         name:"",
-        gender:""
+        gender:students[i]
+          ? students[i].gender || ""
+          : ""
       };
 
     }else{
 
-      students[i].name=value;
+      students[i]={
+        name:value,
+        gender:students[i]
+          ? students[i].gender || ""
+          : ""
+      };
 
-      /*
-       * 一括入力時は既に設定されている
-       * 男女情報を勝手に消さない
-       */
-      if(
-        typeof students[i].gender!=="string"
-      ){
+    }
 
-        students[i].gender="";
+  }
+
+
+  /*
+    一括入力しても
+    列ごとの男女設定は消さない
+  */
+
+  for(var c=0;c<cols;c++){
+
+    if(
+      columnGenders[c]==="男" ||
+      columnGenders[c]==="女"
+    ){
+
+      for(var r=0;r<rows;r++){
+
+        var index=r*cols+c;
+
+        if(students[index].name){
+
+          students[index].gender=
+            columnGenders[c];
+
+        }
 
       }
 
@@ -1869,8 +1818,22 @@ $("bulkBtn").onclick=function(){
 };
 
 
+/* ================================
+   座席表をクリア
+================================ */
 
 $("clearSeatsBtn").onclick=function(){
+
+  if(
+    !confirm(
+      "座席表の名前をすべて消しますか？"
+    )
+  ){
+
+    return;
+
+  }
+
 
   for(var i=0;i<students.length;i++){
 
@@ -1882,8 +1845,10 @@ $("clearSeatsBtn").onclick=function(){
   }
 
 
-  $("bulkInput").value="";
-
+  /*
+    列ごとの男女設定は
+    そのまま維持する
+  */
 
   render();
 
@@ -1898,114 +1863,129 @@ $("clearSeatsBtn").onclick=function(){
 };
 
 
+/* ================================
+   座席数セレクト初期化
+================================ */
 
-function setupSizeSelects(){
+fillSelect("cols",6,cols);
 
-  fillSelect("cols",6,cols);
-
-  fillSelect("rows",6,rows);
-
-
-  $("cols").onchange=function(){
-
-    cols=
-      parseInt(this.value,10);
+fillSelect("rows",6,rows);
 
 
-    resizeStudents();
+/* ================================
+   設定値の読み込み
+================================ */
 
-    render();
+function restoreSettings(){
 
-    refreshSelects();
+  try{
 
-    saveState();
+    var raw=
+      localStorage.getItem(
+        "changeSeatsMakerState"
+      );
 
-  };
+    if(!raw)return;
 
-
-  $("rows").onchange=function(){
-
-    rows=
-      parseInt(this.value,10);
-
-
-    resizeStudents();
-
-    render();
-
-    refreshSelects();
-
-    saveState();
-
-  };
-
-}
+    var data=JSON.parse(raw);
 
 
+    if(data.groupCols!==undefined){
 
-function resizeStudents(){
-
-  var old=students.slice();
-
-  var oldRows=
-    Math.ceil(old.length /
-      Math.max(cols,1));
-
-  var newStudents=[];
-
-
-  /*
-   * 現在の配列を可能な限り
-   * 新しいサイズへ引き継ぐ
-   */
-  for(var r=0;r<rows;r++){
-
-    for(var c=0;c<cols;c++){
-
-      var index=
-        r*cols+c;
-
-
-      if(old[index]){
-
-        newStudents.push(
-          old[index]
-        );
-
-      }else{
-
-        newStudents.push({
-          name:"",
-          gender:""
-        });
-
-      }
+      $("groupCols").value=
+        data.groupCols;
 
     }
 
-  }
+    if(data.groupRows!==undefined){
+
+      $("groupRows").value=
+        data.groupRows;
+
+    }
 
 
-  students=newStudents;
+    if(data.animation){
+
+      $("animation").value=
+        data.animation;
+
+    }
 
 
-  columnGenders=
-    columnGenders.slice(0,cols);
+    if(data.animationAxis){
+
+      $("animationAxis").value=
+        data.animationAxis;
+
+    }
 
 
-  while(columnGenders.length<cols){
+    $("moveAll").checked=
+      !!data.moveAll;
 
-    columnGenders.push("");
+    $("fixGender").checked=
+      !!data.fixGender;
 
-  }
+    $("fixEmpty").checked=
+      !!data.fixEmpty;
+
+
+  }catch(e){}
 
 }
 
 
+/* ================================
+   設定変更時の保存
+================================ */
 
-function getRuleData(){
+[
+  "groupCols",
+  "groupRows",
+  "animation",
+  "animationAxis"
+].forEach(function(id){
 
-  var data={
+  $(id).addEventListener(
+    "change",
+    function(){
+
+      render();
+
+      saveState();
+
+    }
+  );
+
+});
+
+
+[
+  "moveAll",
+  "fixGender",
+  "fixEmpty"
+].forEach(function(id){
+
+  $(id).addEventListener(
+    "change",
+    function(){
+
+      saveState();
+
+    }
+  );
+
+});
+
+
+/* ================================
+   条件取得
+================================ */
+
+function getRuleValues(){
+
+  var result={
     column:[],
     position:[],
     near:[],
@@ -2021,17 +2001,16 @@ function getRuleData(){
       var selects=
         rule.querySelectorAll("select");
 
-      data.column.push({
+      result.column.push({
 
         name:selects[0].value,
 
         direction:selects[1].value,
 
-        number:
-          parseInt(
-            selects[2].value,
-            10
-          )
+        number:parseInt(
+          selects[2].value,
+          10
+        )
 
       });
 
@@ -2045,21 +2024,19 @@ function getRuleData(){
       var selects=
         rule.querySelectorAll("select");
 
-      data.position.push({
+      result.position.push({
 
         name:selects[0].value,
 
-        row:
-          parseInt(
-            selects[1].value,
-            10
-          ),
+        row:parseInt(
+          selects[1].value,
+          10
+        ),
 
-        col:
-          parseInt(
-            selects[2].value,
-            10
-          )
+        col:parseInt(
+          selects[2].value,
+          10
+        )
 
       });
 
@@ -2076,17 +2053,16 @@ function getRuleData(){
       var input=
         rule.querySelector("input");
 
-      data.near.push({
+      result.near.push({
 
         a:selects[0].value,
 
         b:selects[1].value,
 
-        distance:
-          parseInt(
-            input.value,
-            10
-          )
+        distance:parseInt(
+          input.value,
+          10
+        ) || 0
 
       });
 
@@ -2103,17 +2079,16 @@ function getRuleData(){
       var input=
         rule.querySelector("input");
 
-      data.far.push({
+      result.far.push({
 
         a:selects[0].value,
 
         b:selects[1].value,
 
-        distance:
-          parseInt(
-            input.value,
-            10
-          )
+        distance:parseInt(
+          input.value,
+          10
+        ) || 0
 
       });
 
@@ -2124,74 +2099,30 @@ function getRuleData(){
     .querySelectorAll("#leaderRules .rule")
     .forEach(function(rule){
 
-      var selects=
-        rule.querySelectorAll("select");
+      var select=
+        rule.querySelector("select");
 
-      data.leader.push(
-        selects[0].value
-      );
+      if(select.value){
+
+        result.leader.push(
+          select.value
+        );
+
+      }
 
     });
 
 
-  return data;
+  return result;
 
 }
 
 
+/* ================================
+   名前 → 現在位置
+================================ */
 
-function shuffleArray(arr){
-
-  var a=arr.slice();
-
-
-  for(var i=a.length-1;i>0;i--){
-
-    var j=
-      Math.floor(
-        Math.random()*(i+1)
-      );
-
-
-    var temp=a[i];
-
-    a[i]=a[j];
-
-    a[j]=temp;
-
-  }
-
-
-  return a;
-
-}
-
-
-
-function distanceBetween(a,b){
-
-  var ar=
-    Math.floor(a/cols);
-
-  var ac=
-    a%cols;
-
-
-  var br=
-    Math.floor(b/cols);
-
-  var bc=
-    b%cols;
-
-
-  return Math.abs(ar-br)+
-         Math.abs(ac-bc);
-
-}
-
-
-
-function findStudentIndex(arr,name){
+function findStudent(name,arr){
 
   for(var i=0;i<arr.length;i++){
 
@@ -2206,102 +2137,201 @@ function findStudentIndex(arr,name){
 
   }
 
-
   return -1;
 
 }
 
 
+/* ================================
+   行・列
+================================ */
 
-function positionOf(arr,name){
+function rowOf(index){
 
-  return findStudentIndex(arr,name);
+  return Math.floor(index/cols);
 
 }
 
 
+function colOf(index){
 
-function validArrangement(arr){
+  return index%cols;
 
-  var rules=getRuleData();
-
-
-  /*
-   * 位置指定
-   */
-  for(var i=0;i<rules.position.length;i++){
-
-    var rule=
-      rules.position[i];
-
-    if(!rule.name){
-      continue;
-    }
+}
 
 
-    var index=
-      positionOf(
-        arr,
-        rule.name
-      );
+/* ================================
+   座席間距離
+================================ */
 
+function seatDistance(a,b){
 
-    if(index<0){
-      return false;
-    }
+  var ar=rowOf(a);
+  var ac=colOf(a);
 
-
-    var target=
-      (rule.row-1)*cols+
-      (rule.col-1);
-
-
-    if(index!==target){
-      return false;
-    }
-
-  }
-
+  var br=rowOf(b);
+  var bc=colOf(b);
 
   /*
-   * 列指定
-   */
-  for(var j=0;j<rules.column.length;j++){
+    座席間の距離を
+    縦横の差の合計として扱う
+  */
 
-    var cr=
-      rules.column[j];
+  return Math.abs(ar-br)+Math.abs(ac-bc);
 
-    if(!cr.name){
-      continue;
-    }
+}
 
 
-    var index=
-      positionOf(
-        arr,
-        cr.name
-      );
+/* ================================
+   男女固定用
+================================ */
+
+function genderOfStudent(person){
+
+  return person.gender || "";
+
+}
 
 
-    if(index<0){
-      return false;
-    }
+function makeGenderPools(arr){
+
+  var pools={
+    "男":[],
+    "女":[],
+    "":[],
+    "empty":[]
+  };
 
 
-    var row=
-      Math.floor(index/cols);
+  for(var i=0;i<arr.length;i++){
 
+    var p=arr[i];
 
-    if(cr.direction==="front"){
+    if(!p || !p.name){
 
-      if(row+1>cr.number){
-        return false;
-      }
+      pools.empty.push(i);
 
     }else{
 
-      if(rows-row>cr.number){
-        return false;
+      var g=
+        genderOfStudent(p);
+
+      if(g==="男"){
+
+        pools["男"].push(i);
+
+      }else if(g==="女"){
+
+        pools["女"].push(i);
+
+      }else{
+
+        pools[""].push(i);
+
+      }
+
+    }
+
+  }
+
+
+  return pools;
+
+}
+
+
+/* ================================
+   列男女固定
+================================ */
+
+function allowedGenderForColumn(c){
+
+  if(
+    columnGenders[c]==="男" ||
+    columnGenders[c]==="女"
+  ){
+
+    return columnGenders[c];
+
+  }
+
+  return "";
+
+}
+
+
+/* ================================
+   シャッフル
+================================ */
+
+function shuffleArray(arr){
+
+  var a=arr.slice();
+
+  for(var i=a.length-1;i>0;i--){
+
+    var j=
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+    var temp=a[i];
+
+    a[i]=a[j];
+
+    a[j]=temp;
+
+  }
+
+  return a;
+
+}
+
+
+/* ================================
+   候補生成
+================================ */
+
+function createCandidate(){
+
+  var original=
+    cloneStudents(students);
+
+  var result=
+    new Array(rows*cols);
+
+  for(var i=0;i<result.length;i++){
+
+    result[i]={
+      name:"",
+      gender:""
+    };
+
+  }
+
+
+  var used=
+    new Array(original.length)
+      .fill(false);
+
+
+  /*
+    空席固定
+  */
+
+  if($("fixEmpty").checked){
+
+    for(var e=0;e<original.length;e++){
+
+      if(!original[e].name){
+
+        result[e]={
+          name:"",
+          gender:""
+        };
+
+        used[e]=true;
+
       }
 
     }
@@ -2310,92 +2340,401 @@ function validArrangement(arr){
 
 
   /*
-   * 近づける
-   */
-  for(var n=0;n<rules.near.length;n++){
+    男女固定
+    → 男子は男子として指定された席から
+       女子は女子として指定された席から選ぶ
+  */
 
-    var nr=
-      rules.near[n];
-
-
-    if(!nr.a || !nr.b){
-      continue;
-    }
-
-
-    var a=
-      positionOf(arr,nr.a);
-
-    var b=
-      positionOf(arr,nr.b);
-
-
-    if(a<0 || b<0){
-      return false;
-    }
-
-
-    if(
-      distanceBetween(a,b)>
-      nr.distance
-    ){
-
-      return false;
-
-    }
-
-  }
-
-
-  /*
-   * 離す
-   */
-  for(var f=0;f<rules.far.length;f++){
-
-    var fr=
-      rules.far[f];
-
-
-    if(!fr.a || !fr.b){
-      continue;
-    }
-
-
-    var fa=
-      positionOf(arr,fr.a);
-
-    var fb=
-      positionOf(arr,fr.b);
-
-
-    if(fa<0 || fb<0){
-      return false;
-    }
-
-
-    if(
-      distanceBetween(fa,fb)<
-      fr.distance
-    ){
-
-      return false;
-
-    }
-
-  }
-
-
-  /*
-   * 男女固定
-   */
   if($("fixGender").checked){
 
-    for(var g=0;g<arr.length;g++){
+    var pools=
+      makeGenderPools(original);
+
+
+    for(var c=0;c<cols;c++){
+
+      var required=
+        allowedGenderForColumn(c);
 
       if(
-        students[g].gender &&
-        arr[g].gender!==
-        students[g].gender
+        required!==""
+      ){
+
+        var pool=
+          shuffleArray(
+            pools[required]
+          );
+
+        for(var r=0;r<rows;r++){
+
+          var idx=r*cols+c;
+
+          if(used[idx])continue;
+
+          if(pool.length){
+
+            var source=
+              pool.shift();
+
+            if(!used[source]){
+
+              result[idx]={
+                name:
+                  original[source].name,
+                gender:
+                  original[source].gender
+              };
+
+              used[source]=true;
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    まだ配置されていない生徒
+  */
+
+  var remaining=[];
+
+  for(var s=0;s<original.length;s++){
+
+    if(!used[s]){
+
+      remaining.push(s);
+
+    }
+
+  }
+
+
+  remaining=
+    shuffleArray(remaining);
+
+
+  /*
+    残りの席へ配置
+  */
+
+  for(var target=0;
+      target<result.length;
+      target++){
+
+    if(used[target])continue;
+
+    if(result[target].name)continue;
+
+    if(!remaining.length)break;
+
+
+    var chosen=-1;
+
+
+    /*
+      列男女指定がある場合、
+      その性別を優先
+    */
+
+    var requiredGender=
+      allowedGenderForColumn(
+        colOf(target)
+      );
+
+
+    if(requiredGender){
+
+      for(var q=0;q<remaining.length;q++){
+
+        var sourceIndex=
+          remaining[q];
+
+        if(
+          original[sourceIndex].gender===
+          requiredGender
+        ){
+
+          chosen=q;
+          break;
+
+        }
+
+      }
+
+    }
+
+
+    if(chosen<0){
+
+      chosen=0;
+
+    }
+
+
+    var source=
+      remaining.splice(
+        chosen,
+        1
+      )[0];
+
+
+    result[target]={
+      name:
+        original[source].name,
+
+      gender:
+        original[source].gender
+    };
+
+  }
+
+
+  return result;
+
+    }
+  /* ================================
+   条件を満たしているか確認
+================================ */
+
+function checkColumnRules(candidate,rules){
+
+  for(var i=0;i<rules.column.length;i++){
+
+    var rule=rules.column[i];
+
+    if(!rule.name)continue;
+
+    var index=findStudent(
+      rule.name,
+      candidate
+    );
+
+    if(index<0)return false;
+
+    var row=rowOf(index);
+
+    var target=
+      rule.direction==="front"
+        ? rule.number-1
+        : rows-rule.number;
+
+    if(rule.direction==="front"){
+
+      if(row>target)return false;
+
+    }else{
+
+      if(row<target)return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* ================================
+   位置指定
+================================ */
+
+function checkPositionRules(candidate,rules){
+
+  for(var i=0;i<rules.position.length;i++){
+
+    var rule=rules.position[i];
+
+    if(!rule.name)continue;
+
+    var index=findStudent(
+      rule.name,
+      candidate
+    );
+
+    if(index<0)return false;
+
+    if(
+      rowOf(index)!==rule.row-1 ||
+      colOf(index)!==rule.col-1
+    ){
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* ================================
+   近づける条件
+================================ */
+
+function checkNearRules(candidate,rules){
+
+  for(var i=0;i<rules.near.length;i++){
+
+    var rule=rules.near[i];
+
+    if(!rule.a || !rule.b)continue;
+
+    var a=findStudent(
+      rule.a,
+      candidate
+    );
+
+    var b=findStudent(
+      rule.b,
+      candidate
+    );
+
+    if(a<0 || b<0)return false;
+
+    if(
+      seatDistance(a,b)>
+      rule.distance
+    ){
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* ================================
+   離す条件
+================================ */
+
+function checkFarRules(candidate,rules){
+
+  for(var i=0;i<rules.far.length;i++){
+
+    var rule=rules.far[i];
+
+    if(!rule.a || !rule.b)continue;
+
+    var a=findStudent(
+      rule.a,
+      candidate
+    );
+
+    var b=findStudent(
+      rule.b,
+      candidate
+    );
+
+    if(a<0 || b<0)return false;
+
+    if(
+      seatDistance(a,b)<
+      rule.distance
+    ){
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* ================================
+   班の配置
+================================ */
+
+function groupInfo(index){
+
+  var gc=+$("groupCols").value;
+  var gr=+$("groupRows").value;
+
+  if(!gc && !gr){
+
+    return {
+      x:0,
+      y:0
+    };
+
+  }
+
+  return {
+
+    x:gc
+      ? Math.floor(colOf(index)/gc)
+      : 0,
+
+    y:gr
+      ? Math.floor(rowOf(index)/gr)
+      : 0
+
+  };
+
+}
+
+
+/* ================================
+   班長チェック
+================================ */
+
+function checkLeaders(candidate,rules){
+
+  if(!rules.leader.length){
+    return true;
+  }
+
+  var leaders=
+    rules.leader.map(function(name){
+
+      return findStudent(
+        name,
+        candidate
+      );
+
+    });
+
+
+  for(var i=0;i<leaders.length;i++){
+
+    if(leaders[i]<0){
+      return false;
+    }
+
+  }
+
+
+  /*
+    班長同士が同じ班にならないようにする
+  */
+
+  for(var a=0;a<leaders.length;a++){
+
+    for(var b=a+1;b<leaders.length;b++){
+
+      var ga=groupInfo(leaders[a]);
+      var gb=groupInfo(leaders[b]);
+
+      if(
+        ga.x===gb.x &&
+        ga.y===gb.y
       ){
 
         return false;
@@ -2406,34 +2745,73 @@ function validArrangement(arr){
 
   }
 
+  return true;
 
-  /*
-   * 列ごとの男女
-   */
-  for(var cg=0;cg<cols;cg++){
-
-    if(!columnGenders[cg]){
-      continue;
-    }
+}
 
 
-    for(var rr=0;rr<rows;rr++){
+/* ================================
+   条件判定
+================================ */
 
-      var idx=
-        rr*cols+cg;
+function isValidCandidate(candidate,rules){
+
+  if(
+    !checkColumnRules(
+      candidate,
+      rules
+    )
+  ){
+
+    return false;
+
+  }
 
 
-      if(
-        arr[idx].name &&
-        arr[idx].gender!==
-        columnGenders[cg]
-      ){
+  if(
+    !checkPositionRules(
+      candidate,
+      rules
+    )
+  ){
 
-        return false;
+    return false;
 
-      }
+  }
 
-    }
+
+  if(
+    !checkNearRules(
+      candidate,
+      rules
+    )
+  ){
+
+    return false;
+
+  }
+
+
+  if(
+    !checkFarRules(
+      candidate,
+      rules
+    )
+  ){
+
+    return false;
+
+  }
+
+
+  if(
+    !checkLeaders(
+      candidate,
+      rules
+    )
+  ){
+
+    return false;
 
   }
 
@@ -2443,63 +2821,35 @@ function validArrangement(arr){
 }
 
 
+/* ================================
+   席替え結果を作る
+================================ */
 
-function createCandidate(){
+function generateSeats(){
 
-  var original=
-    students.map(function(s){
-
-      return {
-        name:s.name,
-        gender:s.gender
-      };
-
-    });
-
-
-  var candidates=
-    [];
-
-
-  /*
-   * 今の座席から全員移動させない場合、
-   * 何人かの入れ替えを含む通常シャッフル。
-   */
-  if($("moveAll").checked){
-
-    candidates=
-      shuffleArray(original);
-
-  }else{
-
-    candidates=
-      shuffleArray(original);
-
-  }
-
-
-  return candidates;
-
-}
-
-
-
-function generateArrangement(){
+  var rules=getRuleValues();
 
   var best=null;
 
+  var attempts=0;
 
   /*
-   * 完全ランダムを何度か試して
-   * 条件を満たす配置を探す
-   */
-  for(var attempt=0;attempt<12000;attempt++){
+    条件を満たすまで何度か試す
+  */
+
+  while(
+    attempts<5000
+  ){
 
     var candidate=
       createCandidate();
 
-
-    if(validArrangement(candidate)){
+    if(
+      isValidCandidate(
+        candidate,
+        rules
+      )
+    ){
 
       best=candidate;
 
@@ -2507,17 +2857,51 @@ function generateArrangement(){
 
     }
 
+    attempts++;
+
   }
 
 
   /*
-   * 条件が多い場合でも最低限動作するよう、
-   * 位置指定を優先した配置を作る。
-   */
+    条件が厳しすぎる場合でも
+    完全に停止しないようにする
+  */
+
   if(!best){
 
-    best=
-      createFallbackArrangement();
+    for(
+      var retry=0;
+      retry<100;
+      retry++
+    ){
+
+      var candidate=
+        createCandidate();
+
+      if(
+        isValidCandidate(
+          candidate,
+          rules
+        )
+      ){
+
+        best=candidate;
+
+        break;
+
+      }
+
+    }
+
+  }
+
+
+  if(!best){
+
+    best=createCandidate();
+
+    $("status").textContent=
+      "条件をすべて満たす座席を作れなかったため、近い配置を作成しました。";
 
   }
 
@@ -2527,130 +2911,65 @@ function generateArrangement(){
 }
 
 
+/* ================================
+   座席をリセット
+   → 席替え前に戻す
+================================ */
 
-function createFallbackArrangement(){
+$("resetBtn").onclick=function(){
 
-  var result=
-    new Array(rows*cols);
+  if(
+    !beforeShuffleStudents
+  ){
 
-  var remaining=
-    students.map(function(s){
+    $("status").textContent=
+      "戻せる座席がありません。";
 
-      return {
-        name:s.name,
-        gender:s.gender
-      };
-
-    });
-
-
-  /*
-   * まず位置指定を配置
-   */
-  var rules=getRuleData();
-
-
-  rules.position.forEach(function(rule){
-
-    if(!rule.name){
-      return;
-    }
-
-
-    var source=-1;
-
-
-    for(var i=0;i<remaining.length;i++){
-
-      if(
-        remaining[i] &&
-        remaining[i].name===
-        rule.name
-      ){
-
-        source=i;
-
-        break;
-
-      }
-
-    }
-
-
-    if(source<0){
-      return;
-    }
-
-
-    var target=
-      (rule.row-1)*cols+
-      (rule.col-1);
-
-
-    if(!result[target]){
-
-      result[target]=
-        remaining[source];
-
-      remaining[source]=null;
-
-    }
-
-  });
-
-
-  var rest=
-    remaining.filter(function(s){
-      return s!==null;
-    });
-
-
-  rest=
-    shuffleArray(rest);
-
-
-  for(var r=0;r<result.length;r++){
-
-    if(!result[r]){
-
-      result[r]=
-        rest.shift() || {
-          name:"",
-          gender:""
-        };
-
-    }
+    return;
 
   }
 
 
-  return result;
-
-                      }
- function renderPresentation(arr){
-
-  var presentation=
-    $("presentation");
-
-  var stage=
-    $("presentationStage");
+  students=
+    cloneStudents(
+      beforeShuffleStudents
+    );
 
 
-  stage.innerHTML="";
+  render();
 
+  refreshSelects();
+
+  saveState();
+
+
+  $("status").textContent=
+    "席替え前の座席に戻しました。";
+
+};
+
+
+/* ================================
+   発表用座席HTML
+================================ */
+
+function createPresentationBoard(){
 
   var board=
     document.createElement("div");
 
-  board.className="presentation-board";
+  board.className=
+    "presentation-board";
 
 
   var front=
     document.createElement("div");
 
-  front.className="presentation-front";
+  front.className=
+    "presentation-front";
 
-  front.textContent="黒板（前）";
+  front.textContent=
+    "黒板（前）";
 
   board.appendChild(front);
 
@@ -2658,13 +2977,17 @@ function createFallbackArrangement(){
   var table=
     document.createElement("div");
 
-  table.className="presentation-table";
+  table.className=
+    "presentation-table";
 
   table.style.gridTemplateColumns=
     "repeat("+cols+",100px)";
 
 
-  for(var i=0;i<arr.length;i++){
+  var seats=[];
+
+
+  for(var i=0;i<students.length;i++){
 
     var seat=
       document.createElement("div");
@@ -2673,53 +2996,42 @@ function createFallbackArrangement(){
       "presentation-seat hidden-seat";
 
 
-    if(arr[i].gender==="男"){
-      seat.classList.add("male");
-    }
-
-    if(arr[i].gender==="女"){
-      seat.classList.add("female");
-    }
-
-
     seat.dataset.index=i;
-
-    seat.textContent="";
 
 
     table.appendChild(seat);
+
+    seats.push(seat);
 
   }
 
 
   board.appendChild(table);
 
-  stage.appendChild(board);
-
-
-  presentation.classList.add("show");
-
-
-  startPresentation(arr);
+  return {
+    board:board,
+    seats:seats
+  };
 
 }
 
 
+/* ================================
+   発表順を作る
+================================ */
 
-function getPresentationOrder(){
+function makeRevealOrder(axis){
 
   var order=[];
-
-  var axis=
-    $("animationAxis").value;
 
 
   if(axis==="row"){
 
     /*
-     * 横：
-     * 左上 → 右へ → 次の行
-     */
+      横一列ずつ
+      左上 → 右
+    */
+
     for(var r=0;r<rows;r++){
 
       for(var c=0;c<cols;c++){
@@ -2735,15 +3047,16 @@ function getPresentationOrder(){
   }else{
 
     /*
-     * 縦：
-     * 左上 → 下へ → 次の列
-     */
-    for(var c2=0;c2<cols;c2++){
+      縦一列ずつ
+      左上 → 下
+    */
 
-      for(var r2=0;r2<rows;r2++){
+    for(var c=0;c<cols;c++){
+
+      for(var r=0;r<rows;r++){
 
         order.push(
-          r2*cols+c2
+          r*cols+c
         );
 
       }
@@ -2758,64 +3071,64 @@ function getPresentationOrder(){
 }
 
 
+/* ================================
+   通常演出
+================================ */
 
-function startPresentation(arr){
+function runNormalPresentation(){
 
-  var seats=
-    Array.from(
-      document.querySelectorAll(
-        ".presentation-seat"
-      )
-    );
+  var presentation=
+    $("presentation");
+
+  var stage=
+    $("presentationStage");
+
+  stage.innerHTML="";
+
+
+  var data=
+    createPresentationBoard();
+
+
+  stage.appendChild(
+    data.board
+  );
+
+
+  presentation.classList.add("show");
 
 
   var order=
-    getPresentationOrder();
+    makeRevealOrder(
+      $("animationAxis").value
+    );
 
 
-  var mode=
-    $("animation").value;
+  var count=0;
 
 
-  /*
-   * 一席ずつ順番に表示。
-   * 通常は0.6秒間隔。
-   */
-  var current=0;
+  function revealNext(){
 
-
-  function reveal(index){
-
-    if(index>=order.length){
-
-      setTimeout(function(){
-
-        $("closePresentation").style.display=
-          "block";
-
-      },300);
+    if(count>=order.length){
 
       return;
 
     }
 
 
-    var seatIndex=
-      order[index];
+    var index=
+      order[count];
 
     var seat=
-      seats[seatIndex];
+      data.seats[index];
 
-
-    if(!seat){
-      return;
-    }
+    var person=
+      students[index];
 
 
     seat.classList.remove(
       "hidden-seat"
     );
-
 
     seat.classList.add(
       "revealed"
@@ -2823,179 +3136,1037 @@ function startPresentation(arr){
 
 
     seat.textContent=
-      arr[seatIndex].name ||
-      "空席";
+      person.name || "空席";
 
 
-    if(mode==="slot"){
+    if(person.gender==="男"){
 
-      playSlotEffect(
-        seat,
-        arr[seatIndex].name ||
-        "空席",
-        function(){
-
-          current++;
-
-          setTimeout(function(){
-
-            reveal(current);
-
-          },600);
-
-        }
-      );
-
-    }else{
-
-      current++;
-
-      setTimeout(function(){
-
-        reveal(current);
-
-      },600);
+      seat.classList.add("male");
 
     }
+
+    if(person.gender==="女"){
+
+      seat.classList.add("female");
+
+    }
+
+
+    count++;
+
+
+    setTimeout(
+      revealNext,
+      600
+    );
 
   }
 
 
-  /*
-   * 最初は全部黒。
-   */
-  seats.forEach(function(seat){
-
-    seat.classList.add(
-      "hidden-seat"
-    );
-
-  });
-
-
-  $("closePresentation").style.display=
-    "block";
-
-
-  setTimeout(function(){
-
-    reveal(0);
-
-  },300);
+  setTimeout(
+    revealNext,
+    600
+  );
 
 }
 
 
+/* ================================
+   スロット演出
+================================ */
 
-function playSlotEffect(
-  seat,
-  finalName,
-  callback
-){
+function runSlotPresentation(){
 
-  /*
-   * スロットも座席全体を表示したまま、
-   * 対象の一席だけ名前が
-   * ババババッと切り替わって止まる。
-   */
-  var allNames=
-    names();
+  var presentation=
+    $("presentation");
 
+  var stage=
+    $("presentationStage");
 
-  var candidates=
-    allNames.filter(function(name){
-
-      return name!==finalName;
-
-    });
+  stage.innerHTML="";
 
 
-  if(candidates.length===0){
-
-    candidates=[
-      "田中",
-      "佐藤",
-      "鈴木",
-      "高橋",
-      "山田"
-    ];
-
-  }
+  var data=
+    createPresentationBoard();
 
 
-  seat.classList.add(
-    "slot-seat"
+  stage.appendChild(
+    data.board
   );
+
+
+  presentation.classList.add("show");
+
+
+  var order=
+    makeRevealOrder(
+      $("animationAxis").value
+    );
 
 
   var count=0;
 
-  var max=12;
+
+  function slotOne(){
+
+    if(count>=order.length){
+
+      return;
+
+    }
 
 
-  var timer=
-    setInterval(function(){
+    var index=
+      order[count];
 
-      var random=
-        candidates[
-          Math.floor(
-            Math.random()*
-            candidates.length
-          )
-        ];
+    var seat=
+      data.seats[index];
+
+
+    var person=
+      students[index];
+
+
+    /*
+      名前が高速で切り替わる
+    */
+
+    var pool=
+      students
+        .filter(function(s){
+          return s.name;
+        });
+
+
+    var ticks=0;
+
+    var interval=
+      setInterval(function(){
+
+        if(pool.length){
+
+          var random=
+            pool[
+              Math.floor(
+                Math.random()*
+                pool.length
+              )
+            ];
+
+          seat.textContent=
+            random.name;
+
+        }
+
+        ticks++;
+
+      },70);
+
+
+    setTimeout(function(){
+
+      clearInterval(interval);
+
+
+      seat.classList.remove(
+        "hidden-seat"
+      );
+
+      seat.classList.add(
+        "revealed"
+      );
 
 
       seat.textContent=
-        random;
+        person.name || "空席";
+
+
+      if(person.gender==="男"){
+
+        seat.classList.add("male");
+
+      }
+
+      if(person.gender==="女"){
+
+        seat.classList.add("female");
+
+      }
 
 
       count++;
 
 
-      if(count>=max){
-
-        clearInterval(timer);
-
-
-        seat.classList.remove(
-          "slot-seat"
-        );
+      setTimeout(
+        slotOne,
+        600
+      );
 
 
-        seat.textContent=
-          finalName;
+    },700);
+
+  }
 
 
-        setTimeout(
-          callback,
-          150
-        );
-
-      }
-
-    },70);
+  setTimeout(
+    slotOne,
+    600
+  );
 
 }
 
 
+/* ================================
+   席替えボタン
+================================ */
 
-$("closePresentation").onclick=
+$("shuffleBtn").onclick=function(){
+
+  /*
+    席替え前の状態を保存
+  */
+
+  beforeShuffleStudents=
+    cloneStudents(students);
+
+
+  /*
+    新しい座席を生成
+  */
+
+  var result=
+    generateSeats();
+
+
+  /*
+    発表中に表示するため、
+    先に新しい座席をセット
+  */
+
+  students=
+    cloneStudents(result);
+
+
+  saveState();
+
+
+  /*
+    通常画面では黒くするので
+    renderは発表終了後に行う
+  */
+
+  if(
+    $("animation").value==="slot"
+  ){
+
+    runSlotPresentation();
+
+  }else{
+
+    runNormalPresentation();
+
+  }
+
+};
+
+
+/* ================================
+   発表終了
+================================ */
+
+$("closePresentation").onclick=function(){
+
+  $("presentation")
+    .classList.remove("show");
+
+
+  render();
+
+  refreshSelects();
+
+  saveState();
+
+};
+
+
+/* ================================
+   ESCで閉じる
+================================ */
+
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(
+      e.key==="Escape" &&
+      $("presentation")
+        .classList.contains("show")
+    ){
+
+      $("presentation")
+        .classList.remove("show");
+
+      render();
+
+      refreshSelects();
+
+      saveState();
+
+    }
+
+  }
+);
+  <!-- ================================
+     初期化
+================================ -->
+
+loadState();
+
+fillSelect(
+  "cols",
+  6,
+  cols
+);
+
+fillSelect(
+  "rows",
+  6,
+  rows
+);
+
+restoreSettings();
+
+
+/* ================================
+   現在の列数に合わせて
+   列指定セレクトを調整
+================================ */
+
+function updateRuleSelects(){
+
+  document
+    .querySelectorAll(
+      "#columnRules .rule"
+    )
+    .forEach(function(rule){
+
+      var select=
+        rule.querySelectorAll("select")[2];
+
+      if(!select)return;
+
+      var current=
+        parseInt(select.value,10) || 1;
+
+      select.innerHTML="";
+
+      for(
+        var i=1;
+        i<=rows;
+        i++
+      ){
+
+        var option=
+          document.createElement("option");
+
+        option.value=i;
+
+        option.textContent=
+          i+"列目まで";
+
+        if(i===current){
+
+          option.selected=true;
+
+        }
+
+        select.appendChild(option);
+
+      }
+
+    });
+
+
+  document
+    .querySelectorAll(
+      "#positionRules .rule"
+    )
+    .forEach(function(rule){
+
+      var selects=
+        rule.querySelectorAll("select");
+
+      if(selects.length<3)return;
+
+
+      var rowSelect=selects[1];
+
+      var colSelect=selects[2];
+
+
+      var currentRow=
+        parseInt(rowSelect.value,10) || 1;
+
+      var currentCol=
+        parseInt(colSelect.value,10) || 1;
+
+
+      rowSelect.innerHTML="";
+
+      for(
+        var r=1;
+        r<=rows;
+        r++
+      ){
+
+        var ro=
+          document.createElement("option");
+
+        ro.value=r;
+
+        ro.textContent=
+          "前から"+r+"列目";
+
+        if(r===currentRow){
+
+          ro.selected=true;
+
+        }
+
+        rowSelect.appendChild(ro);
+
+      }
+
+
+      colSelect.innerHTML="";
+
+      for(
+        var c=1;
+        c<=cols;
+        c++
+      ){
+
+        var co=
+          document.createElement("option");
+
+        co.value=c;
+
+        co.textContent=
+          "左から"+c+"列目";
+
+        if(c===currentCol){
+
+          co.selected=true;
+
+        }
+
+        colSelect.appendChild(co);
+
+      }
+
+    });
+
+}
+
+
+/* ================================
+   座席数変更時に
+   条件欄も更新
+================================ */
+
+$("cols").addEventListener(
+  "change",
+  updateRuleSelects
+);
+
+$("rows").addEventListener(
+  "change",
+  updateRuleSelects
+);
+
+
+/* ================================
+   班の間隔を視覚的に反映
+================================ */
+
+function applyGroupGaps(){
+
+  var grid=
+    $("seatGrid");
+
+  if(!grid)return;
+
+  var gc=
+    parseInt(
+      $("groupCols").value,
+      10
+    ) || 0;
+
+  var gr=
+    parseInt(
+      $("groupRows").value,
+      10
+    ) || 0;
+
+
+  var seats=
+    grid.querySelectorAll(".seat");
+
+
+  seats.forEach(function(seat,index){
+
+    var r=rowOf(index);
+    var c=colOf(index);
+
+
+    seat.classList.remove(
+      "gap-r",
+      "gap-b"
+    );
+
+
+    /*
+      横方向の班分け
+      → 班と班の間に横の隙間
+    */
+
+    if(
+      gc>0 &&
+      (c+1)%gc===0 &&
+      c<cols-1
+    ){
+
+      seat.classList.add(
+        "gap-r"
+      );
+
+    }
+
+
+    /*
+      縦方向の班分け
+      → 班と班の間に縦の隙間
+    */
+
+    if(
+      gr>0 &&
+      (r+1)%gr===0 &&
+      r<rows-1
+    ){
+
+      seat.classList.add(
+        "gap-b"
+      );
+
+    }
+
+  });
+
+}
+
+
+/* ================================
+   班変更時
+================================ */
+
+$("groupCols").addEventListener(
+  "change",
   function(){
 
-    $("presentation")
-      .classList.remove("show");
+    render();
 
-  };
+    applyGroupGaps();
+
+    saveState();
+
+  }
+);
 
 
+$("groupRows").addEventListener(
+  "change",
+  function(){
 
-function makePrintBoard(
-  bottom
+    render();
+
+    applyGroupGaps();
+
+    saveState();
+
+  }
+);
+
+
+/* ================================
+   生徒選択欄の自動更新
+================================ */
+
+document.addEventListener(
+  "input",
+  function(e){
+
+    if(
+      e.target.matches(
+        "#bulkInput"
+      )
+    ){
+
+      /*
+        入力途中では
+        列男女などを消さない
+      */
+
+      return;
+
+    }
+
+  }
+);
+
+
+/* ================================
+   ルール追加後の保存
+================================ */
+
+function watchRuleArea(id){
+
+  var area=$(id);
+
+  if(!area)return;
+
+
+  area.addEventListener(
+    "change",
+    function(){
+
+      saveState();
+
+    }
+  );
+
+  area.addEventListener(
+    "input",
+    function(){
+
+      saveState();
+
+    }
+  );
+
+}
+
+
+watchRuleArea("columnRules");
+watchRuleArea("positionRules");
+watchRuleArea("nearRules");
+watchRuleArea("farRules");
+watchRuleArea("leaderRules");
+
+
+/* ================================
+   名前が入力されている生徒だけ
+   列男女設定を適用
+================================ */
+
+function applyStoredColumnGender(){
+
+  for(
+    var c=0;
+    c<cols;
+    c++
+  ){
+
+    var gender=
+      columnGenders[c];
+
+    if(
+      gender!=="男" &&
+      gender!=="女"
+    ){
+
+      continue;
+
+    }
+
+
+    for(
+      var r=0;
+      r<rows;
+      r++
+    ){
+
+      var index=
+        r*cols+c;
+
+
+      /*
+        空席には性別を付けない
+      */
+
+      if(
+        students[index] &&
+        students[index].name
+      ){
+
+        students[index].gender=
+          gender;
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/* ================================
+   クリア後も
+   列ごとの男女設定を保持
+================================ */
+
+var originalClear=
+  $("clearSeatsBtn").onclick;
+
+
+$("clearSeatsBtn").onclick=function(){
+
+  if(
+    !confirm(
+      "座席表の名前をすべて消しますか？"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  for(
+    var i=0;
+    i<students.length;
+    i++
+  ){
+
+    students[i]={
+      name:"",
+      gender:""
+    };
+
+  }
+
+
+  /*
+    columnGendersは絶対に変更しない
+  */
+
+  render();
+
+  refreshSelects();
+
+  saveState();
+
+
+  $("status").textContent=
+    "座席表をクリアしました。";
+
+};
+
+
+/* ================================
+   ページ読み込み時の表示
+================================ */
+
+applyStoredColumnGender();
+
+render();
+
+refreshSelects();
+
+updateRuleSelects();
+
+applyGroupGaps();
+
+
+/* ================================
+   localStorageへの自動保存
+================================ */
+
+setInterval(
+  function(){
+
+    saveState();
+
+  },
+  1000
+);
+
+
+/* ================================
+   ページを離れる直前にも保存
+================================ */
+
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    saveState();
+
+  }
+);
+
+
+/* ================================
+   タブを閉じたり戻った場合にも
+   状態を保存
+================================ */
+
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    if(
+      document.visibilityState===
+      "hidden"
+    ){
+
+      saveState();
+
+    }
+
+  }
+);
+
+
+/* ================================
+   画像保存
+================================ */
+
+$("saveBtn").onclick=function(){
+
+  if(
+    typeof html2canvas!=="function"
+  ){
+
+    $("status").textContent=
+      "画像保存機能の読み込みに失敗しました。";
+
+    return;
+
+  }
+
+
+  var wrapper=
+    document.createElement("div");
+
+  wrapper.style.position=
+    "fixed";
+
+  wrapper.style.left=
+    "-100000px";
+
+  wrapper.style.top=
+    "0";
+
+  wrapper.style.background=
+    "#fff";
+
+  wrapper.style.padding=
+    "30px";
+
+  wrapper.style.width=
+    Math.max(
+      700,
+      cols*120+80
+    )+"px";
+
+
+  var title=
+    document.createElement("div");
+
+  title.textContent=
+    "席替え";
+
+  title.style.textAlign=
+    "center";
+
+  title.style.fontSize=
+    "28px";
+
+  title.style.fontWeight=
+    "800";
+
+  title.style.marginBottom=
+    "20px";
+
+
+  var front=
+    document.createElement("div");
+
+  front.textContent=
+    "黒板（前）";
+
+  front.style.background=
+    "#eee";
+
+  front.style.padding=
+    "10px";
+
+  front.style.textAlign=
+    "center";
+
+  front.style.marginBottom=
+    "20px";
+
+
+  var grid=
+    document.createElement("div");
+
+  grid.style.display=
+    "grid";
+
+  grid.style.gridTemplateColumns=
+    "repeat("+cols+",100px)";
+
+  grid.style.gap=
+    "8px";
+
+  grid.style.justifyContent=
+    "center";
+
+
+  students.forEach(function(person,index){
+
+    var cell=
+      document.createElement("div");
+
+    cell.style.width=
+      "100px";
+
+    cell.style.minHeight=
+      "65px";
+
+    cell.style.border=
+      "2px solid #333";
+
+    cell.style.borderRadius=
+      "9px";
+
+    cell.style.display=
+      "flex";
+
+    cell.style.alignItems=
+      "center";
+
+    cell.style.justifyContent=
+      "center";
+
+    cell.style.textAlign=
+      "center";
+
+    cell.style.padding=
+      "7px";
+
+    cell.style.fontWeight=
+      "800";
+
+    cell.style.overflowWrap=
+      "anywhere";
+
+
+    cell.textContent=
+      person.name || "空席";
+
+
+    if(person.gender==="男"){
+
+      cell.style.color=
+        "#4a90e2";
+
+    }
+
+    if(person.gender==="女"){
+
+      cell.style.color=
+        "#e85b67";
+
+    }
+
+
+    grid.appendChild(cell);
+
+  });
+
+
+  wrapper.append(
+    title,
+    front,
+    grid
+  );
+
+
+  document.body.appendChild(
+    wrapper
+  );
+
+
+  html2canvas(wrapper,{
+    backgroundColor:"#ffffff",
+    scale:2
+  }).then(function(canvas){
+
+    var link=
+      document.createElement("a");
+
+    link.download=
+      "席替え.png";
+
+    link.href=
+      canvas.toDataURL(
+        "image/png"
+      );
+
+    link.click();
+
+
+    document.body.removeChild(
+      wrapper
+    );
+
+
+    $("status").textContent=
+      "画像を保存しました。";
+
+
+  }).catch(function(){
+
+    if(wrapper.parentNode){
+
+      wrapper.parentNode.removeChild(
+        wrapper
+      );
+
+    }
+
+
+    $("status").textContent=
+      "画像の保存に失敗しました。";
+
+  });
+
+};
+
+
+/* ================================
+   印刷用データ作成
+================================ */
+
+function createPrintArea(
+  blackboardBottom
 ){
 
   var area=
     $("printArea");
-
 
   area.innerHTML="";
 
@@ -3007,10 +4178,7 @@ function makePrintBoard(
     "print-page-title";
 
   title.textContent=
-    "席替え後の座席表";
-
-
-  area.appendChild(title);
+    "席替え";
 
 
   var board=
@@ -3020,22 +4188,15 @@ function makePrintBoard(
     "print-board";
 
 
-  if(!bottom){
+  var blackboard=
+    document.createElement("div");
 
-    var blackboardTop=
-      document.createElement("div");
+  blackboard.className=
+    "print-blackboard";
 
-    blackboardTop.className=
-      "print-blackboard";
 
-    blackboardTop.textContent=
-      "黒板";
-
-    board.appendChild(
-      blackboardTop
-    );
-
-  }
+  blackboard.textContent=
+    "黒板";
 
 
   var grid=
@@ -3045,10 +4206,10 @@ function makePrintBoard(
     "print-grid";
 
   grid.style.gridTemplateColumns=
-    "repeat("+cols+",1fr)";
+    "repeat("+cols+",80px)";
 
 
-  students.forEach(function(s){
+  students.forEach(function(person){
 
     var seat=
       document.createElement("div");
@@ -3057,482 +4218,122 @@ function makePrintBoard(
       "print-seat";
 
 
-    if(s.gender==="男"){
-
-      seat.classList.add("male");
-
-    }
-
-
-    if(s.gender==="女"){
-
-      seat.classList.add("female");
-
-    }
-
-
     seat.textContent=
-      s.name || "空席";
+      person.name || "空席";
 
 
-    grid.appendChild(seat);
+    if(person.gender==="男"){
+
+      seat.classList.add(
+        "male"
+      );
+
+    }
+
+
+    if(person.gender==="女"){
+
+      seat.classList.add(
+        "female"
+      );
+
+    }
+
+
+    grid.appendChild(
+      seat
+    );
 
   });
 
 
-  board.appendChild(grid);
+  board.appendChild(
+    blackboardBottom
+      ? grid
+      : blackboard
+  );
 
 
-  if(bottom){
-
-    var blackboardBottom=
-      document.createElement("div");
-
-    blackboardBottom.className=
-      "print-blackboard bottom";
-
-    blackboardBottom.textContent=
-      "黒板";
+  if(blackboardBottom){
 
     board.appendChild(
-      blackboardBottom
+      blackboard
+    );
+
+  }else{
+
+    board.appendChild(
+      grid
     );
 
   }
 
 
-  area.appendChild(board);
+  area.append(
+    title,
+    board
+  );
 
 }
 
 
+/* ================================
+   印刷
+================================ */
 
-$("printTopBtn").onclick=
-  function(){
+$("printTopBtn").onclick=function(){
 
-    makePrintBoard(false);
+  createPrintArea(false);
 
-    window.print();
-
-  };
-
-
-
-$("printBottomBtn").onclick=
-  function(){
-
-    makePrintBoard(true);
+  setTimeout(function(){
 
     window.print();
 
-  };
+  },100);
+
+};
 
 
+$("printBottomBtn").onclick=function(){
 
-function canvasRoundRect(
-  ctx,
-  x,
-  y,
-  w,
-  h,
-  r
-){
+  createPrintArea(true);
 
-  ctx.beginPath();
+  setTimeout(function(){
 
-  ctx.moveTo(x+r,y);
+    window.print();
 
-  ctx.lineTo(x+w-r,y);
+  },100);
 
-  ctx.quadraticCurveTo(
-    x+w,y,
-    x+w,y+r
-  );
-
-  ctx.lineTo(
-    x+w,
-    y+h-r
-  );
-
-  ctx.quadraticCurveTo(
-    x+w,y+h,
-    x+w-r,y+h
-  );
-
-  ctx.lineTo(
-    x+r,
-    y+h
-  );
-
-  ctx.quadraticCurveTo(
-    x,y+h,
-    x,y+h-r
-  );
-
-  ctx.lineTo(
-    x,y+r
-  );
-
-  ctx.quadraticCurveTo(
-    x,y,
-    x+r,y
-  );
-
-  ctx.closePath();
-
-}
+};
 
 
+/* ================================
+   印刷終了後
+================================ */
 
-function saveAsImage(){
+window.addEventListener(
+  "afterprint",
+  function(){
 
-  var canvas=
-    $("exportCanvas");
-
-  var cellW=170;
-
-  var cellH=105;
-
-  var gap=12;
-
-  var margin=45;
-
-  var boardW=
-    cols*cellW+
-    (cols-1)*gap;
-
-  var boardH=
-    rows*cellH+
-    (rows-1)*gap;
-
-  canvas.width=
-    boardW+margin*2;
-
-  canvas.height=
-    boardH+
-    margin*2+
-    80;
-
-
-  var ctx=
-    canvas.getContext("2d");
-
-
-  ctx.fillStyle="#ffffff";
-
-  ctx.fillRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-
-  ctx.fillStyle="#333";
-
-  ctx.font=
-    "bold 30px sans-serif";
-
-  ctx.textAlign="center";
-
-  ctx.fillText(
-    "席替え後の座席表",
-    canvas.width/2,
-    45
-  );
-
-
-  for(var r=0;r<rows;r++){
-
-    for(var c=0;c<cols;c++){
-
-      var index=
-        r*cols+c;
-
-      var x=
-        margin+
-        c*(cellW+gap);
-
-      var y=
-        margin+
-        35+
-        r*(cellH+gap);
-
-
-      var person=
-        students[index];
-
-
-      ctx.strokeStyle=
-        "#333";
-
-      ctx.lineWidth=2;
-
-      canvasRoundRect(
-        ctx,
-        x,
-        y,
-        cellW,
-        cellH,
-        10
-      );
-
-      ctx.stroke();
-
-
-      ctx.fillStyle=
-        person.gender==="男"
-          ? "#4a90e2"
-          : person.gender==="女"
-            ? "#e85b67"
-            : "#333";
-
-
-      ctx.font=
-        "bold 22px sans-serif";
-
-      ctx.textAlign="center";
-
-      ctx.textBaseline="middle";
-
-
-      ctx.fillText(
-        person.name || "空席",
-        x+cellW/2,
-        y+cellH/2,
-        cellW-20
-      );
-
-    }
+    $("printArea").innerHTML="";
 
   }
-
-
-  var link=
-    document.createElement("a");
-
-  link.download=
-    "席替え後の座席表.png";
-
-
-  link.href=
-    canvas.toDataURL(
-      "image/png"
-    );
-
-
-  link.click();
-
-}
-
-
-
-$("saveBtn").onclick=
-  saveAsImage;
-
-
-
-$("shuffleBtn").onclick=
-  function(){
-
-    var result=
-      generateArrangement();
-
-
-    if(!result){
-
-      $("status").textContent=
-        "条件を満たす座席を作れませんでした。";
-
-      return;
-
-    }
-
-
-    $("status").textContent=
-      "席替えを準備しています…";
-
-
-    renderPresentation(
-      result
-    );
-
-
-    /*
-     * 発表が終わった後に
-     * 実際の座席表を更新。
-     */
-    setTimeout(function(){
-
-      students=
-        result.map(function(s){
-
-          return {
-            name:s.name,
-            gender:s.gender
-          };
-
-        });
-
-
-      render();
-
-      saveState();
-
-
-      $("status").textContent=
-        "席替えが完了しました。";
-
-    },
-    (
-      rows*cols*600
-    )+
-    1800
-    );
-
-  };
-
-
-
-$("resetBtn").onclick=
-  function(){
-
-    render();
-
-    $("status").textContent=
-      "座席表を現在の状態に戻しました。";
-
-  };
-
-
-
-$("groupCols").onchange=
-  function(){
-
-    render();
-
-    saveState();
-
-  };
-
-
-
-$("groupRows").onchange=
-  function(){
-
-    render();
-
-    saveState();
-
-  };
-
-
-
-$("animation").onchange=
-  saveState;
-
-
-
-$("animationAxis").onchange=
-  saveState;
-
-
-
-$("moveAll").onchange=
-  saveState;
-
-
-
-$("fixGender").onchange=
-  saveState;
-
-
-
-/*
- * 初期化
- */
-
-loadState();
-
-
-fillSelect(
-  "cols",
-  6,
-  cols
 );
 
 
-fillSelect(
-  "rows",
-  6,
-  rows
-);
+/* ================================
+   初期表示メッセージ
+================================ */
 
-
-if(
-  localStorage.getItem(
-    "changeSeatsMakerState"
-  )
-){
-
-  try{
-
-    var saved=
-      JSON.parse(
-        localStorage.getItem(
-          "changeSeatsMakerState"
-        )
-      );
-
-
-    if(saved.groupCols!==undefined){
-
-      $("groupCols").value=
-        saved.groupCols;
-
-    }
-
-
-    if(saved.groupRows!==undefined){
-
-      $("groupRows").value=
-        saved.groupRows;
-
-    }
-
-
-    if(saved.animation){
-
-      $("animation").value=
-        saved.animation;
-
-    }
-
-
-    if(saved.animationAxis){
-
-      $("animationAxis").value=
-        saved.animationAxis;
-
-    }
-
-
-    $("moveAll").checked=
-      !!saved.moveAll;
-
-
-    $("fixGender").checked=
-      !!saved.fixGender;
-
-  }catch(e){}
-
-}
-
-
-render();
+$("status").textContent="";
 
 
 })();
+</script>
+
+<!-- 画像保存用ライブラリ -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
 </script>
 
 </body>
